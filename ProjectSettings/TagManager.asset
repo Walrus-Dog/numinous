@@ -8,6 +8,7 @@ TagManager:
   - Button
   - ShadowButton
   - Shadow
+  - Pickup
   layers:
   - Default
   - TransparentFX
