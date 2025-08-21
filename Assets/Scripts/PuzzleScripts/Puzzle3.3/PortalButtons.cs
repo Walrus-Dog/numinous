@@ -1,9 +1,8 @@
 using System.Transactions;
 using UnityEngine;
 
-public class PortalButtons : MonoBehaviour
+public class PortalButtons : Button
 {
-    public bool pressed;
     Vector3 pressedPos;
     Vector3 unpressedPos;
 
@@ -16,7 +15,7 @@ public class PortalButtons : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (pressed)
+        if (activeState)
         {
             transform.position = pressedPos;
         }
@@ -30,23 +29,23 @@ public class PortalButtons : MonoBehaviour
     {
         if (gameObject.CompareTag("ShadowButton") && other.gameObject.CompareTag("Shadow"))
         {
-            pressed = true;
+            activeState = true;
         }
 
         if (gameObject.CompareTag("Button") && other.gameObject.CompareTag("Player"))
         {
-            pressed = true;
+            activeState = true;
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (gameObject.CompareTag("ShadowButton") && other.gameObject.CompareTag("Shadow"))
         {
-            pressed = false;
+            activeState = false;
         }
         if (gameObject.CompareTag("Button") && other.gameObject.CompareTag("Player"))
         {
-            pressed = false;
+            activeState = false;
         }
     }
 }
