@@ -25,8 +25,10 @@ public class DoorController : MonoBehaviour
     {
         int trueCount = 0;
 
+        //Different door types
         switch (doorType) 
         {
+            //If a code door
             case doorTypes.codeDoor:
                 if (player.GetComponent<InteractorMain>().numbersCollected.Count == code.Count) 
                 {
@@ -43,12 +45,24 @@ public class DoorController : MonoBehaviour
                     }
                 }
                 break;
+            //If a item/key door
             case doorTypes.itemDoor:
-                if (player.GetComponent<InteractorMain>().inventory == item)
+                if (player.GetComponent<InteractorMain>().inventory.Count == item.Count)
                 {
-                    Destroy(gameObject);
+                    for (int i = 0; i < item.Count; i++)
+                    {
+                        if (player.GetComponent<InteractorMain>().inventory[i] == item[i])
+                        {
+                            trueCount++;
+                        }
+                    }
+                    if (trueCount == item.Count)
+                    {
+                        Destroy(gameObject);
+                    }
                 }
                 break;
+            //If a puzzle element door
             case doorTypes.puzzleDoor:
                 foreach (var element in puzzle) 
                 {
