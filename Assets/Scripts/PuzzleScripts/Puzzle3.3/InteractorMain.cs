@@ -11,6 +11,9 @@ public class InteractorMain : MonoBehaviour
     public List<int> numbersCollected = new List<int>();
 
     public int codeCount;
+
+    GameObject lastDrawer;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -31,6 +34,19 @@ public class InteractorMain : MonoBehaviour
             HandleKeypad(hit);
             //Handle pickup. MUST BE TAGGED PICKUP
             HandlePickup(hit);
+        }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            //Cast a ray from center of camera that hits all objects xf infront of it.
+            Ray ray = new Ray(cam.transform.position, cam.transform.forward);
+            RaycastHit[] hit = Physics.RaycastAll(ray, 10f);
+            HandleDrawer(hit);
+        }
+
+        if (Input.GetKeyUp(KeyCode.E) && lastDrawer != null)
+        {
+            lastDrawer.GetComponent<DrawerPullout>().pullingOut = false;
         }
 
         if (numbersCollected.Count > codeCount)
@@ -58,6 +74,20 @@ public class InteractorMain : MonoBehaviour
                 inventory.Add(hit[i].collider.gameObject);
                 //Move object below the map.
                 hit[i].transform.Translate(-1 * transform.up * 100);
+            }
+        }
+    }
+
+    void HandleDrawer(RaycastHit[] hit)
+    {
+        for (int i = 0; i < hit.Length; i++)
+        {
+            if (hit[i].collider.gameObject.CompareTag("Drawer"))
+            {
+                lastDrawer = hit[i].collider.gameObject;
+                DrawerPullout drawer = hit[i].collider.gameObject.GetComponent<DrawerPullout>();
+                drawer.PulloutDrawer();
+                drawer.pullingOut = true;
             }
         }
     }

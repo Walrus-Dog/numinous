@@ -9,6 +9,7 @@ TagManager:
   - ShadowButton
   - Shadow
   - Pickup
+  - Drawer
   layers:
   - Default
   - TransparentFX
