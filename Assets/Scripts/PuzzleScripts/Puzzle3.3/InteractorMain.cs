@@ -9,6 +9,8 @@ public class InteractorMain : MonoBehaviour
     public List<GameObject> inventory = new List<GameObject>();
     //List of numbers collected. CREATE WAY TO CLEAR THIS VALUE.
     public List<int> numbersCollected = new List<int>();
+
+    public int codeCount;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -30,6 +32,11 @@ public class InteractorMain : MonoBehaviour
             //Handle pickup. MUST BE TAGGED PICKUP
             HandlePickup(hit);
         }
+
+        if (numbersCollected.Count > codeCount)
+        {
+            numbersCollected.Clear();
+        }
     }
 
     void HandleKeypad(RaycastHit[] hit)
@@ -43,10 +50,15 @@ public class InteractorMain : MonoBehaviour
 
     void HandlePickup(RaycastHit[] hit)
     {
-        if (hit[0].collider.gameObject.CompareTag("Pickup"))
+        for (int i = 0; i < hit.Length; i++)
         {
-            inventory.Add(hit[0].collider.gameObject);
-            Destroy(hit[0].collider.gameObject);
+            if (hit[i].collider.gameObject.CompareTag("Pickup"))
+            {
+                Debug.Log("That's a pickup");
+                inventory.Add(hit[i].collider.gameObject);
+                //Move object below the map.
+                hit[i].transform.Translate(-1 * transform.up * 100);
+            }
         }
     }
 }

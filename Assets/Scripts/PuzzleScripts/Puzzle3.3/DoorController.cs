@@ -41,24 +41,24 @@ public class DoorController : MonoBehaviour
                     }
                     if (trueCount == code.Count)
                     {
-                        Destroy(gameObject);
+                        OpenDoor();
                     }
                 }
                 break;
             //If a item/key door
             case doorTypes.itemDoor:
-                if (player.GetComponent<InteractorMain>().inventory.Count == item.Count)
+                if (player.GetComponent<InteractorMain>().inventory.Count >= item.Count)
                 {
                     for (int i = 0; i < item.Count; i++)
                     {
-                        if (player.GetComponent<InteractorMain>().inventory[i] == item[i])
+                        if (player.GetComponent<InteractorMain>().inventory.Contains(item[i]))
                         {
                             trueCount++;
                         }
                     }
-                    if (trueCount == item.Count)
+                    if (trueCount >= item.Count)
                     {
-                        Destroy(gameObject);
+                        OpenDoor();
                     }
                 }
                 break;
@@ -73,12 +73,19 @@ public class DoorController : MonoBehaviour
                     }
                     if (trueCount == puzzle.Count)
                     {
-                        Destroy(gameObject);
+                        OpenDoor();
                     }
                 }
                 break;
 
 
         }
+    }
+
+    void OpenDoor()
+    {
+        //Destroy(gameObject);
+
+        gameObject.transform.Translate(transform.up * 5 * Time.deltaTime);
     }
 }
