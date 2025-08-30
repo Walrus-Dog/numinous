@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-public class DrawerPullout : MonoBehaviour
+public class DrawerPullout : Button
 {
 
     public float pulloutAmount;
@@ -10,10 +10,14 @@ public class DrawerPullout : MonoBehaviour
     public float pulloutSpeed;
     public bool pullingOut = false;
 
+    public float speedMultiplier;
+    public float minSpeed;
+
     public float targetPull = .5f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //Set start pos
         startPos = transform.position;
         newPos = transform.position;
     }
@@ -21,8 +25,10 @@ public class DrawerPullout : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Set position
         newPos = new Vector3(startPos.x, startPos.y, startPos.z + Mathf.Clamp(pulloutAmount, 0f, .8f));
 
+        //Push drawer in when not pulling out
         if(!pullingOut)
         {
             PullInDrawer();
@@ -39,7 +45,21 @@ public class DrawerPullout : MonoBehaviour
             pulloutAmount = 1f;
         }
 
-        pulloutSpeed = ((Mathf.Abs(targetPull - pulloutAmount) + 1f) * Time.deltaTime);
+        pulloutSpeed = (Mathf.Abs(targetPull - pulloutAmount) * Time.deltaTime) * speedMultiplier;
+
+        if (pulloutSpeed < minSpeed)
+        {
+            pulloutSpeed = minSpeed;
+        }
+
+        if (pulloutAmount >= targetPull)
+        {
+            activeState = true;
+        }
+        else
+        {
+            activeState = false;
+        }
     }
 
     public void PulloutDrawer()
