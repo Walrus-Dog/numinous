@@ -31,7 +31,7 @@ public class InteractorMain : MonoBehaviour
             RaycastHit[] hit = Physics.RaycastAll(ray, 10f);
 
             //Handle keypad. MUST BE TAGGED BUTTON
-            HandleKeypad(hit);
+            HandleSequence(hit);
             //Handle pickup. MUST BE TAGGED PICKUP
             HandlePickup(hit);
         }
@@ -55,7 +55,7 @@ public class InteractorMain : MonoBehaviour
         }
     }
 
-    void HandleKeypad(RaycastHit[] hit)
+    void HandleSequence(RaycastHit[] hit)
     {
         if (hit[0].collider.gameObject.CompareTag("Button") && hit[0].collider.gameObject.GetComponent<ButtonStats>() != null)
         {
@@ -84,6 +84,7 @@ public class InteractorMain : MonoBehaviour
         {
             if (hit[i].collider.gameObject.CompareTag("Drawer"))
             {
+                //Set the last drawer intereracted with (so you set pullingOut to false)
                 lastDrawer = hit[i].collider.gameObject;
                 DrawerPullout drawer = hit[i].collider.gameObject.GetComponent<DrawerPullout>();
                 drawer.PulloutDrawer();

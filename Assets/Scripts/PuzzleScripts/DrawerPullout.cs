@@ -12,8 +12,10 @@ public class DrawerPullout : Button
 
     public float speedMultiplier;
     public float minSpeed;
-
+    [Tooltip("The center point of the active area")]
     public float targetPull = .5f;
+    [Tooltip("The range that the player sould be in.")]
+    public float targetRange;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -36,6 +38,7 @@ public class DrawerPullout : Button
 
         transform.position = newPos;
 
+        //Keep inside max and min.
         if (pulloutAmount < 0f)
         {
             pulloutAmount = 0f;
@@ -44,15 +47,15 @@ public class DrawerPullout : Button
         {
             pulloutAmount = 1f;
         }
-
+        //Pullout speed equation.
         pulloutSpeed = (Mathf.Abs(targetPull - pulloutAmount) * Time.deltaTime) * speedMultiplier;
-
+        //Set pullout speed to minimum speed.
         if (pulloutSpeed < minSpeed)
         {
             pulloutSpeed = minSpeed;
         }
-
-        if (pulloutAmount >= targetPull)
+        //Active state condition
+        if (pulloutAmount >= targetPull - targetRange && pulloutAmount <= targetPull + targetRange)
         {
             activeState = true;
         }

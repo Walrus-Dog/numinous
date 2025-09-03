@@ -244,6 +244,7 @@ MonoBehaviour:
   pulloutAmount: 0
   pulloutSpeed: 1
   pullingOut: 0
+  targetRange: 0
   speedMultiplier: 0
   minSpeed: 0
   targetPull: 0.5
@@ -1523,7 +1524,8 @@ MonoBehaviour:
   pulloutAmount: 0
   pulloutSpeed: 1
   pullingOut: 0
-  speedMultiplier: 50
+  targetRange: 0.1
+  speedMultiplier: 300
   minSpeed: 0.05
   targetPull: 0.5
 --- !u!1 &907914065
