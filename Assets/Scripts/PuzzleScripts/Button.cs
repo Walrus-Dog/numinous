@@ -11,5 +11,9 @@ public class Button : MonoBehaviour
         {
             gameObject.GetComponent<Renderer>().material.color = Color.red;
         }
+        else
+        {
+            gameObject.GetComponent<Renderer>().material.color = Color.white;
+        }
     }
 }

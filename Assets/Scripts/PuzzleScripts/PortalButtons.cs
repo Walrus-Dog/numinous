@@ -15,6 +15,7 @@ public class PortalButtons : Button
     // Update is called once per frame
     void Update()
     {
+        base.Update();
         if (activeState)
         {
             transform.position = pressedPos;

@@ -27,6 +27,8 @@ public class DrawerPullout : Button
     // Update is called once per frame
     void Update()
     {
+        base.Update();
+
         //Set position
         newPos = new Vector3(startPos.x, startPos.y, startPos.z + Mathf.Clamp(pulloutAmount, 0f, .8f));
 
