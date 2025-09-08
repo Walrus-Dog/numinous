@@ -118,12 +118,12 @@ public class PlayerWalking : PlayerState
                 var angle = Vector3.Angle(Vector3.up, hit.normal);
 
                 //DEBUG CODE 
-                Debug.DrawLine(hit.point, hit.point + hit.normal, Color.black, 1f);
-                OnNextDrawGizmos += () =>
-                {
-                    GUI.color = Color.black;
-                    Handles.Label(transform.position + new Vector3(0, 2f, 0), "Angle: " + angle.ToString());
-                };
+                //Debug.DrawLine(hit.point, hit.point + hit.normal, Color.black, 1f);
+                //OnNextDrawGizmos += () =>
+                //{
+                //    GUI.color = Color.black;
+                //    Handles.Label(transform.position + new Vector3(0, 2f, 0), "Angle: " + angle.ToString());
+                //};
 
                 if (angle > player.controller.slopeLimit)
                 {
