@@ -14,6 +14,8 @@ public class DoorController : MonoBehaviour
     public List<GameObject> item;
     public List<GameObject> puzzle;
 
+    public float unlockTimer = 2.5f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -41,7 +43,7 @@ public class DoorController : MonoBehaviour
                     }
                     if (trueCount == code.Count)
                     {
-                        OpenDoor();
+                        UnlockDoor();
                     }
                 }
                 break;
@@ -58,7 +60,7 @@ public class DoorController : MonoBehaviour
                     }
                     if (trueCount >= item.Count)
                     {
-                        OpenDoor();
+                        UnlockDoor();
                     }
                 }
                 break;
@@ -73,7 +75,7 @@ public class DoorController : MonoBehaviour
                     }
                     if (trueCount == puzzle.Count)
                     {
-                        OpenDoor();
+                        UnlockDoor();
                     }
                 }
                 break;
@@ -82,10 +84,18 @@ public class DoorController : MonoBehaviour
         }
     }
 
+    void UnlockDoor()
+    {
+        unlockTimer -= Time.deltaTime;
+
+        if (unlockTimer < 0)
+        {
+            OpenDoor();
+        }
+    }
+
     void OpenDoor()
     {
-        //Destroy(gameObject);
-
         gameObject.transform.Translate(transform.up * 5 * Time.deltaTime);
     }
 }
