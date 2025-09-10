@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class InteractorMain : MonoBehaviour
 {
@@ -14,39 +15,59 @@ public class InteractorMain : MonoBehaviour
 
     GameObject lastDrawer;
 
+    public PlayerInput playerInput;
+    InputAction interactAction;
+
+    //So buttons arent held down.
+    public bool hasInteracted = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         cam = Camera.main;
+
+        if (codeCount == 0)
+        {
+            codeCount = 3;
+        }
+    }
+
+    private void Awake()
+    {
+        interactAction = playerInput.actions["Interact"];
     }
 
     // Update is called once per frame
     void Update()
     {
+        var isTryingToInteract = interactAction.ReadValue<float>() > 0;
         //INPUT KEY IS E. 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (isTryingToInteract)
         {
-            //Cast a ray from center of camera that hits all objects xf infront of it.
+            //Cast a ray from center of camera that hits all objects infront of it.
             Ray ray = new Ray(cam.transform.position, cam.transform.forward);
-            RaycastHit[] hit = Physics.RaycastAll(ray, 10f);
+            RaycastHit[] hit = Physics.RaycastAll(ray, 5f);
 
             //Handle keypad. MUST BE TAGGED BUTTON
-            HandleSequence(hit);
+            if (!hasInteracted)
+            {
+                HandleSequence(hit);
+            }
             //Handle pickup. MUST BE TAGGED PICKUP
             HandlePickup(hit);
-        }
-
-        if (Input.GetKey(KeyCode.E))
-        {
-            //Cast a ray from center of camera that hits all objects xf infront of it.
-            Ray ray = new Ray(cam.transform.position, cam.transform.forward);
-            RaycastHit[] hit = Physics.RaycastAll(ray, 10f);
+            //Handle Drawer. MUST BE TAGGED DRAWER
             HandleDrawer(hit);
+
+            hasInteracted = true;
         }
 
-        if (Input.GetKeyUp(KeyCode.E) && lastDrawer != null)
+        if (!isTryingToInteract)
         {
-            lastDrawer.GetComponent<DrawerPullout>().pullingOut = false;
+            hasInteracted = false;
+
+            if (lastDrawer != null)
+            {
+                lastDrawer.GetComponent<DrawerPullout>().pullingOut = false;
+            }
         }
 
         if (numbersCollected.Count > codeCount)
@@ -59,7 +80,11 @@ public class InteractorMain : MonoBehaviour
     {
         if (hit[0].collider.gameObject.CompareTag("Button") && hit[0].collider.gameObject.GetComponent<ButtonStats>() != null)
         {
-            numbersCollected.Add(hit[0].collider.gameObject.GetComponent<ButtonStats>().buttonValue);
+            GameObject button = hit[0].collider.gameObject;
+            //Make button flash red.
+            
+            //Add nums to list
+            numbersCollected.Add(button.GetComponent<ButtonStats>().buttonValue);
             Debug.Log(numbersCollected[numbersCollected.Count - 1]);
         }
     }
