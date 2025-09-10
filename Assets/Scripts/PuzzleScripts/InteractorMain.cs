@@ -24,6 +24,11 @@ public class InteractorMain : MonoBehaviour
     void Start()
     {
         cam = Camera.main;
+
+        if (codeCount == 0)
+        {
+            codeCount = 3;
+        }
     }
 
     private void Awake()
