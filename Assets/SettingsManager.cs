@@ -4,8 +4,17 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 
-public class SettingsMenuManager : MonoBehaviour
+public class SettingsManager : MonoBehaviour
 {
+    public TMP_Dropdown graphicsDropdown;
+
+
+
+
+    public void ChangeGraphicsQuality()
+    {
+        QualitySettings.SetQualityLevel(graphicsDropdown.value);
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
