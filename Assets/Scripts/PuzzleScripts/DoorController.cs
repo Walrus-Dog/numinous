@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class DoorController : MonoBehaviour
 {
-    public enum doorTypes { codeDoor, itemDoor, puzzleDoor}
+    public enum doorTypes { codeDoor, itemDoor, puzzleDoor }
     public doorTypes doorType;
 
     public GameObject player;
@@ -16,10 +16,13 @@ public class DoorController : MonoBehaviour
 
     public float unlockTimer = 2.5f;
 
+    public bool interactToOpen = false;
+    public bool interacted = false;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -27,12 +30,13 @@ public class DoorController : MonoBehaviour
     {
         int trueCount = 0;
 
+
         //Different door types
-        switch (doorType) 
+        switch (doorType)
         {
             //If a code door
             case doorTypes.codeDoor:
-                if (player.GetComponent<InteractorMain>().numbersCollected.Count == code.Count) 
+                if (player.GetComponent<InteractorMain>().numbersCollected.Count == code.Count)
                 {
                     for (int i = 0; i < code.Count; i++)
                     {
@@ -66,7 +70,7 @@ public class DoorController : MonoBehaviour
                 break;
             //If a puzzle element door
             case doorTypes.puzzleDoor:
-                foreach (var element in puzzle) 
+                foreach (var element in puzzle)
                 {
                     if (element.gameObject.GetComponent<Button>().activeState == true)
                     {
@@ -79,18 +83,20 @@ public class DoorController : MonoBehaviour
                     }
                 }
                 break;
-
-
         }
+
     }
 
     void UnlockDoor()
     {
         unlockTimer -= Time.deltaTime;
 
-        if (unlockTimer < 0)
+        if (interactToOpen && interacted || !interactToOpen)
         {
-            OpenDoor();
+            if (unlockTimer < 0)
+            {
+                OpenDoor();
+            }
         }
     }
 

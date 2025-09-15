@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5115269801712852040}
   m_Layer: 0
   m_Name: Door
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,3 +128,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   puzzle: []
+  unlockTimer: 2.5
+  interactToOpen: 0
+  interacted: 0
