@@ -43,6 +43,7 @@ public class InteractorMain : MonoBehaviour
         //INPUT KEY IS E. 
         if (isTryingToInteract)
         {
+            Debug.Log(isTryingToInteract);
             //Cast a ray from center of camera that hits all objects infront of it.
             Ray ray = new Ray(cam.transform.position, cam.transform.forward);
             RaycastHit[] hit = Physics.RaycastAll(ray, 5f);
@@ -56,7 +57,8 @@ public class InteractorMain : MonoBehaviour
             HandlePickup(hit);
             //Handle Drawer. MUST BE TAGGED DRAWER
             HandleDrawer(hit);
-
+            //Handle Door. MUST BE TAGGED DOOR
+            HandleDoors(hit);
             hasInteracted = true;
         }
 
@@ -114,6 +116,18 @@ public class InteractorMain : MonoBehaviour
                 DrawerPullout drawer = hit[i].collider.gameObject.GetComponent<DrawerPullout>();
                 drawer.PulloutDrawer();
                 drawer.pullingOut = true;
+            }
+        }
+    }
+
+    void HandleDoors(RaycastHit[] hit)
+    {
+        for (int i = 0; i < hit.Length; i++)
+        {
+            if (hit[i].collider.gameObject.CompareTag("Door"))
+            {
+                DoorController door = hit[i].collider.gameObject.GetComponent<DoorController>();
+                door.interacted = true;
             }
         }
     }
