@@ -43,7 +43,6 @@ public class InteractorMain : MonoBehaviour
         //INPUT KEY IS E. 
         if (isTryingToInteract)
         {
-            Debug.Log(isTryingToInteract);
             //Cast a ray from center of camera that hits all objects infront of it.
             Ray ray = new Ray(cam.transform.position, cam.transform.forward);
             RaycastHit[] hit = Physics.RaycastAll(ray, 5f);
@@ -74,7 +73,9 @@ public class InteractorMain : MonoBehaviour
 
         if (numbersCollected.Count > codeCount)
         {
+            int lastNum = numbersCollected[numbersCollected.Count - 1];
             numbersCollected.Clear();
+            numbersCollected.Add(lastNum);
         }
     }
 
