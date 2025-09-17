@@ -19,6 +19,9 @@ public class DoorController : MonoBehaviour
     public bool interactToOpen = false;
     public bool interacted = false;
 
+    public AudioSource doorUnlocking;
+    bool unlockOnce = false;
+    public AudioSource doorOpening;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -94,6 +97,12 @@ public class DoorController : MonoBehaviour
     {
         unlockTimer -= Time.deltaTime;
 
+        if (!unlockOnce)
+        {
+            doorUnlocking.Play();
+            unlockOnce = true;
+        }
+
         if (interactToOpen && interacted || !interactToOpen)
         {
             if (unlockTimer < 0)
@@ -106,5 +115,10 @@ public class DoorController : MonoBehaviour
     void OpenDoor()
     {
         gameObject.transform.Translate(transform.up * 5 * Time.deltaTime);
+
+        if (!doorOpening.isPlaying)
+        {
+            doorOpening.Play();
+        }
     }
 }

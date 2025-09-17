@@ -20,6 +20,8 @@ public class InteractorMain : MonoBehaviour
 
     //So buttons arent held down.
     public bool hasInteracted = false;
+
+    public AudioSource interactAudio;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -50,6 +52,7 @@ public class InteractorMain : MonoBehaviour
             //Handle keypad. MUST BE TAGGED BUTTON
             if (!hasInteracted)
             {
+                interactAudio.Play();
                 HandleSequence(hit);
             }
             //Handle pickup. MUST BE TAGGED PICKUP
