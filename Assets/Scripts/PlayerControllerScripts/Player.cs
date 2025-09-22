@@ -142,6 +142,10 @@ public class Player : MonoBehaviour
             {
                 footstepSound.Play();
             }
+            if (!IsGrounded)
+            {
+                footstepSound.Stop();
+            }
         }
         else
         {

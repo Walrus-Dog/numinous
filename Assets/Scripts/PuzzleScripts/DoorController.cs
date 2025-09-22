@@ -2,17 +2,22 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using TMPro;
 
 public class DoorController : MonoBehaviour
 {
     public enum doorTypes { codeDoor, itemDoor, puzzleDoor }
     public doorTypes doorType;
 
+    public TextMeshProUGUI codeDisplay;
+
     public GameObject player;
 
     public List<int> code;
     public List<GameObject> item;
     public List<GameObject> puzzle;
+
+    bool hasOpened = false;
 
     public float unlockTimer = 2.5f;
 
@@ -25,15 +30,28 @@ public class DoorController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        //Find player
         if (player != null)
         {
             player = GameObject.FindGameObjectWithTag("Player");
+        }
+        //If door type code, display code to canvas
+        if (doorType == doorTypes.codeDoor)
+        {
+            string codeToDisplay = string.Empty;
+
+            for (int i = 0; i < code.Count; i++)
+            {
+                codeToDisplay += $"{code[i]}, ";
+            }
+            codeDisplay.text = codeToDisplay;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
+        //True count increments for each correct code/item/puzzle
         int trueCount = 0;
 
 
@@ -115,10 +133,11 @@ public class DoorController : MonoBehaviour
     void OpenDoor()
     {
         gameObject.transform.Translate(transform.up * 5 * Time.deltaTime);
-
-        if (!doorOpening.isPlaying)
+        
+        if (!hasOpened)
         {
             doorOpening.Play();
+            hasOpened = true;
         }
     }
 }
