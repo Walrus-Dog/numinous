@@ -42,7 +42,14 @@ public class DoorController : MonoBehaviour
 
             for (int i = 0; i < code.Count; i++)
             {
-                codeToDisplay += $"{code[i]}, ";
+                if (i < code.Count - 1)
+                {
+                    codeToDisplay += $"{code[i]}, ";
+                }
+                else
+                {
+                    codeToDisplay += code[i];
+                }
             }
             codeDisplay.text = codeToDisplay;
         }
