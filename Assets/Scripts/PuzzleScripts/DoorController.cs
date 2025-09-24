@@ -32,9 +32,15 @@ public class DoorController : MonoBehaviour
     //So door unlocking sound plays once
     bool unlockOnce = false;
     public AudioSource doorOpening;
+
+    //For closing the door
+    Vector2 originalPosition;
+    public AudioSource doorClosingSound;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        originalPosition = transform.position;
+
         //Find player
         if (player != null)
         {
@@ -152,5 +158,14 @@ public class DoorController : MonoBehaviour
             doorOpening.Play();
             hasOpened = true;
         }
+    }
+
+    void CloseDoor()
+    {
+        gameObject.transform.position = originalPosition;
+        if (!doorClosingSound.isPlaying)
+        {
+            doorClosingSound.Play();
+        }    
     }
 }
