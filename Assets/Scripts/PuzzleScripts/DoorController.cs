@@ -117,7 +117,8 @@ public class DoorController : MonoBehaviour
         }
 
     }
-
+    /
+    //Uncloked Door can be opened (automatically or by interacting)
     void UnlockDoor()
     {
         unlockTimer -= Time.deltaTime;
