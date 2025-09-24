@@ -52,7 +52,6 @@ public class InteractorMain : MonoBehaviour
             //Handle keypad. MUST BE TAGGED BUTTON
             if (!hasInteracted)
             {
-                interactAudio.Play();
                 HandleSequence(hit);
             }
             //Handle pickup. MUST BE TAGGED PICKUP
@@ -88,10 +87,15 @@ public class InteractorMain : MonoBehaviour
         {
             GameObject button = hit[0].collider.gameObject;
             //Make button flash red.
-            
+
             //Add nums to list
             numbersCollected.Add(button.GetComponent<ButtonStats>().buttonValue);
             Debug.Log(numbersCollected[numbersCollected.Count - 1]);
+
+
+
+            interactAudio.Play();
+
         }
     }
 
@@ -105,6 +109,11 @@ public class InteractorMain : MonoBehaviour
                 inventory.Add(hit[i].collider.gameObject);
                 //Move object below the map.
                 hit[i].transform.Translate(-1 * transform.up * 100);
+
+                if (!interactAudio.isPlaying)
+                {
+                    interactAudio.Play();
+                }
             }
         }
     }
@@ -120,6 +129,11 @@ public class InteractorMain : MonoBehaviour
                 DrawerPullout drawer = hit[i].collider.gameObject.GetComponent<DrawerPullout>();
                 drawer.PulloutDrawer();
                 drawer.pullingOut = true;
+
+                if (!interactAudio.isPlaying && !hasInteracted)
+                {
+                    interactAudio.Play();
+                }
             }
         }
     }
@@ -132,6 +146,11 @@ public class InteractorMain : MonoBehaviour
             {
                 DoorController door = hit[i].collider.gameObject.GetComponent<DoorController>();
                 door.interacted = true;
+
+                if (!interactAudio.isPlaying)
+                {
+                    interactAudio.Play();
+                }
             }
         }
     }

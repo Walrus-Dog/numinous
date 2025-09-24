@@ -6,6 +6,7 @@ using TMPro;
 
 public class DoorController : MonoBehaviour
 {
+    //What is required to open the door
     public enum doorTypes { codeDoor, itemDoor, puzzleDoor }
     public doorTypes doorType;
 
@@ -13,18 +14,22 @@ public class DoorController : MonoBehaviour
 
     public GameObject player;
 
+    //What Items are needed to open door (set by doorTypes)
     public List<int> code;
     public List<GameObject> item;
     public List<GameObject> puzzle;
 
     bool hasOpened = false;
 
+    //How long till door unlocks after having fufilled the requirments
     public float unlockTimer = 2.5f;
 
+    //Interact with door to open bools
     public bool interactToOpen = false;
     public bool interacted = false;
 
     public AudioSource doorUnlocking;
+    //So door unlocking sound plays once
     bool unlockOnce = false;
     public AudioSource doorOpening;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -117,7 +122,7 @@ public class DoorController : MonoBehaviour
         }
 
     }
-    /
+    
     //Uncloked Door can be opened (automatically or by interacting)
     void UnlockDoor()
     {
