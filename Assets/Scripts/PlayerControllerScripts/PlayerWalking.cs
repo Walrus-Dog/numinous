@@ -81,6 +81,7 @@ public class PlayerWalking : PlayerState
         bool isOrWasTryingToJump = tryingToJump || (wasTryingToJump && player.IsGrounded);
         bool isOrWasGrounded = player.IsGrounded || wasGrounded;
 
+        //PLAY JUMP AUDIO
         if (isOrWasTryingToJump && isOrWasGrounded)
         {
             player.velocity.y += jumpSpeed;

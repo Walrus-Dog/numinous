@@ -8,7 +8,7 @@ public class InteractorMain : MonoBehaviour
     Camera cam;
     //Inventory
     public List<GameObject> inventory = new List<GameObject>();
-    //List of numbers collected. CREATE WAY TO CLEAR THIS VALUE.
+    //List of numbers collected.
     public List<int> numbersCollected = new List<int>();
 
     public int codeCount;
