@@ -83,6 +83,11 @@ public class InteractorMain : MonoBehaviour
 
     void HandleSequence(RaycastHit[] hit)
     {
+        for (int i = 0; i < hit.Length; i++)
+        {
+            Debug.Log(hit[i].collider.gameObject.name);
+        }
+
         if (hit[0].collider.gameObject.CompareTag("Button") && hit[0].collider.gameObject.GetComponent<ButtonStats>() != null)
         {
             GameObject button = hit[0].collider.gameObject;
