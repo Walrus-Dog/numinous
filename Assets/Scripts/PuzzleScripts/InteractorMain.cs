@@ -86,21 +86,20 @@ public class InteractorMain : MonoBehaviour
         for (int i = 0; i < hit.Length; i++)
         {
             Debug.Log(hit[i].collider.gameObject.name);
-        }
+            
+            if (hit[i].collider.gameObject.CompareTag("Button") && hit[i].collider.gameObject.GetComponent<ButtonStats>() != null)
+            {
+                GameObject button = hit[i].collider.gameObject;
+                //Make button flash red.
 
-        if (hit[0].collider.gameObject.CompareTag("Button") && hit[0].collider.gameObject.GetComponent<ButtonStats>() != null)
-        {
-            GameObject button = hit[0].collider.gameObject;
-            //Make button flash red.
+                //Add nums to list
+                numbersCollected.Add(button.GetComponent<ButtonStats>().buttonValue);
+                Debug.Log(numbersCollected[numbersCollected.Count - 1]);
 
-            //Add nums to list
-            numbersCollected.Add(button.GetComponent<ButtonStats>().buttonValue);
-            Debug.Log(numbersCollected[numbersCollected.Count - 1]);
+                interactAudio.Play();
 
-
-
-            interactAudio.Play();
-
+                break;
+            }
         }
     }
 
