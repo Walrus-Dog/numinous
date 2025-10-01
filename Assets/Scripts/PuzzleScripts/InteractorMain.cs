@@ -20,6 +20,8 @@ public class InteractorMain : MonoBehaviour
 
     //So buttons arent held down.
     public bool hasInteracted = false;
+
+    public AudioSource interactAudio;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -56,7 +58,8 @@ public class InteractorMain : MonoBehaviour
             HandlePickup(hit);
             //Handle Drawer. MUST BE TAGGED DRAWER
             HandleDrawer(hit);
-
+            //Handle Door. MUST BE TAGGED DOOR
+            HandleDoors(hit);
             hasInteracted = true;
         }
 
@@ -72,7 +75,9 @@ public class InteractorMain : MonoBehaviour
 
         if (numbersCollected.Count > codeCount)
         {
+            int lastNum = numbersCollected[numbersCollected.Count - 1];
             numbersCollected.Clear();
+            numbersCollected.Add(lastNum);
         }
     }
 
@@ -82,10 +87,15 @@ public class InteractorMain : MonoBehaviour
         {
             GameObject button = hit[0].collider.gameObject;
             //Make button flash red.
-            
+
             //Add nums to list
             numbersCollected.Add(button.GetComponent<ButtonStats>().buttonValue);
             Debug.Log(numbersCollected[numbersCollected.Count - 1]);
+
+
+
+            interactAudio.Play();
+
         }
     }
 
@@ -99,6 +109,11 @@ public class InteractorMain : MonoBehaviour
                 inventory.Add(hit[i].collider.gameObject);
                 //Move object below the map.
                 hit[i].transform.Translate(-1 * transform.up * 100);
+
+                if (!interactAudio.isPlaying)
+                {
+                    interactAudio.Play();
+                }
             }
         }
     }
@@ -114,6 +129,28 @@ public class InteractorMain : MonoBehaviour
                 DrawerPullout drawer = hit[i].collider.gameObject.GetComponent<DrawerPullout>();
                 drawer.PulloutDrawer();
                 drawer.pullingOut = true;
+
+                if (!interactAudio.isPlaying && !hasInteracted)
+                {
+                    interactAudio.Play();
+                }
+            }
+        }
+    }
+
+    void HandleDoors(RaycastHit[] hit)
+    {
+        for (int i = 0; i < hit.Length; i++)
+        {
+            if (hit[i].collider.gameObject.CompareTag("Door"))
+            {
+                DoorController door = hit[i].collider.gameObject.GetComponent<DoorController>();
+                door.interacted = true;
+
+                if (!interactAudio.isPlaying)
+                {
+                    interactAudio.Play();
+                }
             }
         }
     }

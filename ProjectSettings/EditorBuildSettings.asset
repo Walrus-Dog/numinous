@@ -6,10 +6,24 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+<<<<<<< HEAD
     path: Assets/Scenes/MainMenu.unity
     guid: a5944d12953586945b8d9523778ca8bb
   - enabled: 1
     path: Assets/Scenes/PauseMenu.unity
     guid: 1cdf92d5e524cc04e95be4b21c35a9f3
+=======
+    path: Assets/Scenes/LevelHub.unity
+    guid: c3269c09ba262ea4faea67aefef99b4d
+  - enabled: 1
+    path: Assets/Scenes/Level1.unity
+    guid: fd881d2e8a5e5ec489927b74013b6b26
+  - enabled: 1
+    path: Assets/Scenes/Level2.unity
+    guid: 1390b27adf6611c45b1514d59263a209
+  - enabled: 1
+    path: Assets/Scenes/Level3.unity
+    guid: 1804f55b4cb5c8045b8eda6f2605627a
+>>>>>>> menutest
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0

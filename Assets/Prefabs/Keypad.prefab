@@ -745,6 +745,7 @@ GameObject:
   - component: {fileID: 5028232017002585128}
   - component: {fileID: 8586801375558058605}
   - component: {fileID: 5275595931020420510}
+  - component: {fileID: 6352238678234170335}
   m_Layer: 0
   m_Name: PlayerButton (7)
   m_TagString: Button
@@ -854,6 +855,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   buttonValue: 3
+--- !u!95 &6352238678234170335
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5151922760751723510}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5902915743771367241
 GameObject:
   m_ObjectHideFlags: 0
