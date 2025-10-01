@@ -149,12 +149,14 @@ public class InteractorMain : MonoBehaviour
             if (hit[i].collider.gameObject.CompareTag("Door"))
             {
                 DoorController door = hit[i].collider.gameObject.GetComponent<DoorController>();
-                door.interacted = true;
+                
+                    door.interacted = true;
 
-                if (!interactAudio.isPlaying)
-                {
-                    interactAudio.Play();
-                }
+                    if (!interactAudio.isPlaying)
+                    {
+                        interactAudio.Play();
+                    }
+                
             }
         }
     }

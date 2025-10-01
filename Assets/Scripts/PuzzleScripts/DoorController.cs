@@ -27,6 +27,8 @@ public class DoorController : MonoBehaviour
     //Interact with door to open bools
     public bool interactToOpen = false;
     public bool interacted = false;
+    public float interactTimer = .1f;
+
 
     public AudioSource doorUnlocking;
     //So door unlocking sound plays once
@@ -36,6 +38,7 @@ public class DoorController : MonoBehaviour
     //For closing the door
     Vector2 originalPosition;
     public AudioSource doorClosingSound;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -64,6 +67,8 @@ public class DoorController : MonoBehaviour
             }
             codeDisplay.text = codeToDisplay;
         }
+
+        
     }
 
     // Update is called once per frame
@@ -125,6 +130,17 @@ public class DoorController : MonoBehaviour
                     }
                 }
                 break;
+        }
+
+        //BAD BUG FIX
+        if (interacted && !hasOpened)
+        {
+            interactTimer -= Time.deltaTime;
+            if (interactTimer < 0)
+            {
+                interacted = false;
+                interactTimer = .1f;
+            }
         }
 
     }
