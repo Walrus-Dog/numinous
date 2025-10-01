@@ -23,6 +23,8 @@ public class PlayerWalking : PlayerState
     InputAction jumpAction;
     InputAction crouchAction;
 
+    public AudioSource jumpSound;
+
     public override void Awake()
     {
         base.Awake();
@@ -82,6 +84,11 @@ public class PlayerWalking : PlayerState
         if (isOrWasTryingToJump && isOrWasGrounded)
         {
             player.velocity.y += jumpSpeed;
+
+            if (!jumpSound.isPlaying)
+            {
+                jumpSound.Play();
+            }
         }
         tryingToJump = false;
     }

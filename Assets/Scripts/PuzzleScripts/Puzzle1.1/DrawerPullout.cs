@@ -16,6 +16,8 @@ public class DrawerPullout : Button
     public float targetPull = .5f;
     [Tooltip("The range that the player sould be in.")]
     public float targetRange;
+
+    public AudioSource drawerSound;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -49,6 +51,15 @@ public class DrawerPullout : Button
         {
             pulloutAmount = 1f;
         }
+
+        if (pulloutAmount > 0f && pulloutAmount < 1)
+        {
+            if (!drawerSound.isPlaying)
+            {
+                drawerSound.Play();
+            }
+        }
+
         //Pullout speed equation.
         pulloutSpeed = (Mathf.Abs(targetPull - pulloutAmount) * Time.deltaTime) * speedMultiplier;
         //Set pullout speed to minimum speed.

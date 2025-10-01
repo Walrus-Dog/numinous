@@ -48,6 +48,8 @@ public class Player : MonoBehaviour
     InputAction flyUpDownAction;
     InputAction interactAction;
 
+    public AudioSource footstepSound;
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -133,6 +135,22 @@ public class Player : MonoBehaviour
     {
         var moveInput = moveAction.ReadValue<Vector2>();
         var flyUpDownInput = flyUpDownAction.ReadValue<float>();
+
+        if (moveInput != Vector2.zero)
+        {
+            if (!footstepSound.isPlaying)
+            {
+                footstepSound.Play();
+            }
+            if (!IsGrounded)
+            {
+                footstepSound.Stop();
+            }
+        }
+        else
+        {
+            footstepSound.Stop();
+        }
 
         var input = new Vector3();
         var referenceTransform = horizontal ? transform : cameraTransform;

@@ -15,9 +15,9 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
   m_Fog: 1
-  m_FogColor: {r: 0.24705882, g: 0.27058825, b: 0.3529412, a: 1}
+  m_FogColor: {r: 0.10946953, g: 0.11179695, b: 0.11320752, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.02
+  m_FogDensity: 0.05
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.24476877, g: 0.26932475, b: 0.35220122, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: dd742e250e47ff84e9bcbfc72017bdf1, type: 2}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 112cd63f1c6fa3d468b5fe3eef1f548f, type: 2}
   m_HaloStrength: 1
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -685,6 +685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ffd565148079d6e489a3da6c2cd7245b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delayTime: 2
 --- !u!1 &1090764156 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 61ec234a40f7e944985033865f132ad5, type: 3}
@@ -1066,7 +1067,7 @@ GameObject:
   - component: {fileID: 2046231207}
   - component: {fileID: 2046231206}
   m_Layer: 0
-  m_Name: Level2 Scene Transition (1)
+  m_Name: 'Level2 Scene Transition '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1132,7 +1133,7 @@ GameObject:
   - component: {fileID: 2102416104}
   - component: {fileID: 2102416103}
   m_Layer: 0
-  m_Name: Level3 Scene Transition (2)
+  m_Name: 'Level3 Scene Transition '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
