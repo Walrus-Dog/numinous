@@ -128,6 +128,10 @@ public class InteractorMain : MonoBehaviour
         {
             if (hit[i].collider.gameObject.CompareTag("Drawer"))
             {
+                if (lastDrawer != hit[i].collider.gameObject && lastDrawer != null)
+                {
+                    lastDrawer.GetComponent<DrawerPullout>().pullingOut = false;
+                }
                 //Set the last drawer intereracted with (so you set pullingOut to false)
                 lastDrawer = hit[i].collider.gameObject;
                 DrawerPullout drawer = hit[i].collider.gameObject.GetComponent<DrawerPullout>();
