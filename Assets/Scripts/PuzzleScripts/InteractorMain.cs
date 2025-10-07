@@ -86,7 +86,7 @@ public class InteractorMain : MonoBehaviour
         for (int i = 0; i < hit.Length; i++)
         {
             Debug.Log(hit[i].collider.gameObject.name);
-            
+
             if (hit[i].collider.gameObject.CompareTag("Button") && hit[i].collider.gameObject.GetComponent<ButtonStats>() != null)
             {
                 GameObject button = hit[i].collider.gameObject;
@@ -128,6 +128,7 @@ public class InteractorMain : MonoBehaviour
         {
             if (hit[i].collider.gameObject.CompareTag("Drawer"))
             {
+                //Prevents "Last drawer" from changing without pushing drawer in.
                 if (lastDrawer != hit[i].collider.gameObject && lastDrawer != null)
                 {
                     lastDrawer.GetComponent<DrawerPullout>().pullingOut = false;
@@ -153,14 +154,14 @@ public class InteractorMain : MonoBehaviour
             if (hit[i].collider.gameObject.CompareTag("Door"))
             {
                 DoorController door = hit[i].collider.gameObject.GetComponent<DoorController>();
-                
-                    door.interacted = true;
 
-                    if (!interactAudio.isPlaying)
-                    {
-                        interactAudio.Play();
-                    }
-                
+                door.interacted = true;
+
+                if (!interactAudio.isPlaying)
+                {
+                    interactAudio.Play();
+                }
+
             }
         }
     }

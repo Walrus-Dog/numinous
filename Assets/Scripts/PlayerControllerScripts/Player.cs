@@ -36,7 +36,7 @@ public class Player : MonoBehaviour
     public CharacterController controller;
     public Vector3 velocity;
     public Vector3 initialCameraPosition;
-    Vector2 look;
+    public Vector2 look;
 
     (Vector3, Quaternion) initialPositionAndRotation;
 
@@ -77,12 +77,12 @@ public class Player : MonoBehaviour
         standingHeight = Height;
     }
 
-    public void Teleport(Vector3 position, Quaternion rotation) 
+    public void Teleport(Vector3 position) 
     { 
         transform.position = position;
         Physics.SyncTransforms();
-        look.x = rotation.eulerAngles.y;
-        look.y = rotation.eulerAngles.z;
+        //look.x = rotation.eulerAngles.y;
+        //look.y = rotation.eulerAngles.z;
         velocity = Vector3.zero;
     }
 
@@ -112,7 +112,7 @@ public class Player : MonoBehaviour
         if (transform.position.y < worldBottomBoundary)
         {
             var (position, rotation) = initialPositionAndRotation;
-            Teleport(position, rotation);
+            Teleport(position);
         }
     }
 

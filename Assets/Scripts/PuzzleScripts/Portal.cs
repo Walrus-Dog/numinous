@@ -8,7 +8,7 @@ public class Portal : MonoBehaviour
     {
         if(other.CompareTag("Player") && other.TryGetComponent<Player>(out var player))
         {
-            player.Teleport(destination.position, destination.rotation);
+            player.Teleport(destination.position);
         }
     }
 
