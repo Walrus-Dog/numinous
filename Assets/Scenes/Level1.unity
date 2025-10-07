@@ -737,6 +737,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5115269801712852040, guid: 1242586ae4aa9a549bae1d5872beda8f, type: 3}
+      propertyPath: randCode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5115269801712852040, guid: 1242586ae4aa9a549bae1d5872beda8f, type: 3}
       propertyPath: codeDisplay
       value: 
       objectReference: {fileID: 298793593}

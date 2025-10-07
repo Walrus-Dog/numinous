@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using TMPro;
+using UnityEditor.Rendering;
 
 public class DoorController : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class DoorController : MonoBehaviour
 
     //What Items are needed to open door (set by doorTypes)
     public List<int> code;
+    public bool randCode;
     public List<GameObject> item;
     public List<GameObject> puzzle;
 
@@ -43,6 +45,15 @@ public class DoorController : MonoBehaviour
     void Start()
     {
         originalPosition = transform.position;
+
+        //Set Random Code
+        if (randCode)
+        {
+            for (int i = 0; i < code.Count; i++)
+            {
+                code[i] = Random.Range(1, 4);
+            }
+        }
 
         //Find player
         if (player != null)
@@ -132,7 +143,7 @@ public class DoorController : MonoBehaviour
                 break;
         }
 
-        //BAD BUG FIX
+        //BUG FIX
         if (interacted && !hasOpened)
         {
             interactTimer -= Time.deltaTime;
