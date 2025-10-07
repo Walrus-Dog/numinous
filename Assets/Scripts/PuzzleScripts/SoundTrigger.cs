@@ -10,8 +10,11 @@ public class SoundTrigger : MonoBehaviour
     {
         if (playOnce && !hasPlayed || !playOnce)
         {
-            soundToPlay.Play();
-            hasPlayed = true;
+            if (!soundToPlay.isPlaying)
+            {
+                soundToPlay.Play();
+                hasPlayed = true;
+            }
         }
     }
 }
