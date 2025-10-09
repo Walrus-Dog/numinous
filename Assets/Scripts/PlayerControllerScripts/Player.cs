@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] float acceleration = 20f;
     [SerializeField] float worldBottomBoundary = -100f;
     [SerializeField] float cameraTransitionSpeed = 10f;
+    [SerializeField] float gravityMultiplier = 1f;
 
     public Transform cameraTransform;
 
@@ -127,7 +128,7 @@ public class Player : MonoBehaviour
 
     public void UpdateGravity()
     {
-        var gravity = Physics.gravity * mass * Time.deltaTime;
+        var gravity = Physics.gravity * mass * Time.deltaTime * gravityMultiplier;
         velocity.y = controller.isGrounded ? -1f : velocity.y + gravity.y;
     }
 
