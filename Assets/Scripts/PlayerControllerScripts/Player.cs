@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
 
         moveAction = playerInput.actions["move"];
         lookAction = playerInput.actions["look"];
-        flyUpDownAction = playerInput.actions["flyUpDown"];
+        //flyUpDownAction = playerInput.actions["flyUpDown"];
         interactAction = playerInput.actions["interact"];
 
         currentPlayerState = playerWalking;
@@ -135,7 +135,7 @@ public class Player : MonoBehaviour
     public Vector3 GetMovementInput(float speed, bool horizontal = true)
     {
         var moveInput = moveAction.ReadValue<Vector2>();
-        var flyUpDownInput = flyUpDownAction.ReadValue<float>();
+        //var flyUpDownInput = flyUpDownAction.ReadValue<float>();
 
         if (moveInput != Vector2.zero)
         {
@@ -159,10 +159,10 @@ public class Player : MonoBehaviour
         input += referenceTransform.forward * moveInput.y;
         input += referenceTransform.right * moveInput.x;
 
-        if (!horizontal)
-        {
-            input += transform.up * flyUpDownInput;
-        }
+        //if (!horizontal)
+        //{
+        //    input += transform.up * flyUpDownInput;
+        //}
 
         input = Vector3.ClampMagnitude(input, 1f);
         input *= speed * movementSpeedMutliplier;
