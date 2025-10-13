@@ -1,4 +1,6 @@
+using Mono.Cecil.Cil;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +12,7 @@ public class InteractorMain : MonoBehaviour
     public List<GameObject> inventory = new List<GameObject>();
     //List of numbers collected.
     public List<int> numbersCollected = new List<int>();
+    public TextMeshProUGUI CodeDisplay;
 
     public int codeCount;
 
@@ -78,6 +81,29 @@ public class InteractorMain : MonoBehaviour
             int lastNum = numbersCollected[numbersCollected.Count - 1];
             numbersCollected.Clear();
             numbersCollected.Add(lastNum);
+        }
+
+        //Display code
+        if (numbersCollected.Count != 0)
+        {
+            string codeToDisplay = string.Empty;
+
+            for (int i = 0; i < numbersCollected.Count; i++)
+            {
+                if (i < numbersCollected.Count - 1)
+                {
+                    codeToDisplay += $"{numbersCollected[i]}, ";
+                }
+                else
+                {
+                    codeToDisplay += numbersCollected[i];
+                }
+            }
+            CodeDisplay.text = codeToDisplay;
+        }
+        else
+        {
+            CodeDisplay.text = string.Empty;
         }
     }
 

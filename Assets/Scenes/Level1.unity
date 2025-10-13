@@ -4587,11 +4587,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1863796095179949405, guid: ae88684721a5014418c49ff59ddfbc3c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -2.9699998
+      value: -2.01
       objectReference: {fileID: 0}
     - target: {fileID: 1863796095179949405, guid: ae88684721a5014418c49ff59ddfbc3c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.86099994
+      value: 1.495
       objectReference: {fileID: 0}
     - target: {fileID: 1863796095179949405, guid: ae88684721a5014418c49ff59ddfbc3c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -4621,6 +4621,18 @@ PrefabInstance:
       value: 325.2
       objectReference: {fileID: 0}
     - target: {fileID: 4397657861656596165, guid: ae88684721a5014418c49ff59ddfbc3c, type: 3}
+      propertyPath: m_margin.w
+      value: 417.49228
+      objectReference: {fileID: 0}
+    - target: {fileID: 4397657861656596165, guid: ae88684721a5014418c49ff59ddfbc3c, type: 3}
+      propertyPath: m_margin.x
+      value: 505.49066
+      objectReference: {fileID: 0}
+    - target: {fileID: 4397657861656596165, guid: ae88684721a5014418c49ff59ddfbc3c, type: 3}
+      propertyPath: m_margin.z
+      value: -528.4542
+      objectReference: {fileID: 0}
+    - target: {fileID: 4397657861656596165, guid: ae88684721a5014418c49ff59ddfbc3c, type: 3}
       propertyPath: m_fontSizeBase
       value: 325.2
       objectReference: {fileID: 0}
@@ -4642,11 +4654,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7445501236299547871, guid: ae88684721a5014418c49ff59ddfbc3c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0.000061035
+      value: -524
       objectReference: {fileID: 0}
     - target: {fileID: 7445501236299547871, guid: ae88684721a5014418c49ff59ddfbc3c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -425
       objectReference: {fileID: 0}
     - target: {fileID: 7931739242563444387, guid: ae88684721a5014418c49ff59ddfbc3c, type: 3}
       propertyPath: m_PresetInfoIsWorld
