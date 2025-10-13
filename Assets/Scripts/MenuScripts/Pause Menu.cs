@@ -7,13 +7,15 @@ public class PauseMenu : MonoBehaviour
     public static bool Paused = false;
     public GameObject PauseMenuScreen;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    //--timescale pauses game--
+
     void Start()
     {
         Time.timeScale = 1f;
     }
 
-    // Update is called once per frame
+   //--escape key pauses/starts game--
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -44,6 +46,9 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         Paused = false;
     }
+
+    //--LOADS SCENE BY SUBTRACTING 1 IN BUILD INDEX! (E.g. PauseMenu (1) -> Quit -> Subtracts 1 -> Main Menu (0))
+    //--Will NOT work if the PauseMenu is not behind the Main Menu!!--
 
     public void QuitButton()
     {
