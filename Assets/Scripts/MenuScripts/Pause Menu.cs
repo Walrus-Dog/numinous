@@ -2,11 +2,14 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.LowLevel;
 public class PauseMenu : MonoBehaviour
 {
     public static bool Paused = false;
     public GameObject PauseMenuScreen;
-
+    InputSystem_Actions Actions;
+    bool inputRead;
     //--timescale pauses game--
 
     void Start()
@@ -18,18 +21,24 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+
+        var pauseInput = Actions.UI.Pause.ReadValue<float>() > 0;
+        if (pauseInput && !inputRead)
         {
             if (Paused)
             {
-
-
+                inputRead = true;
                 Play();
             }
             else
             {
+                inputRead = true;
                 Stop();
             }
+        }
+        else
+        {
+            inputRead = false;
         }
     }
 
@@ -53,6 +62,17 @@ public class PauseMenu : MonoBehaviour
     public void QuitButton()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
+    private void OnEnable()
+    {
+        Actions = new InputSystem_Actions();
+        Actions.UI.Pause.Enable();
+    }
+
+    private void OnDisable()
+    {
+        Actions.UI.Pause.Disable();
     }
 
 }
