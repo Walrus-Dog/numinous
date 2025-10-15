@@ -41,6 +41,8 @@ public class DoorController : MonoBehaviour
     Vector2 originalPosition;
     public AudioSource doorClosingSound;
 
+    public int minCodeNum = 1;
+    public int maxCodeNum = 4;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -51,7 +53,7 @@ public class DoorController : MonoBehaviour
         {
             for (int i = 0; i < code.Count; i++)
             {
-                code[i] = Random.Range(1, 4);
+                code[i] = Random.Range(minCodeNum, maxCodeNum);
             }
         }
 
