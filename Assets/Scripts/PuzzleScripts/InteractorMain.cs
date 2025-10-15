@@ -25,10 +25,16 @@ public class InteractorMain : MonoBehaviour
     public bool hasInteracted = false;
 
     public AudioSource interactAudio;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        // Find the main camera safely
         cam = Camera.main;
+        if (cam == null)
+        {
+            Debug.LogWarning("InteractorMain: No Main Camera found in scene!");
+        }
 
         if (codeCount == 0)
         {
@@ -38,13 +44,33 @@ public class InteractorMain : MonoBehaviour
 
     private void Awake()
     {
-        interactAction = playerInput.actions["Interact"];
+        // FIX: find PlayerInput if not assigned in the Inspector
+        if (playerInput == null)
+        {
+            playerInput = GetComponent<PlayerInput>();
+            if (playerInput == null)
+                playerInput = FindFirstObjectByType<PlayerInput>(); 
+        }
+
+        if (playerInput != null)
+        {
+            interactAction = playerInput.actions["Interact"];
+        }
+        else
+        {
+            Debug.LogWarning("InteractorMainScript: No PlayerInput found. assign one in the inspector.", this);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        // FIX: Don't run when game is paused or missing input/camera
+        if (PauseMenu.Paused) return;
+        if (playerInput == null || interactAction == null || cam == null) return;
+
         var isTryingToInteract = interactAction.ReadValue<float>() > 0;
+
         //INPUT KEY IS E. 
         if (isTryingToInteract)
         {
