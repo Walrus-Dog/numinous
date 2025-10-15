@@ -2793,6 +2793,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 453096411}
   m_CullTransparentMesh: 1
+--- !u!1 &453920169
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 453920170}
+  - component: {fileID: 453920172}
+  - component: {fileID: 453920171}
+  m_Layer: 5
+  m_Name: UIBrightnessOverlay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &453920170
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 453920169}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 10.405951, y: 6.97712, z: 4.9952}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1911794212}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 5, y: -17}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &453920171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 453920169}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.3137255}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &453920172
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 453920169}
+  m_CullTransparentMesh: 1
 --- !u!1 &454644829
 GameObject:
   m_ObjectHideFlags: 0
@@ -2913,6 +2988,8 @@ MonoBehaviour:
   sfxVol: {fileID: 996239610}
   vibrateToggle: {fileID: 919938440}
   MainMixer: {fileID: 24100000, guid: 23c79154fc5129242ad1dd177c67712f, type: 2}
+  brightnessSlider: {fileID: 0}
+  uiOverlay: {fileID: 0}
 --- !u!114 &476434685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3579,7 +3656,7 @@ GameObject:
   - component: {fileID: 687284102}
   - component: {fileID: 687284101}
   m_Layer: 0
-  m_Name: UIBrightnessOverlay
+  m_Name: SettingsMenuScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4248,6 +4325,55 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 28}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!1 &864017735
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 864017737}
+  - component: {fileID: 864017736}
+  m_Layer: 0
+  m_Name: Global Volume
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &864017736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864017735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IsGlobal: 1
+  priority: 0
+  blendDistance: 0
+  weight: 1
+  sharedProfile: {fileID: 11400000, guid: 10fc4df2da32a41aaa32d77bc913491c, type: 2}
+--- !u!4 &864017737
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864017735}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 333.85913, y: 204.23697, z: 297.9126}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &872051783
 GameObject:
   m_ObjectHideFlags: 0
@@ -4394,6 +4520,7 @@ GameObject:
   m_Component:
   - component: {fileID: 902116709}
   - component: {fileID: 902116708}
+  - component: {fileID: 902116710}
   m_Layer: 0
   m_Name: MenuManager
   m_TagString: Untagged
@@ -4433,6 +4560,26 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &902116710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 902116707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c79fb3c0164185d4b8be52beebe75a5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  graphicsDropdown: {fileID: 0}
+  masterVol: {fileID: 0}
+  musicVol: {fileID: 0}
+  sfxVol: {fileID: 0}
+  vibrateToggle: {fileID: 0}
+  MainMixer: {fileID: 24100000, guid: 23c79154fc5129242ad1dd177c67712f, type: 2}
+  brightnessSlider: {fileID: 0}
+  uiOverlay: {fileID: 0}
 --- !u!1 &911676372
 GameObject:
   m_ObjectHideFlags: 0
@@ -9411,6 +9558,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1893004955}
   m_CullTransparentMesh: 1
+--- !u!224 &1911794212 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 9197215908643287576, guid: f55f2ff9d1c902c4fa550e5500bc340f, type: 3}
+  m_PrefabInstance: {fileID: 2078911116}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1916415296
 GameObject:
   m_ObjectHideFlags: 0
@@ -10339,10 +10491,17 @@ PrefabInstance:
       propertyPath: m_ActionEvents.Array.data[18].m_ActionName
       value: UI/TrackedDeviceOrientation
       objectReference: {fileID: 0}
+    - target: {fileID: 9171278551872598047, guid: f55f2ff9d1c902c4fa550e5500bc340f, type: 3}
+      propertyPath: CodeDisplay
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3769850643043306931, guid: f55f2ff9d1c902c4fa550e5500bc340f, type: 3}
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 9197215908643287576, guid: f55f2ff9d1c902c4fa550e5500bc340f, type: 3}
+      insertIndex: 0
+      addedObject: {fileID: 453920170}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f55f2ff9d1c902c4fa550e5500bc340f, type: 3}
 --- !u!1 &2088993481
@@ -11135,3 +11294,4 @@ SceneRoots:
   - {fileID: 1585336093}
   - {fileID: 1359502946}
   - {fileID: 902116709}
+  - {fileID: 864017737}
