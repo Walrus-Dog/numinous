@@ -72,26 +72,32 @@ public class Player : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        initialPositionAndRotation = (transform.position, transform.rotation);
+        Cursor.visible = false;
 
+        initialPositionAndRotation = (transform.position, transform.rotation);
         initialCameraPosition = cameraTransform.localPosition;
         standingHeight = Height;
     }
 
-    public void Teleport(Vector3 position) 
-    { 
+    void Update()
+    {
+        // pause game
+        if (global::PauseMenu.Paused)
+            return;
+
+        movementSpeedMutliplier = 1f;
+
+        UpdateMovement();
+        UpdateLook();
+    }
+
+    public void Teleport(Vector3 position)
+    {
         transform.position = position;
         Physics.SyncTransforms();
         //look.x = rotation.eulerAngles.y;
         //look.y = rotation.eulerAngles.z;
         velocity = Vector3.zero;
-    }
-
-    void Update()
-    {
-        movementSpeedMutliplier = 1f;
-
-        UpdateMovement();
     }
 
     public void UpDateCameraPosition(float targetHeight)
@@ -176,7 +182,7 @@ public class Player : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
     }
 
-    public void MoveHorizontal ()
+    public void MoveHorizontal()
     {
         var input = GetMovementInput(walkingSpeed);
 
@@ -202,7 +208,7 @@ public class Player : MonoBehaviour
         if (currentPlayerState == playerWalking)
         {
             currentPlayerState = playerFlying;
-        } 
+        }
         else
         {
             currentPlayerState = playerWalking;
@@ -222,5 +228,4 @@ public class Player : MonoBehaviour
     {
         currentPlayerState = playerWalking;
     }
-
 }
