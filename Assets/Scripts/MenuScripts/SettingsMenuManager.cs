@@ -23,20 +23,27 @@ public class SettingsMenuManager : MonoBehaviour
     [SerializeField] private Slider brightnessSlider;
     [SerializeField] private Image uiOverlay;
 
+    [Header("Controls")]
+    [SerializeField] private Slider sensitivitySlider;
+
     private Volume globalVolume;
     private ColorAdjustments colorAdjustments;
+
     private const string BrightnessKey = "BrightnessValue";
+    private const string SensitivityKey = "MouseSensitivity";
 
     void Start()
     {
         InitializeSettings();
         InitializeBrightness();
+
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         InitializeBrightness();
+        ApplySavedSensitivity(); // reapply on scene load if new Player spawns
     }
 
     // === INITIALIZATION ===
@@ -62,36 +69,59 @@ public class SettingsMenuManager : MonoBehaviour
         vibrateToggle.isOn = vibrateValue;
         isVibrate = vibrateValue;
 
+        // === SENSITIVITY ===
+        float savedSensitivity = PlayerPrefs.GetFloat(SensitivityKey, 1f);
+        if (sensitivitySlider == null)
+            sensitivitySlider = GameObject.Find("SensitivitySlider")?.GetComponent<Slider>();
+
+        if (sensitivitySlider != null)
+        {
+            sensitivitySlider.minValue = 0.1f;
+            sensitivitySlider.maxValue = 2.0f;
+            sensitivitySlider.value = savedSensitivity;
+            sensitivitySlider.onValueChanged.RemoveAllListeners();
+            sensitivitySlider.onValueChanged.AddListener(delegate { ChangeSensitivity(); });
+        }
+
         // === ADD EVENT LISTENERS ===
         graphicsDropdown.onValueChanged.AddListener(delegate { ChangeGraphicsQuality(); });
         masterVol.onValueChanged.AddListener(delegate { ChangeMasterVolume(); });
         musicVol.onValueChanged.AddListener(delegate { ChangeMusicVolume(); });
         sfxVol.onValueChanged.AddListener(delegate { ChangeSFXVolume(); });
         vibrateToggle.onValueChanged.AddListener(delegate { ChangeVibrate(); });
+
+        // Apply saved sensitivity to player 
+        ApplySavedSensitivity();
     }
 
-    // === BRIGHTNESS INITIALIZATION ===
     private void InitializeBrightness()
     {
-        // 1. Load saved brightness before applying visuals
-        float savedBrightness = PlayerPrefs.GetFloat(BrightnessKey, 0f);
-
-        // 2. Find Global Volume and Color Adjustments
+        // 1. Find Global Volume in the active scene
         globalVolume = Object.FindFirstObjectByType<Volume>();
-        if (globalVolume != null && globalVolume.profile.TryGet(out colorAdjustments))
+        if (globalVolume == null)
         {
-            // Apply immediately before the first frame renders
-            colorAdjustments.postExposure.value = savedBrightness;
+            Debug.LogWarning("No Global Volume found in scene!");
+            return;
         }
 
-        // 3. Auto-find UI elements if not assigned
+        if (!globalVolume.profile.TryGet(out colorAdjustments))
+        {
+            Debug.LogWarning("No Color Adjustments override found in Global Volume!");
+            return;
+        }
+
+        // 2. Auto-find UI elements 
         if (brightnessSlider == null)
             brightnessSlider = GameObject.Find("BrightnessSlider")?.GetComponent<Slider>();
 
         if (uiOverlay == null)
             uiOverlay = GameObject.Find("UIBrightnessOverlay")?.GetComponent<Image>();
 
-        // 4. Configure slider
+        // 3. Load and apply saved brightness
+        float savedBrightness = PlayerPrefs.GetFloat(BrightnessKey, 0f);
+        ApplyBrightness(savedBrightness);
+
+        // 4. Connect slider
         if (brightnessSlider != null)
         {
             brightnessSlider.minValue = -2f;
@@ -100,15 +130,6 @@ public class SettingsMenuManager : MonoBehaviour
             brightnessSlider.onValueChanged.RemoveAllListeners();
             brightnessSlider.onValueChanged.AddListener(SetBrightness);
         }
-
-        // 5. Apply overlay after UI initializes (1 frame delay)
-        StartCoroutine(ApplyBrightnessNextFrame(savedBrightness));
-    }
-
-    private IEnumerator ApplyBrightnessNextFrame(float value)
-    {
-        yield return null; // wait one frame for UI to be ready
-        ApplyBrightness(value);
     }
 
     // === SETTINGS CHANGES ===
@@ -142,7 +163,34 @@ public class SettingsMenuManager : MonoBehaviour
         PlayerPrefs.SetInt("Vibrate", isVibrate ? 1 : 0);
     }
 
-    // === BRIGHTNESS CONTROL ===
+    // === SENSITIVITY ===
+    public void ChangeSensitivity()
+    {
+        if (sensitivitySlider == null) return;
+
+        float value = sensitivitySlider.value;
+        PlayerPrefs.SetFloat(SensitivityKey, value);
+        PlayerPrefs.Save();
+
+        ApplySensitivityToPlayer(value);
+    }
+
+    private void ApplySavedSensitivity()
+    {
+        float value = PlayerPrefs.GetFloat(SensitivityKey, 1f);
+        ApplySensitivityToPlayer(value);
+    }
+
+    private void ApplySensitivityToPlayer(float value)
+    {
+        Player player = Object.FindFirstObjectByType<Player>();
+        if (player != null)
+        {
+            player.SetSensitivity(value);
+        }
+    }
+
+    // === BRIGHTNESS ===
     public void SetBrightness(float value)
     {
         ApplyBrightness(value);
@@ -157,13 +205,12 @@ public class SettingsMenuManager : MonoBehaviour
 
         if (uiOverlay != null)
         {
-            // Convert brightness (-2..2) to overlay alpha (0..0.6)
-            float alpha = Mathf.Clamp01(Mathf.InverseLerp(-2f, 2f, -value) * 0.6f);
+            float alpha = Mathf.InverseLerp(-2f, 2f, -value) * 0.6f;
             uiOverlay.color = new Color(0f, 0f, 0f, alpha);
         }
     }
 
-    // === HELPER ===
+    // === HELPERS ===
     private void SetMixerVolume(string parameter, float value)
     {
         MainMixer.SetFloat(parameter, value);
