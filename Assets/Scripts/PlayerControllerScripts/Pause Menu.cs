@@ -127,4 +127,7 @@ public class PauseMenu : MonoBehaviour
         es.AddComponent<StandaloneInputModule>();
 #endif
     }
+
+    
+
 }

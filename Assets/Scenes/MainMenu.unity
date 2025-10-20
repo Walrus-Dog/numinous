@@ -155,6 +155,50 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &21083185
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 21083187}
+  - component: {fileID: 21083186}
+  m_Layer: 0
+  m_Name: MainMenuController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &21083186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21083185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15289c48b5fb2204ca0017580526f9a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &21083187
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 21083185}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 333.23087, y: 362.66183, z: -283.60922}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &71491662
 GameObject:
   m_ObjectHideFlags: 0
@@ -2008,6 +2052,9 @@ MonoBehaviour:
   sfxVol: {fileID: 1306617413}
   vibrateToggle: {fileID: 71491664}
   MainMixer: {fileID: 24100000, guid: 23c79154fc5129242ad1dd177c67712f, type: 2}
+  brightnessSlider: {fileID: 0}
+  uiOverlay: {fileID: 0}
+  sensitivitySlider: {fileID: 0}
 --- !u!1 &723055239
 GameObject:
   m_ObjectHideFlags: 0
@@ -2231,6 +2278,8 @@ GameObject:
   m_Component:
   - component: {fileID: 767008087}
   - component: {fileID: 767008088}
+  - component: {fileID: 767008089}
+  - component: {fileID: 767008090}
   m_Layer: 0
   m_Name: MainMenu
   m_TagString: Untagged
@@ -2269,6 +2318,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a38f9f49a3ed4464f8fc0528d798b484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &767008089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767008086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a10b28982acc5b48be1fc3076a15c71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firstSelected: {fileID: 1256418075}
+--- !u!114 &767008090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767008086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98089a3c4558f554f81e1d0d4477f9bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuSceneNames:
+  - MainMenu
+  firstSelected: {fileID: 1256418075}
 --- !u!1 &795022585
 GameObject:
   m_ObjectHideFlags: 0
@@ -2367,6 +2444,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b55fec4bd474b6489473292d9a221e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  brightnessSlider: {fileID: 0}
+  uiOverlay: {fileID: 0}
 --- !u!1 &878898143
 GameObject:
   m_ObjectHideFlags: 0
@@ -2499,7 +2578,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ff0fc691305e3a4da82b9242a71f69d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sensitivity: 2
 --- !u!4 &885086474
 Transform:
   m_ObjectHideFlags: 0
@@ -6982,3 +7060,4 @@ SceneRoots:
   - {fileID: 767008087}
   - {fileID: 468784387}
   - {fileID: 885086474}
+  - {fileID: 21083187}
