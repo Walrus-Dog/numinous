@@ -53,20 +53,20 @@ public class PauseMenu : MonoBehaviour
 
     private IEnumerator ShowPauseMenuRoutine()
     {
-        // 1?? wait one frame so UI event/raycast systems rebuild
+        // 1 wait one frame so UI event/raycast systems rebuild
         yield return new WaitForEndOfFrame();
         Canvas.ForceUpdateCanvases();
 
-        // 2?? now unlock and show cursor
+        // 2 now unlock and show cursor
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        // 3?? reset EventSystem focus
+        // 3 reset EventSystem focus
         EventSystem.current.SetSelectedGameObject(null);
         if (firstSelectedButton != null)
             EventSystem.current.SetSelectedGameObject(firstSelectedButton);
 
-        // 4?? finally freeze time and disable gameplay
+        // 4 finally freeze time and disable gameplay
         Time.timeScale = 0f;
         Paused = true;
 

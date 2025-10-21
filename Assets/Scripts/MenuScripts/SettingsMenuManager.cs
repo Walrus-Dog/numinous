@@ -39,8 +39,8 @@ public class SettingsMenuManager : MonoBehaviour
 
     [SerializeField] private string settingsMenuRootName = "SettingsMenuScreen";
 
-    private Camera lastActiveCamera; // ?? Track camera changes
-    private AudioListener listener;  // ?? Keep a reference to the listener
+    private Camera lastActiveCamera; // Track camera changes
+    private AudioListener listener;  //  Keep a reference to the listener
 
     void Start()
     {
@@ -48,7 +48,7 @@ public class SettingsMenuManager : MonoBehaviour
         InitializeBrightness();
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        // ? Ensure Audio Listener is active on startup
+        // Ensure Audio Listener is active on startup
         EnsureActiveAudioListener();
 
         // Start watching for camera switches
@@ -60,7 +60,7 @@ public class SettingsMenuManager : MonoBehaviour
         InitializeBrightness();
         ApplySavedSensitivity();
 
-        // ? Ensure Audio Listener is active after each scene load
+        // Ensure Audio Listener is active after each scene load
         EnsureActiveAudioListener();
     }
 
