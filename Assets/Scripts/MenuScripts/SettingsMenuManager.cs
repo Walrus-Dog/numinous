@@ -33,31 +33,39 @@ public class SettingsMenuManager : MonoBehaviour
     private const string BrightnessKey = "BrightnessValue";
     private const string SensitivityKey = "MouseSensitivity";
 
-    // === QUALITY APPLY (deferred) ===
-    [SerializeField] private float qualityApplyDelay = 0.1f; // unscaled seconds
+    [SerializeField] private float qualityApplyDelay = 0.1f;
     private Coroutine qualityApplyRoutine;
-    private int? pendingQualityLevel; // queued while paused
+    private int? pendingQualityLevel;
 
-    // === UI restore target (explicit) ===
     [SerializeField] private string settingsMenuRootName = "SettingsMenuScreen";
+
+    private Camera lastActiveCamera; // ?? Track camera changes
+    private AudioListener listener;  // ?? Keep a reference to the listener
 
     void Start()
     {
         InitializeSettings();
         InitializeBrightness();
         SceneManager.sceneLoaded += OnSceneLoaded;
+
+        // ? Ensure Audio Listener is active on startup
+        EnsureActiveAudioListener();
+
+        // Start watching for camera switches
+        StartCoroutine(TrackActiveCamera());
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         InitializeBrightness();
-        ApplySavedSensitivity(); // reapply on scene load if new Player spawns
+        ApplySavedSensitivity();
+
+        // ? Ensure Audio Listener is active after each scene load
+        EnsureActiveAudioListener();
     }
 
-    // === INITIALIZATION ===
     private void InitializeSettings()
     {
-        // === LOAD SETTINGS/PLAYER PREFS ===
         graphicsDropdown.value = PlayerPrefs.GetInt("GraphicsQuality", QualitySettings.GetQualityLevel());
         QualitySettings.SetQualityLevel(graphicsDropdown.value);
 
@@ -77,7 +85,6 @@ public class SettingsMenuManager : MonoBehaviour
         vibrateToggle.isOn = vibrateValue;
         isVibrate = vibrateValue;
 
-        // === SENSITIVITY ===
         float savedSensitivity = PlayerPrefs.GetFloat(SensitivityKey, 1f);
         if (sensitivitySlider == null)
             sensitivitySlider = GameObject.Find("SensitivitySlider")?.GetComponent<Slider>();
@@ -91,20 +98,17 @@ public class SettingsMenuManager : MonoBehaviour
             sensitivitySlider.onValueChanged.AddListener(delegate { ChangeSensitivity(); });
         }
 
-        // === ADD EVENT LISTENERS ===
         graphicsDropdown.onValueChanged.AddListener(delegate { ChangeGraphicsQuality(); });
         masterVol.onValueChanged.AddListener(delegate { ChangeMasterVolume(); });
         musicVol.onValueChanged.AddListener(delegate { ChangeMusicVolume(); });
         sfxVol.onValueChanged.AddListener(delegate { ChangeSFXVolume(); });
         vibrateToggle.onValueChanged.AddListener(delegate { ChangeVibrate(); });
 
-        // Apply saved sensitivity to player 
         ApplySavedSensitivity();
     }
 
     private void InitializeBrightness()
     {
-        // 1. Find Global Volume in the active scene
         globalVolume = Object.FindFirstObjectByType<Volume>();
         if (globalVolume == null)
         {
@@ -118,18 +122,15 @@ public class SettingsMenuManager : MonoBehaviour
             return;
         }
 
-        // 2. Auto-find UI elements 
         if (brightnessSlider == null)
             brightnessSlider = GameObject.Find("BrightnessSlider")?.GetComponent<Slider>();
 
         if (uiOverlay == null)
             uiOverlay = GameObject.Find("UIBrightnessOverlay")?.GetComponent<Image>();
 
-        // 3. Load and apply saved brightness
         float savedBrightness = PlayerPrefs.GetFloat(BrightnessKey, 0f);
         ApplyBrightness(savedBrightness);
 
-        // 4. Connect slider
         if (brightnessSlider != null)
         {
             brightnessSlider.minValue = -2f;
@@ -140,23 +141,16 @@ public class SettingsMenuManager : MonoBehaviour
         }
     }
 
-    // === SETTINGS CHANGES ===
     public void ChangeGraphicsQuality()
     {
-        // Close dropdown popup immediately so its blocker can’t linger.
         if (graphicsDropdown) graphicsDropdown.Hide();
-        // Start a short “blocker killer” now, in case the popup just spawned.
         StartCoroutine(BlockerKillerBurst());
 
         int lvl = graphicsDropdown.value;
-
-        // Persist choice immediately (so it sticks across sessions)
         PlayerPrefs.SetInt("GraphicsQuality", lvl);
 
-        // Cancel any prior apply coroutine
         if (qualityApplyRoutine != null) StopCoroutine(qualityApplyRoutine);
 
-        // If paused, queue for later; otherwise apply now (smoothly)
         bool isPaused = false;
         try { isPaused = PauseMenu.Paused; } catch { isPaused = false; }
 
@@ -196,7 +190,6 @@ public class SettingsMenuManager : MonoBehaviour
         PlayerPrefs.SetInt("Vibrate", isVibrate ? 1 : 0);
     }
 
-    // === SENSITIVITY ===
     public void ChangeSensitivity()
     {
         if (sensitivitySlider == null) return;
@@ -223,7 +216,6 @@ public class SettingsMenuManager : MonoBehaviour
         }
     }
 
-    // === BRIGHTNESS ===
     public void SetBrightness(float value)
     {
         ApplyBrightness(value);
@@ -243,7 +235,6 @@ public class SettingsMenuManager : MonoBehaviour
         }
     }
 
-    // === HELPERS ===
     private void SetMixerVolume(string parameter, float value)
     {
         MainMixer.SetFloat(parameter, value);
@@ -254,10 +245,8 @@ public class SettingsMenuManager : MonoBehaviour
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
-    // === QUALITY: Apply later when unpaused ===
     private IEnumerator ApplyQualityWhenUnpaused()
     {
-        // Wait until the game is unpaused
         while (true)
         {
             bool isPausedNow = false;
@@ -276,14 +265,11 @@ public class SettingsMenuManager : MonoBehaviour
         qualityApplyRoutine = null;
     }
 
-    // === QUALITY APPLY (deferred; smooth; with blocker cleanup) ===
     private IEnumerator ApplyQualityDeferred(int level)
     {
-        // Light step — no heavy rebuild yet
         QualitySettings.SetQualityLevel(level, applyExpensiveChanges: false);
         yield return null;
 
-        // Brief unscaled delay so heavy step happens off the UI callback
         float t = 0f;
         while (t < qualityApplyDelay)
         {
@@ -291,26 +277,19 @@ public class SettingsMenuManager : MonoBehaviour
             yield return null;
         }
 
-        // Heavy step (recreates render targets/post stack)
         QualitySettings.SetQualityLevel(level, applyExpensiveChanges: true);
         yield return null;
 
-        // Rehook brightness
         InitializeBrightness();
-
-        // Run blocker killer for a short burst after heavy apply too
         yield return StartCoroutine(BlockerKillerBurst());
 
-        // Refresh dropdown label
         if (graphicsDropdown) graphicsDropdown.RefreshShownValue();
-
         qualityApplyRoutine = null;
     }
 
-    // === Kill any dropdown popups/blockers for ~1 second and ensure SettingsMenuScreen is clickable ===
     private IEnumerator BlockerKillerBurst()
     {
-        float duration = 1.0f; // unscaled seconds
+        float duration = 1.0f;
         float elapsed = 0f;
 
         while (elapsed < duration)
@@ -318,7 +297,6 @@ public class SettingsMenuManager : MonoBehaviour
             RemoveAllKnownDropdownArtifacts();
             ForceRestoreSettingsMenuScreen();
 
-            // keep cursor/UI state sane while paused
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
 
@@ -334,12 +312,11 @@ public class SettingsMenuManager : MonoBehaviour
             Canvas.ForceUpdateCanvases();
             EventSystem.current.SetSelectedGameObject(null);
 
-            yield return null; // next frame (unscaled)
+            yield return null;
             elapsed += Time.unscaledDeltaTime;
         }
     }
 
-    // --- Removes all known dropdown artifacts that can eat raycasts ---
     private void RemoveAllKnownDropdownArtifacts()
     {
         try
@@ -350,13 +327,11 @@ public class SettingsMenuManager : MonoBehaviour
                 var go = all[i];
                 if (!go) continue;
 
-                // Names used by TMP and legacy uGUI dropdowns for popups and full-screen blockers
                 if (go.name == "TMP Dropdown Blocker" ||
                     go.name == "TMP Dropdown List" ||
                     go.name == "Blocker" ||
                     go.name == "Dropdown List")
                 {
-                    // Disable if in DontDestroyOnLoad, else destroy
                     if (string.IsNullOrEmpty(go.scene.name))
                         go.SetActive(false);
                     else
@@ -364,10 +339,9 @@ public class SettingsMenuManager : MonoBehaviour
                 }
             }
         }
-        catch { /* best-effort cleanup */ }
+        catch { }
     }
 
-    // --- Forces your SettingsMenuScreen back to a clickable state ---
     private void ForceRestoreSettingsMenuScreen()
     {
         GameObject settingsRoot = GameObject.Find(settingsMenuRootName);
@@ -376,10 +350,8 @@ public class SettingsMenuManager : MonoBehaviour
 
         if (settingsRoot == null) return;
 
-        // Make sure the root is active
         if (!settingsRoot.activeSelf) settingsRoot.SetActive(true);
 
-        // Ensure CanvasGroup & Raycaster allow interaction
         var cg = settingsRoot.GetComponent<CanvasGroup>();
         if (cg != null)
         {
@@ -399,10 +371,9 @@ public class SettingsMenuManager : MonoBehaviour
                 canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
             canvas.overrideSorting = true;
-            if (canvas.sortingOrder < 1500) canvas.sortingOrder = 1500; // above other UI
+            if (canvas.sortingOrder < 1500) canvas.sortingOrder = 1500;
         }
 
-        // As a safety net: disable any giant Image that might be catching rays
         var images = settingsRoot.GetComponentsInChildren<Image>(true);
         foreach (var img in images)
         {
@@ -410,9 +381,68 @@ public class SettingsMenuManager : MonoBehaviour
             if (img.raycastTarget)
             {
                 var rect = img.rectTransform != null ? img.rectTransform.rect : new Rect(0, 0, 0, 0);
-                if (rect.width > 1000f && rect.height > 600f) // full-screen-ish overlay
+                if (rect.width > 1000f && rect.height > 600f)
                     img.raycastTarget = false;
             }
+        }
+    }
+
+    // === AUDIO LISTENER CHECK ===
+    private void EnsureActiveAudioListener()
+    {
+        listener = Object.FindFirstObjectByType<AudioListener>();
+        if (listener == null)
+        {
+            Camera cam = Camera.main;
+            if (cam != null)
+            {
+                listener = cam.gameObject.AddComponent<AudioListener>();
+                Debug.Log("[SettingsMenuManager] No AudioListener found. Added one to Main Camera.");
+            }
+            else
+            {
+                GameObject temp = new GameObject("TempAudioListener");
+                listener = temp.AddComponent<AudioListener>();
+                Debug.LogWarning("[SettingsMenuManager] No Main Camera found. Created a temporary AudioListener object.");
+            }
+        }
+        else
+        {
+            if (!listener.enabled)
+            {
+                listener.enabled = true;
+                Debug.Log("[SettingsMenuManager] AudioListener found but was disabled. Enabled it.");
+            }
+
+            AudioListener[] allListeners = Object.FindObjectsByType<AudioListener>(FindObjectsSortMode.None);
+            for (int i = 1; i < allListeners.Length; i++)
+            {
+                allListeners[i].enabled = false;
+                Debug.LogWarning($"[SettingsMenuManager] Disabled extra AudioListener on {allListeners[i].gameObject.name}");
+            }
+        }
+
+        lastActiveCamera = Camera.main;
+    }
+
+    // === CAMERA TRACKER: moves listener when the active camera changes ===
+    private IEnumerator TrackActiveCamera()
+    {
+        while (true)
+        {
+            Camera currentCam = Camera.main;
+            if (currentCam != null && currentCam != lastActiveCamera)
+            {
+                if (listener != null)
+                {
+                    listener.transform.SetParent(currentCam.transform, false);
+                    listener.transform.localPosition = Vector3.zero;
+                    listener.transform.localRotation = Quaternion.identity;
+                    Debug.Log($"[SettingsMenuManager] AudioListener moved to new active camera: {currentCam.name}");
+                }
+                lastActiveCamera = currentCam;
+            }
+            yield return new WaitForSeconds(0.25f); // check 4x per second
         }
     }
 }
