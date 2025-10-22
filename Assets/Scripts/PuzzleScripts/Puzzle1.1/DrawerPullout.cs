@@ -1,9 +1,7 @@
 using UnityEngine;
 
-
-public class DrawerPullout : Button
+public class DrawerPullout : MonoBehaviour
 {
-
     public float pulloutAmount;
     Vector3 newPos;
     Vector3 startPos;
@@ -18,6 +16,10 @@ public class DrawerPullout : Button
     public float targetRange;
 
     public AudioSource drawerSound;
+
+    // ? Added this field to replace the one from UnityEngine.UI.Button
+    public bool activeState;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -29,13 +31,13 @@ public class DrawerPullout : Button
     // Update is called once per frame
     void Update()
     {
-        base.Update();
+        // ? Removed base.Update() — was referencing UnityEngine.UI.Button.Update()
 
         //Set position
         newPos = new Vector3(startPos.x, startPos.y, startPos.z + Mathf.Clamp(pulloutAmount, 0f, .8f));
 
         //Push drawer in when not pulling out
-        if(!pullingOut)
+        if (!pullingOut)
         {
             PullInDrawer();
         }
@@ -62,11 +64,13 @@ public class DrawerPullout : Button
 
         //Pullout speed equation.
         pulloutSpeed = (Mathf.Abs(targetPull - pulloutAmount) * Time.deltaTime) * speedMultiplier;
+
         //Set pullout speed to minimum speed.
         if (pulloutSpeed < minSpeed)
         {
             pulloutSpeed = minSpeed;
         }
+
         //Active state condition
         if (pulloutAmount >= targetPull - targetRange && pulloutAmount <= targetPull + targetRange)
         {

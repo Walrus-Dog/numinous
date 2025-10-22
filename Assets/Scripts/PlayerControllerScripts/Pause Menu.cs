@@ -2,17 +2,22 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using System.Collections;
 
 public class PauseMenu : MonoBehaviour
 {
-    public static bool Paused = false;
+    public static bool Paused;
+
+    [Header("UI")]
     public GameObject PauseMenuScreen;
-    [SerializeField] private GameObject settingsMenuScreen; // drag your settings menu here
+    [SerializeField] private GameObject settingsMenuScreen;
+    [SerializeField] private GameObject firstSelectedButton;
+
+    [Header("Gameplay")]
     public Player player;
     public PlayerInput playerInput;
-    public MonoBehaviour[] extraScriptsToDisable; // drag camera scripts here (CameraToggle, etc.)
+    public MonoBehaviour[] extraScriptsToDisable;
 
-    // FIX: Always reset pause state when this script is loaded (prevents being stuck paused after scene changes)
     void Awake()
     {
         Paused = false;
@@ -21,107 +26,108 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
-        Time.timeScale = 1f;
+        EnsureEventSystemExists();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     void Update()
     {
-        //--escape key pauses/starts game--
         if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            if (Paused)
-                ResumeGame();
-            else
-                PauseGame();
+            if (Paused) ResumeGame();
+            else PauseGame();
         }
     }
 
-    void PauseGame()
+    public void PauseGame()
     {
+        EnsureEventSystemExists();
+
         PauseMenuScreen.SetActive(true);
-        if (settingsMenuScreen != null)
-            settingsMenuScreen.SetActive(false); // make sure settings are hidden
+        if (settingsMenuScreen != null) settingsMenuScreen.SetActive(false);
+
+        // initialize UI before freeze & unlock
+        StartCoroutine(ShowPauseMenuRoutine());
+    }
+
+    private IEnumerator ShowPauseMenuRoutine()
+    {
+        // 1 wait one frame so UI event/raycast systems rebuild
+        yield return new WaitForEndOfFrame();
+        Canvas.ForceUpdateCanvases();
+
+        // 2 now unlock and show cursor
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        // 3 reset EventSystem focus
         EventSystem.current.SetSelectedGameObject(null);
+        if (firstSelectedButton != null)
+            EventSystem.current.SetSelectedGameObject(firstSelectedButton);
+
+        // 4 finally freeze time and disable gameplay
         Time.timeScale = 0f;
         Paused = true;
 
-        if (playerInput != null)
-            playerInput.enabled = false;
-        if (player != null)
-            player.enabled = false;
-
-        foreach (var script in extraScriptsToDisable)
-        {
-            if (script != null)
-                script.enabled = false;
-        }
-
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        if (playerInput != null) playerInput.enabled = false;
+        if (player != null) player.enabled = false;
+        foreach (var s in extraScriptsToDisable) if (s != null) s.enabled = false;
     }
 
     public void ResumeGame()
     {
-        PauseMenuScreen.SetActive(false);
-        if (settingsMenuScreen != null)
-            settingsMenuScreen.SetActive(false); // ensure settings menu is hidden
-        EventSystem.current.SetSelectedGameObject(null);
         Time.timeScale = 1f;
         Paused = false;
 
-        if (playerInput != null)
-            playerInput.enabled = true;
-        if (player != null)
-            player.enabled = true;
+        PauseMenuScreen.SetActive(false);
+        if (settingsMenuScreen != null) settingsMenuScreen.SetActive(false);
 
-        foreach (var script in extraScriptsToDisable)
-        {
-            if (script != null)
-                script.enabled = true;
-        }
+        if (playerInput != null) playerInput.enabled = true;
+        if (player != null) player.enabled = true;
+        foreach (var s in extraScriptsToDisable) if (s != null) s.enabled = true;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
-    //--opens the settings menu--
     public void OpenSettings()
     {
-        if (settingsMenuScreen != null)
-        {
-            PauseMenuScreen.SetActive(false);     // hide pause menu first
-            settingsMenuScreen.SetActive(true);   // then show settings
-        }
-        else
-        {
-            Debug.LogWarning("PauseMenu: Settings Menu Screen not assigned!");
-        }
+        if (!settingsMenuScreen) return;
+        PauseMenuScreen.SetActive(false);
+        settingsMenuScreen.SetActive(true);
+        Canvas.ForceUpdateCanvases();
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
-    //--closes the settings menu--
     public void CloseSettings()
     {
-        if (settingsMenuScreen != null)
-        {
-            settingsMenuScreen.SetActive(false);  // hide settings first
-            PauseMenuScreen.SetActive(true);      // then show pause menu again
-        }
-        else
-        {
-            Debug.LogWarning("PauseMenu: Settings Menu Screen not assigned!");
-        }
+        if (!settingsMenuScreen) return;
+        settingsMenuScreen.SetActive(false);
+        PauseMenuScreen.SetActive(true);
+        Canvas.ForceUpdateCanvases();
+        EventSystem.current.SetSelectedGameObject(null);
     }
 
-    //--LOADS SCENE BY SUBTRACTING 1 IN BUILD INDEX! (E.g. PauseMenu (1) -> Quit -> Subtracts 1 -> Main Menu (0))
-    //--Will NOT work if the PauseMenu is not behind the Main Menu!!--
     public void QuitButton()
     {
-        // FIX: make sure pause state and timescale reset before leaving scene
         Time.timeScale = 1f;
         Paused = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
-}
 
+    private void EnsureEventSystemExists()
+    {
+        if (EventSystem.current != null) return;
+        GameObject es = new GameObject("EventSystem", typeof(EventSystem));
+#if ENABLE_INPUT_SYSTEM
+        es.AddComponent<UnityEngine.InputSystem.UI.InputSystemUIInputModule>();
+#else
+        es.AddComponent<StandaloneInputModule>();
+#endif
+    }
+
+    
+
+}

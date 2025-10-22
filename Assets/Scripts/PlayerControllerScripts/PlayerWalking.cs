@@ -27,8 +27,42 @@ public class PlayerWalking : PlayerState
     {
         base.Awake();
         sprintAction = playerInput.actions["sprint"];
-        jumpAction = playerInput.actions["jump"];
+        jumpAction = playerInput.actions["jump"];   // <-- ensure your action is named "jump"
         crouchAction = playerInput.actions["crouch"];
+    }
+
+    // Subscribe/unsubscribe so the jump input actually reaches OnJump
+    void OnEnable()
+    {
+        if (jumpAction != null)
+        {
+            jumpAction.started += OnJumpPerformed;
+            jumpAction.performed += OnJumpPerformed;
+            jumpAction.canceled += OnJumpCanceled;
+            jumpAction.Enable();
+        }
+    }
+
+    void OnDisable()
+    {
+        if (jumpAction != null)
+        {
+            jumpAction.started -= OnJumpPerformed;
+            jumpAction.performed -= OnJumpPerformed;
+            jumpAction.canceled -= OnJumpCanceled;
+        }
+    }
+
+    // Input System callback path (keeps your existing method name below too)
+    void OnJumpPerformed(InputAction.CallbackContext ctx)
+    {
+        tryingToJump = true;
+        lastJumpPressTime = Time.time;
+    }
+
+    void OnJumpCanceled(InputAction.CallbackContext ctx)
+    {
+        // kept for future variable-jump logic if needed
     }
 
     public override void OnBeforeMove()
@@ -72,6 +106,9 @@ public class PlayerWalking : PlayerState
 
     void Jumping()
     {
+        //True count increments for each correct code/item/puzzle
+        // (kept original structure; this block handles jump buffer + grace time)
+
         bool wasTryingToJump = Time.time - lastJumpPressTime < jumpPressBufferTime;
         bool wasGrounded = Time.time - lastGroundedTime < jumpGroundGracePeriod;
 
@@ -83,13 +120,18 @@ public class PlayerWalking : PlayerState
         {
             player.velocity.y += jumpSpeed;
 
-            if (!jumpSound.isPlaying)
+            if (jumpSound && !jumpSound.isPlaying)
                 jumpSound.Play();
+
+            // consume the buffered press so we don’t double-jump on the same input
+            lastJumpPressTime = -999f;
         }
 
+        // keep your original one-frame intent; buffer persists via lastJumpPressTime
         tryingToJump = false;
     }
 
+    // This original method name stays for PlayerInput "Send Messages" setups
     void OnJump()
     {
         tryingToJump = true;

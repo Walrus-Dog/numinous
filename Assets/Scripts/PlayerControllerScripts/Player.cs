@@ -7,7 +7,7 @@ using UnityEngine.Windows;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] float mouseSensitiviy = 3f;
+    [SerializeField] float mouseSensitiviy = 1f; // now loaded 
     [SerializeField] float walkingSpeed = 5f;
     [SerializeField] float mass = 1f;
     [SerializeField] float acceleration = 20f;
@@ -51,6 +51,8 @@ public class Player : MonoBehaviour
 
     public AudioSource footstepSound;
 
+    private const string SensitivityKey = "MouseSensitivity"; // Added constant for PlayerPrefs key
+
     void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -71,6 +73,9 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        // === Load saved sensitivity from PlayerPrefs (default 1.0) ===
+        mouseSensitiviy = PlayerPrefs.GetFloat(SensitivityKey, 1f);
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -203,6 +208,13 @@ public class Player : MonoBehaviour
         transform.localRotation = Quaternion.Euler(0, look.x, 0);
     }
 
+    // === Added public method for SettingsMenuManager ===
+    public void SetSensitivity(float value)
+    {
+        // Clamp value to safe range and apply immediately
+        mouseSensitiviy = Mathf.Clamp(value, 0.05f, 10f);
+    }
+
     void OnToggleFlying()
     {
         if (currentPlayerState == playerWalking)
@@ -229,3 +241,4 @@ public class Player : MonoBehaviour
         currentPlayerState = playerWalking;
     }
 }
+

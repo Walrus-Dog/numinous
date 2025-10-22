@@ -1542,6 +1542,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 186550494}
   m_CullTransparentMesh: 1
+--- !u!1 &206661158 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1690167705688417304, guid: 97508436a6f7cb044affe9b0a618793e, type: 3}
+  m_PrefabInstance: {fileID: 1812829139}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &209922017
 GameObject:
   m_ObjectHideFlags: 0
@@ -1950,7 +1955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: dc92d894d1d446dd933c83c8bc6488ab
+  uniqueId: a9f9f8cb1ab5401590056c7ac3d8efb9
 --- !u!114 &266330201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3003,7 +3008,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5115269801712852040, guid: 1242586ae4aa9a549bae1d5872beda8f, type: 3}
       propertyPath: interactToOpen
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5115269801712852040, guid: 1242586ae4aa9a549bae1d5872beda8f, type: 3}
+      propertyPath: puzzle.Array.size
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5115269801712852040, guid: 1242586ae4aa9a549bae1d5872beda8f, type: 3}
       propertyPath: 'code.Array.data[1]'
@@ -3013,6 +3022,26 @@ PrefabInstance:
       propertyPath: 'code.Array.data[2]'
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5115269801712852040, guid: 1242586ae4aa9a549bae1d5872beda8f, type: 3}
+      propertyPath: puzzleComponentType
+      value: DrawerPullout
+      objectReference: {fileID: 0}
+    - target: {fileID: 5115269801712852040, guid: 1242586ae4aa9a549bae1d5872beda8f, type: 3}
+      propertyPath: 'puzzle.Array.data[0]'
+      value: 
+      objectReference: {fileID: 141027285}
+    - target: {fileID: 5115269801712852040, guid: 1242586ae4aa9a549bae1d5872beda8f, type: 3}
+      propertyPath: 'puzzle.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1549090724}
+    - target: {fileID: 5115269801712852040, guid: 1242586ae4aa9a549bae1d5872beda8f, type: 3}
+      propertyPath: 'puzzle.Array.data[2]'
+      value: 
+      objectReference: {fileID: 206661158}
+    - target: {fileID: 5115269801712852040, guid: 1242586ae4aa9a549bae1d5872beda8f, type: 3}
+      propertyPath: 'puzzle.Array.data[3]'
+      value: 
+      objectReference: {fileID: 206661158}
     - target: {fileID: 7547298470715172635, guid: 1242586ae4aa9a549bae1d5872beda8f, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.44846
@@ -7061,7 +7090,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: d150f6aff48f409790ad0dee4f791170
+  uniqueId: 4389d2121b564278b77e5b8dbb69526b
 --- !u!1 &1155459765
 GameObject:
   m_ObjectHideFlags: 0
@@ -8245,7 +8274,7 @@ RectTransform:
   m_GameObject: {fileID: 1346270647}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 11.916299, y: 6.8665915, z: 4.9187}
+  m_LocalScale: {x: 13.67784, y: 6.633608, z: 4.9187}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1929428468}
@@ -9764,6 +9793,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1519856144}
   m_CullTransparentMesh: 1
+--- !u!1 &1549090724 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1690167705688417304, guid: 97508436a6f7cb044affe9b0a618793e, type: 3}
+  m_PrefabInstance: {fileID: 2044087993}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1552500611
 GameObject:
   m_ObjectHideFlags: 0
@@ -11674,6 +11708,10 @@ PrefabInstance:
     - target: {fileID: 1690167705688417304, guid: 97508436a6f7cb044affe9b0a618793e, type: 3}
       propertyPath: m_Name
       value: DrawerBase (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2232981532895312631, guid: 97508436a6f7cb044affe9b0a618793e, type: 3}
+      propertyPath: activeState
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5432943646820976357, guid: 97508436a6f7cb044affe9b0a618793e, type: 3}
       propertyPath: m_LocalPosition.x
