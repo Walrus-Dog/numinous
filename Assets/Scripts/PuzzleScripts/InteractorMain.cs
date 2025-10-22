@@ -26,6 +26,9 @@ public class InteractorMain : MonoBehaviour
 
     public AudioSource interactAudio;
 
+    // FIX: warn if CodeDisplay isn't assigned
+    bool _warnedNoCodeDisplay;   // FIX
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -44,12 +47,11 @@ public class InteractorMain : MonoBehaviour
 
     private void Awake()
     {
-        // FIX: find PlayerInput if not assigned in the Inspector
         if (playerInput == null)
         {
             playerInput = GetComponent<PlayerInput>();
             if (playerInput == null)
-                playerInput = FindFirstObjectByType<PlayerInput>(); 
+                playerInput = FindFirstObjectByType<PlayerInput>();
         }
 
         if (playerInput != null)
@@ -65,7 +67,6 @@ public class InteractorMain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // FIX: Don't run when game is paused or missing input/camera
         if (PauseMenu.Paused) return;
         if (playerInput == null || interactAction == null || cam == null) return;
 
@@ -125,11 +126,21 @@ public class InteractorMain : MonoBehaviour
                     codeToDisplay += numbersCollected[i];
                 }
             }
-            CodeDisplay.text = codeToDisplay;
+
+            if (CodeDisplay != null)                      // FIX: guard to prevent NRE
+                CodeDisplay.text = codeToDisplay;
         }
         else
         {
-            CodeDisplay.text = string.Empty;
+            if (CodeDisplay != null)                      // FIX: guard to prevent NRE
+                CodeDisplay.text = string.Empty;
+        }
+
+        // FIX: warn if not assigned 
+        if (CodeDisplay == null && !_warnedNoCodeDisplay) // FIX
+        {
+            Debug.LogWarning("InteractorMain: CodeDisplay is not assigned. Codes will not show on UI.", this);
+            _warnedNoCodeDisplay = true;
         }
     }
 
@@ -139,7 +150,8 @@ public class InteractorMain : MonoBehaviour
         {
             Debug.Log(hit[i].collider.gameObject.name);
 
-            if (hit[i].collider.gameObject.CompareTag("Button") && hit[i].collider.gameObject.GetComponent<ButtonStats>() != null)
+            if (hit[i].collider.gameObject.CompareTag("Button") &&
+                hit[i].collider.gameObject.GetComponent<ButtonStats>() != null)
             {
                 GameObject button = hit[i].collider.gameObject;
                 //Make button flash red.
@@ -213,7 +225,6 @@ public class InteractorMain : MonoBehaviour
                 {
                     interactAudio.Play();
                 }
-
             }
         }
     }
