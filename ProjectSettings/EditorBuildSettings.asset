@@ -14,5 +14,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Level2.unity
     guid: 1390b27adf6611c45b1514d59263a209
+  - enabled: 1
+    path: Assets/numinousmenuv21.unity
+    guid: a5db4dc22fd4da04c90387e028bde9c5
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
