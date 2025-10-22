@@ -1950,7 +1950,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: dc92d894d1d446dd933c83c8bc6488ab
+  uniqueId: 79c292c9056b4bed867f6d43d26d7396
 --- !u!114 &266330201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7061,7 +7061,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: d150f6aff48f409790ad0dee4f791170
+  uniqueId: 6e88f7e7d7dc47868738e8806cdc7780
 --- !u!1 &1155459765
 GameObject:
   m_ObjectHideFlags: 0
@@ -13112,6 +13112,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3853024750557135890, guid: f55f2ff9d1c902c4fa550e5500bc340f, type: 3}
+      propertyPath: PauseMenuScreen
+      value: 
+      objectReference: {fileID: 1068314060}
+    - target: {fileID: 3853024750557135890, guid: f55f2ff9d1c902c4fa550e5500bc340f, type: 3}
+      propertyPath: settingsMenuScreen
+      value: 
+      objectReference: {fileID: 1953633764}
+    - target: {fileID: 3853024750557135890, guid: f55f2ff9d1c902c4fa550e5500bc340f, type: 3}
+      propertyPath: firstSelectedButton
+      value: 
+      objectReference: {fileID: 1822855686}
     - target: {fileID: 4924790611583681987, guid: f55f2ff9d1c902c4fa550e5500bc340f, type: 3}
       propertyPath: m_Name
       value: Player
