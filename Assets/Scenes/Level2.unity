@@ -2816,8 +2816,8 @@ MonoBehaviour:
   PauseMenuScreen: {fileID: 1148450350}
   settingsMenuScreen: {fileID: 1413399481}
   firstSelectedButton: {fileID: 1809098501}
-  player: {fileID: 1654321492}
-  playerInput: {fileID: 1654321490}
+  player: {fileID: 0}
+  playerInput: {fileID: 0}
   extraScriptsToDisable:
   - {fileID: 0}
 --- !u!4 &640885514
@@ -6808,7 +6808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 09a6765e625e4c6697d0f68bdf8ecfd1
+  uniqueId: 516133239ac14d05ab450c36365c2899
 --- !u!114 &1413399484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8086,28 +8086,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4924790611583681987, guid: f55f2ff9d1c902c4fa550e5500bc340f, type: 3}
   m_PrefabInstance: {fileID: 2021642168}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1654321490 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7615398127063987628, guid: f55f2ff9d1c902c4fa550e5500bc340f, type: 3}
-  m_PrefabInstance: {fileID: 2021642168}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1654321489}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1654321492 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 659055166046999060, guid: f55f2ff9d1c902c4fa550e5500bc340f, type: 3}
-  m_PrefabInstance: {fileID: 2021642168}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1654321489}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 071421a0016ec4342a7f0a5d20bb4ec1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1682234238
 GameObject:
   m_ObjectHideFlags: 0
