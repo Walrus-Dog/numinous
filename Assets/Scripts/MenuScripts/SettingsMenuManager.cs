@@ -39,8 +39,50 @@ public class SettingsMenuManager : MonoBehaviour
 
     [SerializeField] private string settingsMenuRootName = "SettingsMenuScreen";
 
-    private Camera lastActiveCamera; // Track camera changes
-    private AudioListener listener;  //  Keep a reference to the listener
+    private Camera lastActiveCamera;
+    private AudioListener listener;
+
+    // === Defaults used by Reset All ===
+    private const int DefaultQualityLevel = 2;
+    private const float DefaultMaster = 0.75f;
+    private const float DefaultMusic = 0.75f;
+    private const float DefaultSfx = 0.75f;
+    private const bool DefaultVibrate = true;
+    private const float DefaultBrightness = 0f;
+    private const float DefaultSensitivity = 1f;
+
+    // === VOLUME HELPERS (linear <-> dB) ===
+    private static float LinearToDb(float linear)
+    {
+        if (linear <= 0.0001f) return -80f;
+        return Mathf.Log10(linear) * 20f;
+    }
+
+    private static float DbToLinear(float dB)
+    {
+        return Mathf.Pow(10f, dB / 20f);
+    }
+
+    // Load a volume from PlayerPrefs as linear [0..1], migrating legacy dB (–80..0) to linear once.
+    private float LoadVolumeLinear(string key, float defaultLinear)
+    {
+        const float Sentinel = -999f;
+        float stored = PlayerPrefs.GetFloat(key, Sentinel);
+
+        if (stored == Sentinel)
+            return defaultLinear; // not set yet
+
+        if (stored < 0f || stored > 1f) // legacy dB
+        {
+            float clampedDb = Mathf.Clamp(stored, -80f, 0f);
+            float linear = DbToLinear(clampedDb);
+            PlayerPrefs.SetFloat(key, linear);
+            PlayerPrefs.Save();
+            return Mathf.Clamp01(linear);
+        }
+
+        return Mathf.Clamp01(stored);
+    }
 
     void Start()
     {
@@ -48,10 +90,7 @@ public class SettingsMenuManager : MonoBehaviour
         InitializeBrightness();
         SceneManager.sceneLoaded += OnSceneLoaded;
 
-        // Ensure Audio Listener is active on startup
         EnsureActiveAudioListener();
-
-        // Start watching for camera switches
         StartCoroutine(TrackActiveCamera());
     }
 
@@ -59,37 +98,39 @@ public class SettingsMenuManager : MonoBehaviour
     {
         InitializeBrightness();
         ApplySavedSensitivity();
-
-        // Ensure Audio Listener is active after each scene load
         EnsureActiveAudioListener();
     }
 
+    // === INITIALIZATION ===
     private void InitializeSettings()
     {
+        // Graphics
         graphicsDropdown.value = PlayerPrefs.GetInt("GraphicsQuality", QualitySettings.GetQualityLevel());
         QualitySettings.SetQualityLevel(graphicsDropdown.value);
 
-        float masterValue = PlayerPrefs.GetFloat("MasterVolume", 0.75f);
-        float musicValue = PlayerPrefs.GetFloat("MusicVolume", 0.75f);
-        float sfxValue = PlayerPrefs.GetFloat("SFXVolume", 0.75f);
+        // Audio (linear sliders 0..1, with migration)
+        float masterValue = LoadVolumeLinear("MasterVolume", DefaultMaster);
+        float musicValue = LoadVolumeLinear("MusicVolume", DefaultMusic);
+        float sfxValue = LoadVolumeLinear("SFXVolume", DefaultSfx);
 
-        masterVol.value = masterValue;
-        musicVol.value = musicValue;
-        sfxVol.value = sfxValue;
+        if (masterVol) { masterVol.minValue = 0f; masterVol.maxValue = 1f; masterVol.value = masterValue; }
+        if (musicVol) { musicVol.minValue = 0f; musicVol.maxValue = 1f; musicVol.value = musicValue; }
+        if (sfxVol) { sfxVol.minValue = 0f; sfxVol.maxValue = 1f; sfxVol.value = sfxValue; }
 
         SetMixerVolume("MasterVolume", masterValue);
         SetMixerVolume("MusicVolume", musicValue);
         SetMixerVolume("SFXVolume", sfxValue);
 
-        bool vibrateValue = PlayerPrefs.GetInt("Vibrate", 1) == 1;
-        vibrateToggle.isOn = vibrateValue;
+        // Vibrate
+        bool vibrateValue = PlayerPrefs.GetInt("Vibrate", DefaultVibrate ? 1 : 0) == 1;
+        if (vibrateToggle) vibrateToggle.isOn = vibrateValue;
         isVibrate = vibrateValue;
 
-        float savedSensitivity = PlayerPrefs.GetFloat(SensitivityKey, 1f);
+        // Sensitivity
+        float savedSensitivity = PlayerPrefs.GetFloat(SensitivityKey, DefaultSensitivity);
         if (sensitivitySlider == null)
             sensitivitySlider = GameObject.Find("SensitivitySlider")?.GetComponent<Slider>();
-
-        if (sensitivitySlider != null)
+        if (sensitivitySlider)
         {
             sensitivitySlider.minValue = 0.1f;
             sensitivitySlider.maxValue = 2.0f;
@@ -98,23 +139,21 @@ public class SettingsMenuManager : MonoBehaviour
             sensitivitySlider.onValueChanged.AddListener(delegate { ChangeSensitivity(); });
         }
 
-        graphicsDropdown.onValueChanged.AddListener(delegate { ChangeGraphicsQuality(); });
-        masterVol.onValueChanged.AddListener(delegate { ChangeMasterVolume(); });
-        musicVol.onValueChanged.AddListener(delegate { ChangeMusicVolume(); });
-        sfxVol.onValueChanged.AddListener(delegate { ChangeSFXVolume(); });
-        vibrateToggle.onValueChanged.AddListener(delegate { ChangeVibrate(); });
+        // Listeners
+        if (graphicsDropdown) graphicsDropdown.onValueChanged.AddListener(delegate { ChangeGraphicsQuality(); });
+        if (masterVol) masterVol.onValueChanged.AddListener(delegate { ChangeMasterVolume(); });
+        if (musicVol) musicVol.onValueChanged.AddListener(delegate { ChangeMusicVolume(); });
+        if (sfxVol) sfxVol.onValueChanged.AddListener(delegate { ChangeSFXVolume(); });
+        if (vibrateToggle) vibrateToggle.onValueChanged.AddListener(delegate { ChangeVibrate(); });
 
+        // Apply to player
         ApplySavedSensitivity();
     }
 
     private void InitializeBrightness()
     {
         globalVolume = Object.FindFirstObjectByType<Volume>();
-        if (globalVolume == null)
-        {
-            Debug.LogWarning("No Global Volume found in scene!");
-            return;
-        }
+        if (globalVolume == null) { Debug.LogWarning("No Global Volume found in scene!"); return; }
 
         if (!globalVolume.profile.TryGet(out colorAdjustments))
         {
@@ -124,14 +163,13 @@ public class SettingsMenuManager : MonoBehaviour
 
         if (brightnessSlider == null)
             brightnessSlider = GameObject.Find("BrightnessSlider")?.GetComponent<Slider>();
-
         if (uiOverlay == null)
             uiOverlay = GameObject.Find("UIBrightnessOverlay")?.GetComponent<Image>();
 
-        float savedBrightness = PlayerPrefs.GetFloat(BrightnessKey, 0f);
+        float savedBrightness = PlayerPrefs.GetFloat(BrightnessKey, DefaultBrightness);
         ApplyBrightness(savedBrightness);
 
-        if (brightnessSlider != null)
+        if (brightnessSlider)
         {
             brightnessSlider.minValue = -2f;
             brightnessSlider.maxValue = 2f;
@@ -141,6 +179,7 @@ public class SettingsMenuManager : MonoBehaviour
         }
     }
 
+    // === SETTINGS CHANGES ===
     public void ChangeGraphicsQuality()
     {
         if (graphicsDropdown) graphicsDropdown.Hide();
@@ -168,31 +207,36 @@ public class SettingsMenuManager : MonoBehaviour
 
     public void ChangeMasterVolume()
     {
-        SetMixerVolume("MasterVolume", masterVol.value);
+        if (!masterVol) return;
         PlayerPrefs.SetFloat("MasterVolume", masterVol.value);
+        SetMixerVolume("MasterVolume", masterVol.value);
     }
 
     public void ChangeMusicVolume()
     {
-        SetMixerVolume("MusicVolume", musicVol.value);
+        if (!musicVol) return;
         PlayerPrefs.SetFloat("MusicVolume", musicVol.value);
+        SetMixerVolume("MusicVolume", musicVol.value);
     }
 
     public void ChangeSFXVolume()
     {
-        SetMixerVolume("SFXVolume", sfxVol.value);
+        if (!sfxVol) return;
         PlayerPrefs.SetFloat("SFXVolume", sfxVol.value);
+        SetMixerVolume("SFXVolume", sfxVol.value);
     }
 
     public void ChangeVibrate()
     {
+        if (!vibrateToggle) return;
         isVibrate = vibrateToggle.isOn;
         PlayerPrefs.SetInt("Vibrate", isVibrate ? 1 : 0);
     }
 
+    // === SENSITIVITY ===
     public void ChangeSensitivity()
     {
-        if (sensitivitySlider == null) return;
+        if (!sensitivitySlider) return;
 
         float value = sensitivitySlider.value;
         PlayerPrefs.SetFloat(SensitivityKey, value);
@@ -203,19 +247,17 @@ public class SettingsMenuManager : MonoBehaviour
 
     private void ApplySavedSensitivity()
     {
-        float value = PlayerPrefs.GetFloat(SensitivityKey, 1f);
+        float value = PlayerPrefs.GetFloat(SensitivityKey, DefaultSensitivity);
         ApplySensitivityToPlayer(value);
     }
 
     private void ApplySensitivityToPlayer(float value)
     {
         Player player = Object.FindFirstObjectByType<Player>();
-        if (player != null)
-        {
-            player.SetSensitivity(value);
-        }
+        if (player != null) player.SetSensitivity(value);
     }
 
+    // === BRIGHTNESS ===
     public void SetBrightness(float value)
     {
         ApplyBrightness(value);
@@ -235,9 +277,11 @@ public class SettingsMenuManager : MonoBehaviour
         }
     }
 
-    private void SetMixerVolume(string parameter, float value)
+    // === HELPERS ===
+    private void SetMixerVolume(string parameter, float linearValue)
     {
-        MainMixer.SetFloat(parameter, value);
+        if (!MainMixer) return;
+        MainMixer.SetFloat(parameter, LinearToDb(Mathf.Clamp01(linearValue)));
     }
 
     private void OnDestroy()
@@ -347,13 +391,12 @@ public class SettingsMenuManager : MonoBehaviour
         GameObject settingsRoot = GameObject.Find(settingsMenuRootName);
         if (settingsRoot == null && graphicsDropdown != null)
             settingsRoot = graphicsDropdown.GetComponentInParent<Canvas>(true)?.gameObject;
-
         if (settingsRoot == null) return;
 
         if (!settingsRoot.activeSelf) settingsRoot.SetActive(true);
 
         var cg = settingsRoot.GetComponent<CanvasGroup>();
-        if (cg != null)
+        if (cg)
         {
             cg.alpha = 1f;
             cg.interactable = true;
@@ -361,7 +404,7 @@ public class SettingsMenuManager : MonoBehaviour
         }
 
         var ray = settingsRoot.GetComponent<GraphicRaycaster>();
-        if (ray != null) ray.enabled = true;
+        if (ray) ray.enabled = true;
 
         var canvas = settingsRoot.GetComponentInParent<Canvas>(true);
         if (canvas)
@@ -387,7 +430,6 @@ public class SettingsMenuManager : MonoBehaviour
         }
     }
 
-    // === AUDIO LISTENER CHECK ===
     private void EnsureActiveAudioListener()
     {
         listener = Object.FindFirstObjectByType<AudioListener>();
@@ -425,7 +467,6 @@ public class SettingsMenuManager : MonoBehaviour
         lastActiveCamera = Camera.main;
     }
 
-    // === CAMERA TRACKER: moves listener when the active camera changes ===
     private IEnumerator TrackActiveCamera()
     {
         while (true)
@@ -442,7 +483,79 @@ public class SettingsMenuManager : MonoBehaviour
                 }
                 lastActiveCamera = currentCam;
             }
-            yield return new WaitForSeconds(0.25f); // check 4x per second
+            yield return new WaitForSeconds(0.25f);
         }
+    }
+
+    // ===============================
+    // === RESET ALL (Button hook) ===
+    // ===============================
+    public void OnClick_ResetAll()
+    {
+        StartCoroutine(ResetAllRoutine());
+    }
+
+    private IEnumerator ResetAllRoutine()
+    {
+        // 1) Reset PlayerPrefs
+        PlayerPrefs.SetInt("GraphicsQuality", ClampQuality(DefaultQualityLevel));
+        PlayerPrefs.SetFloat("MasterVolume", DefaultMaster);
+        PlayerPrefs.SetFloat("MusicVolume", DefaultMusic);
+        PlayerPrefs.SetFloat("SFXVolume", DefaultSfx);
+        PlayerPrefs.SetInt("Vibrate", DefaultVibrate ? 1 : 0);
+        PlayerPrefs.SetFloat(BrightnessKey, DefaultBrightness);
+        PlayerPrefs.SetFloat(SensitivityKey, DefaultSensitivity);
+        PlayerPrefs.Save();
+
+        // 2) UI -> defaults
+        if (graphicsDropdown)
+        {
+            graphicsDropdown.value = ClampQuality(DefaultQualityLevel);
+            graphicsDropdown.RefreshShownValue();
+        }
+        if (masterVol) masterVol.value = DefaultMaster;
+        if (musicVol) musicVol.value = DefaultMusic;
+        if (sfxVol) sfxVol.value = DefaultSfx;
+
+        if (vibrateToggle) vibrateToggle.isOn = DefaultVibrate;
+
+        if (brightnessSlider) brightnessSlider.value = DefaultBrightness;
+        if (sensitivitySlider) sensitivitySlider.value = Mathf.Clamp(DefaultSensitivity, 0.1f, 2.0f);
+
+        // 3) Apply systems
+        SetMixerVolume("MasterVolume", DefaultMaster);
+        SetMixerVolume("MusicVolume", DefaultMusic);
+        SetMixerVolume("SFXVolume", DefaultSfx);
+
+        ApplyBrightness(DefaultBrightness);
+        ApplySensitivityToPlayer(DefaultSensitivity);
+
+        // 4) Apply quality safely (even if paused)
+        int q = ClampQuality(DefaultQualityLevel);
+        if (qualityApplyRoutine != null) StopCoroutine(qualityApplyRoutine);
+        bool isPaused = false; try { isPaused = PauseMenu.Paused; } catch { isPaused = false; }
+        if (isPaused)
+        {
+            pendingQualityLevel = q;
+            if (qualityApplyRoutine == null)
+                qualityApplyRoutine = StartCoroutine(ApplyQualityWhenUnpaused());
+        }
+        else
+        {
+            qualityApplyRoutine = StartCoroutine(ApplyQualityDeferred(q));
+        }
+
+        // 5) Clean TMP artifacts & ensure menu stays interactive
+        yield return StartCoroutine(BlockerKillerBurst());
+        ForceRestoreSettingsMenuScreen();
+
+        // optional: clear selection
+        if (EventSystem.current) EventSystem.current.SetSelectedGameObject(null);
+    }
+
+    private int ClampQuality(int level)
+    {
+        int max = Mathf.Max(0, QualitySettings.names.Length - 1);
+        return Mathf.Clamp(level, 0, max);
     }
 }
