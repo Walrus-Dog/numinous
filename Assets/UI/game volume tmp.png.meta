@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a9ea9c338b2ade34ca39ed428abc6fa2
+guid: 66fb63f4b8c72784abc5993d15cc0ee1
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -45,10 +45,10 @@ TextureImporter:
   compressionQuality: 50
   spriteMode: 2
   spriteExtrude: 1
-  spriteMeshType: 1
+  spriteMeshType: 0
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 300
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -97,23 +97,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: numinous titlework_0
+      name: game volume tmp_0
       rect:
         serializedVersion: 2
-        x: 22
-        y: 234
-        width: 1348
-        height: 256
+        x: 78
+        y: 387
+        width: 840
+        height: 108
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c2a4ef2bfc60a1d48893c7fdcbe6e439
-      internalID: 1873219311
+      spriteID: 1273f1350fc6e6b4d8bce209183c0369
+      internalID: -1427629019
       vertices: []
       indices: 
       edges: []
@@ -122,7 +122,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 967cb3c22f1d36449b7d79987fe1deff
+    spriteID: cea29a5959767fa45b9bba4c9efad316
     internalID: 0
     vertices: []
     indices: 
@@ -132,7 +132,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      numinous titlework_0: 1873219311
+      game volume tmp_0: -1427629019
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

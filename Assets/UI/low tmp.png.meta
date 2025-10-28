@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a9ea9c338b2ade34ca39ed428abc6fa2
+guid: 437bc1ae1e37c674187f3f17db773094
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,23 +97,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: numinous titlework_0
+      name: low tmp_0
       rect:
         serializedVersion: 2
-        x: 22
-        y: 234
-        width: 1348
-        height: 256
+        x: 66
+        y: 477
+        width: 242
+        height: 91
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c2a4ef2bfc60a1d48893c7fdcbe6e439
-      internalID: 1873219311
+      spriteID: 5cc0a0a137429b842b2302b6caaa3f32
+      internalID: 1839909940
       vertices: []
       indices: 
       edges: []
@@ -122,7 +122,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 967cb3c22f1d36449b7d79987fe1deff
+    spriteID: 35d25c428fe6a2d4592802693fe4a224
     internalID: 0
     vertices: []
     indices: 
@@ -132,7 +132,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      numinous titlework_0: 1873219311
+      low tmp_0: 1839909940
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

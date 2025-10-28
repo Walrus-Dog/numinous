@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 2
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -97,23 +97,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: quit button_0
+      name: quit button_1
       rect:
         serializedVersion: 2
-        x: 43
-        y: 115
-        width: 343
-        height: 181
+        x: 78
+        y: 137
+        width: 283
+        height: 113
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6c7158bc435942c48858297a18a5f753
-      internalID: -1660756813
+      spriteID: 4c4e6a51d0c0a71499f7e724335a8fba
+      internalID: -1951502145
       vertices: []
       indices: 
       edges: []
@@ -133,6 +133,7 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       quit button_0: -1660756813
+      quit button_1: -1951502145
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
