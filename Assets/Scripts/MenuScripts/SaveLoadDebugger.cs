@@ -3,26 +3,31 @@ using UnityEngine;
 
 public class SaveLoadDebugger : MonoBehaviour
 {
-    [Tooltip("Slot used by F5 (save) / F9 (load) / F8 (delete).")]
-    public int slot = 1;
+    [Tooltip("Slot used by F5 (save) / F9 (load) / F8 (delete). Default = 4")]
+    public int slot = 4;
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.F5))
         {
-            Debug.Log("[SLD] F5 Save requested");
+            Debug.Log("[SLD] ?? F5 Save requested");
             SaveManager.Instance.SaveToSlot(slot);
+            Notify("Saved Successfully");
             DumpSnapshot("[SLD] After SAVE");
         }
+
         if (Input.GetKeyDown(KeyCode.F9))
         {
-            Debug.Log("[SLD] F9 Load requested");
+            Debug.Log("[SLD] ?? F9 Load requested");
             SaveManager.Instance.LoadFromSlot(slot);
+            Notify("Loaded Successfully");
         }
+
         if (Input.GetKeyDown(KeyCode.F8))
         {
-            Debug.Log("[SLD] F8 Delete slot requested");
+            Debug.Log("[SLD] ?? F8 Delete slot requested");
             SaveManager.Instance.DeleteSlot(slot);
+            Notify("Deleted Save Slot");
         }
     }
 
@@ -44,5 +49,12 @@ public class SaveLoadDebugger : MonoBehaviour
                 Debug.Log($"       - {s.GetType().Name}");
         }
         Debug.Log($"[SLD] persistentDataPath: {Application.persistentDataPath}");
+    }
+
+    private void Notify(string msg)
+    {
+        var notifier = GameObject.FindFirstObjectByType<SaveNotificationUI>(FindObjectsInactive.Include);
+        if (notifier != null)
+            notifier.Show(msg);
     }
 }
