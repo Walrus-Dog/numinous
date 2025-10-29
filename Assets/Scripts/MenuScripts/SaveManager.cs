@@ -49,7 +49,7 @@ public class SaveManager : MonoBehaviour
     {
         slot = Mathf.Clamp(slot, 1, 3);
 
-        // Ensure we don't carry paused state across scenes
+        // Ensure a clean gameplay state before loading
         GameplayStateReset.ResetToGameplay();
 
         var json = SaveSystem.Read(slot);
@@ -97,8 +97,7 @@ public class SaveManager : MonoBehaviour
         return DateTimeOffset.FromUnixTimeSeconds(data.savedUnixTime).DateTime;
     }
 
-    // ===== Capture & Restore =====
-
+    // ===== Capture =====
     private SaveFile Capture()
     {
         var file = new SaveFile
@@ -151,115 +150,103 @@ public class SaveManager : MonoBehaviour
         return file;
     }
 
+    // ===== LoadSceneAndRestore =====
     private System.Collections.IEnumerator LoadSceneAndRestore(SaveFile data)
     {
-        // 1) Scene swap if needed
+        // === 1. Scene swap if needed ===
         var current = SceneManager.GetActiveScene().name;
         if (!string.IsNullOrEmpty(data.sceneName) && current != data.sceneName)
         {
             if (!SceneExistsInBuildSettings(data.sceneName))
             {
-                Debug.LogError($"[SaveManager] ? Scene '{data.sceneName}' is not in Build Settings. " +
-                               $"Add it (File -> Build Settings) or save again in a listed scene.");
+                Debug.LogError($"[SaveManager] ? Scene '{data.sceneName}' is not in Build Settings.");
                 yield break;
             }
 
-            Debug.Log($"[SaveManager] Loading scene '{data.sceneName}' (was '{current}')...");
+            Debug.Log($"[SaveManager] Loading scene '{data.sceneName}'...");
             var op = SceneManager.LoadSceneAsync(data.sceneName, LoadSceneMode.Single);
-            while (!op.isDone) yield return null;
-            yield return null; // allow Awake/Start
-        }
-        else
-        {
-            Debug.Log($"[SaveManager] Scene already '{current}', no scene change.");
+            while (!op.isDone)
+                yield return null;
+            yield return null; // wait one extra frame after scene load
         }
 
-        // 2) Fresh, unpaused state
+        // Reset to a clean baseline
         GameplayStateReset.ResetToGameplay();
 
-        // 3) Build entity lookup
+        // === 2. Restore entities ===
         var lookup = new Dictionary<string, SaveableEntity>();
         foreach (var e in GameObject.FindObjectsByType<SaveableEntity>(FindObjectsSortMode.None))
             lookup[e.UniqueId] = e;
 
-        Debug.Log($"[SaveManager] Restoring entries={data.entries?.Length ?? 0}, scene has entities={lookup.Count}");
-
-        int restoredEntities = 0, restoredComponents = 0, missingEntities = 0, missingComponents = 0;
-
         foreach (var entry in data.entries)
         {
-            if (!lookup.TryGetValue(entry.id, out var ent))
-            {
-                missingEntities++;
-                Debug.LogWarning($"[SaveManager] (missing entity) id={entry.id} nameHint='{entry.name}' components={entry.components?.Count ?? 0}");
-                continue;
-            }
+            if (!lookup.TryGetValue(entry.id, out var ent)) continue;
 
             var saveables = ent.GetComponents<ISaveable>();
-            var byType = new Dictionary<string, ISaveable>();
-            foreach (var s in saveables)
-                byType[s.GetType().AssemblyQualifiedName] = s;
-
-            int thisCompRestored = 0;
-
             foreach (var comp in entry.components)
             {
-                if (!byType.TryGetValue(comp.type, out var target))
+                foreach (var s in saveables)
                 {
-                    missingComponents++;
-                    Debug.LogWarning($"[SaveManager] (missing component) on '{ent.name}' type='{comp.type}'");
-                    continue;
-                }
-
-                try
-                {
-                    var adapterType = target.GetType();
-                    var stateType = adapterType.GetNestedType("State", BindingFlags.Public | BindingFlags.NonPublic);
-                    if (stateType == null)
+                    if (s.GetType().AssemblyQualifiedName == comp.type)
                     {
-                        Debug.LogWarning($"[SaveManager] {adapterType.Name} has no nested State type; skipping.");
-                        continue;
+                        var stateType = s.GetType().GetNestedType("State", BindingFlags.Public | BindingFlags.NonPublic);
+                        if (stateType == null) continue;
+                        var stateObj = JsonUtility.FromJson(comp.json, stateType);
+                        s.RestoreState(stateObj);
                     }
-
-                    var stateObj = JsonUtility.FromJson(comp.json, stateType);
-                    target.RestoreState(stateObj);
-                    restoredComponents++;
-                    thisCompRestored++;
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError($"[SaveManager] Restore error on '{ent.name}' ({target.GetType().Name}): {e}");
                 }
             }
-
-            if (thisCompRestored > 0) restoredEntities++;
         }
 
-        Debug.Log($"[SaveManager] ? Restore summary: entitiesRestored={restoredEntities}, " +
-                  $"componentsRestored={restoredComponents}, missingEntities={missingEntities}, missingComponents={missingComponents}");
+        Debug.Log("[SaveManager] ? Entities restored. Waiting for Player...");
 
-        // === ?? Stay paused after load ===
-        yield return null;
-
-        Time.timeScale = 0f;
-        PauseMenu.Paused = true;
-
-        var pm = UnityEngine.Object.FindFirstObjectByType<PauseMenu>();
-        if (pm != null)
+        // === 3. Wait for Player to exist ===
+        GameObject player = null;
+        float timeout = 5f;
+        while (player == null && timeout > 0f)
         {
-            if (pm.PauseMenuScreen != null)
-                pm.PauseMenuScreen.SetActive(true);
-
-            var field = pm.GetType().GetField("settingsMenuScreen", BindingFlags.NonPublic | BindingFlags.Instance);
-            var settings = field?.GetValue(pm) as GameObject;
-            if (settings != null)
-                settings.SetActive(false);
+            player = GameObject.FindGameObjectWithTag("Player");
+            timeout -= Time.unscaledDeltaTime;
+            yield return null;
         }
 
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        // === 4. Resume normal gameplay immediately ===
+        Time.timeScale = 1f;
+        PauseMenu.Paused = false;
 
-        Debug.Log("[SaveManager] ?? Loaded save — game remains paused with cursor visible.");
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        if (player != null)
+        {
+#if ENABLE_INPUT_SYSTEM
+            var pi = player.GetComponent<UnityEngine.InputSystem.PlayerInput>();
+            if (pi != null)
+            {
+                pi.enabled = true;
+                var map = pi.actions?.FindActionMap("Player", false);
+                if (map != null && pi.currentActionMap != map)
+                    pi.SwitchCurrentActionMap("Player");
+            }
+#endif
+
+            foreach (var mb in player.GetComponents<MonoBehaviour>())
+            {
+                if (mb != null && !mb.enabled)
+                    mb.enabled = true;
+            }
+
+            Debug.Log("[SaveManager] ?? Player active — gameplay resumed normally.");
+        }
+
+        // Hide pause menu if it's still active
+        var pm = UnityEngine.Object.FindFirstObjectByType<PauseMenu>(FindObjectsInactive.Include);
+        if (pm != null && pm.PauseMenuScreen != null)
+            pm.PauseMenuScreen.SetActive(false);
+
+#if UNITY_EDITOR
+        Debug.Log("[SaveManager] ? Game loaded UNPAUSED — cursor locked, ready to play.");
+#endif
     }
 
     private bool SceneExistsInBuildSettings(string name)
@@ -288,14 +275,14 @@ public class SaveManager : MonoBehaviour
     private class EntityRecord
     {
         public string id;
-        public string name; // hint for logs
+        public string name;
         public List<ComponentRecord> components;
     }
 
     [Serializable]
     private class ComponentRecord
     {
-        public string type; // AssemblyQualifiedName of the ISaveable adapter
-        public string json; // JSON of the adapter's nested State struct
+        public string type;
+        public string json;
     }
 }
