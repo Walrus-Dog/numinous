@@ -104,7 +104,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   soundToPlay: {fileID: 347467064985677059}
+  playOnce: 1
 --- !u!82 &347467064985677059
 AudioSource:
   m_ObjectHideFlags: 0
@@ -132,7 +133,7 @@ AudioSource:
   m_GameObject: {fileID: 1730110168257243947}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -7702377275053938126, guid: 23c79154fc5129242ad1dd177c67712f, type: 2}
   m_audioClip: {fileID: 8300000, guid: adca564b06f238c45bc6b96f752a224f, type: 3}
   m_Resource: {fileID: 8300000, guid: adca564b06f238c45bc6b96f752a224f, type: 3}
   m_PlayOnAwake: 0
