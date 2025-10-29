@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     [SerializeField] float worldBottomBoundary = -100f;
     [SerializeField] float cameraTransitionSpeed = 10f;
     [SerializeField] float gravityMultiplier = 1f;
+    [SerializeField] CharacterController characterController;
 
     public Transform cameraTransform;
 
@@ -73,6 +74,8 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        characterController.stepOffset = 1;
+
         // === Load saved sensitivity from PlayerPrefs (default 1.0) ===
         mouseSensitiviy = PlayerPrefs.GetFloat(SensitivityKey, 1f);
 

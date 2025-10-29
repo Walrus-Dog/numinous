@@ -275,6 +275,7 @@ MonoBehaviour:
   worldBottomBoundary: -100
   cameraTransitionSpeed: 10
   gravityMultiplier: 1
+  characterController: {fileID: 2670071407002590820}
   cameraTransform: {fileID: 598671968739312154}
   standingHeight: 0
   controller: {fileID: 0}
@@ -429,6 +430,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PauseMenuScreen: {fileID: 0}
+  settingsMenuScreen: {fileID: 0}
+  firstSelectedButton: {fileID: 0}
+  player: {fileID: 0}
+  playerInput: {fileID: 0}
+  extraScriptsToDisable: []
+  mainMenuSceneName: MainMenu
 --- !u!1 &5694132339445356192
 GameObject:
   m_ObjectHideFlags: 0
