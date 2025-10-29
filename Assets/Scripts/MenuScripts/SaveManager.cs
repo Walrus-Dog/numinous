@@ -36,7 +36,7 @@ public class SaveManager : MonoBehaviour
             var data = Capture();
             var json = JsonUtility.ToJson(data, true);
             SaveSystem.Write(slot, json);
-            Debug.Log($"[SaveManager] ? Saved slot {slot} -> {SaveSystem.GetSlotPath(slot)}. " +
+            Debug.Log($"[SaveManager] ?? Saved slot {slot} -> {SaveSystem.GetSlotPath(slot)}. " +
                       $"scene='{data.sceneName}', entries={data.entries?.Length ?? 0}");
         }
         catch (Exception e)
@@ -66,7 +66,7 @@ public class SaveManager : MonoBehaviour
         }
         catch (Exception e)
         {
-            Debug.LogError($"[SaveManager] ? JSON parse failed (slot {slot}). Delete old saves and try again. {e}");
+            Debug.LogError($"[SaveManager] JSON parse failed (slot {slot}). Delete old saves and try again. {e}");
             return;
         }
 
@@ -76,7 +76,7 @@ public class SaveManager : MonoBehaviour
             return;
         }
 
-        Debug.Log($"[SaveManager] ?? Loading slot {slot}: scene='{data.sceneName}', entries={data.entries?.Length ?? 0}");
+        Debug.Log($"[SaveManager] ? Loading slot {slot}: scene='{data.sceneName}', entries={data.entries?.Length ?? 0}");
         StartCoroutine(LoadSceneAndRestore(data));
     }
 
@@ -84,7 +84,7 @@ public class SaveManager : MonoBehaviour
     {
         slot = Mathf.Clamp(slot, 1, 3);
         SaveSystem.Delete(slot);
-        Debug.Log($"[SaveManager] Deleted slot {slot}");
+        Debug.Log($"[SaveManager] ?? Deleted slot {slot}");
     }
 
     public bool SlotExists(int slot) => SaveSystem.Exists(Mathf.Clamp(slot, 1, 3));
@@ -124,7 +124,11 @@ public class SaveManager : MonoBehaviour
                 try
                 {
                     var stateObj = s.CaptureState();
-                    if (stateObj == null) { Debug.Log($"[SaveManager] (skip) {ent.name}:{s.GetType().Name} returned null"); continue; }
+                    if (stateObj == null)
+                    {
+                        Debug.Log($"[SaveManager] (skip) {ent.name}:{s.GetType().Name} returned null");
+                        continue;
+                    }
 
                     string json = JsonUtility.ToJson(stateObj, false);
                     er.components.Add(new ComponentRecord
@@ -135,7 +139,7 @@ public class SaveManager : MonoBehaviour
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError($"[SaveManager] ? Capture error on {ent.name} ({s.GetType().Name}): {e}");
+                    Debug.LogError($"[SaveManager] Capture error on {ent.name} ({s.GetType().Name}): {e}");
                 }
             }
 
@@ -224,7 +228,7 @@ public class SaveManager : MonoBehaviour
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError($"[SaveManager] ? Restore error on '{ent.name}' ({target.GetType().Name}): {e}");
+                    Debug.LogError($"[SaveManager] Restore error on '{ent.name}' ({target.GetType().Name}): {e}");
                 }
             }
 
@@ -233,6 +237,29 @@ public class SaveManager : MonoBehaviour
 
         Debug.Log($"[SaveManager] ? Restore summary: entitiesRestored={restoredEntities}, " +
                   $"componentsRestored={restoredComponents}, missingEntities={missingEntities}, missingComponents={missingComponents}");
+
+        // === ?? Stay paused after load ===
+        yield return null;
+
+        Time.timeScale = 0f;
+        PauseMenu.Paused = true;
+
+        var pm = UnityEngine.Object.FindFirstObjectByType<PauseMenu>();
+        if (pm != null)
+        {
+            if (pm.PauseMenuScreen != null)
+                pm.PauseMenuScreen.SetActive(true);
+
+            var field = pm.GetType().GetField("settingsMenuScreen", BindingFlags.NonPublic | BindingFlags.Instance);
+            var settings = field?.GetValue(pm) as GameObject;
+            if (settings != null)
+                settings.SetActive(false);
+        }
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        Debug.Log("[SaveManager] ?? Loaded save — game remains paused with cursor visible.");
     }
 
     private bool SceneExistsInBuildSettings(string name)

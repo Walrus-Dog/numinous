@@ -828,6 +828,7 @@ MonoBehaviour:
   playerInput: {fileID: 0}
   extraScriptsToDisable:
   - {fileID: 0}
+  mainMenuSceneName: MainMenu
 --- !u!4 &62607566
 Transform:
   m_ObjectHideFlags: 0
@@ -1815,7 +1816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 18b8b1f710b94fddba44c78f58dfb5a8
+  uniqueId: 906c7b1d0c174ea3bba77dabec353b3a
 --- !u!114 &266330201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6269,6 +6270,7 @@ MonoBehaviour:
   player: {fileID: 0}
   playerInput: {fileID: 0}
   extraScriptsToDisable: []
+  mainMenuSceneName: MainMenu
 --- !u!4 &985514970
 Transform:
   m_ObjectHideFlags: 0
@@ -7349,7 +7351,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 0bc54566b1b645c082e497de98a93647
+  uniqueId: 18e753b23e6046008c2ae86303ba6a46
 --- !u!1 &1137684569
 GameObject:
   m_ObjectHideFlags: 0
