@@ -3456,6 +3456,7 @@ MonoBehaviour:
   playerInput: {fileID: 0}
   extraScriptsToDisable:
   - {fileID: 0}
+  mainMenuSceneName: MainMenu
 --- !u!4 &640885514
 Transform:
   m_ObjectHideFlags: 0
@@ -4541,7 +4542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 5b4f467a811140e9a763476a1a674b53
+  uniqueId: 606d7fe5fbe64bcebe5b0affae7fe303
 --- !u!114 &912533565
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4884,6 +4885,10 @@ PrefabInstance:
     - target: {fileID: 5115269801712852040, guid: 1242586ae4aa9a549bae1d5872beda8f, type: 3}
       propertyPath: codeDisplay
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5115269801712852040, guid: 1242586ae4aa9a549bae1d5872beda8f, type: 3}
+      propertyPath: openDistance
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 5115269801712852040, guid: 1242586ae4aa9a549bae1d5872beda8f, type: 3}
       propertyPath: interactToOpen
@@ -6230,6 +6235,7 @@ MonoBehaviour:
   player: {fileID: 0}
   playerInput: {fileID: 0}
   extraScriptsToDisable: []
+  mainMenuSceneName: MainMenu
 --- !u!4 &1153936017
 Transform:
   m_ObjectHideFlags: 0
@@ -7644,15 +7650,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2259217279554725988, guid: de5c6f4fadf093a4ca5c0fbc1de2d510, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -23.75284
+      value: -26.28
       objectReference: {fileID: 0}
     - target: {fileID: 2259217279554725988, guid: de5c6f4fadf093a4ca5c0fbc1de2d510, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 44.86
+      value: 46.08
       objectReference: {fileID: 0}
     - target: {fileID: 2259217279554725988, guid: de5c6f4fadf093a4ca5c0fbc1de2d510, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -97.19027
+      value: -95.87
       objectReference: {fileID: 0}
     - target: {fileID: 2259217279554725988, guid: de5c6f4fadf093a4ca5c0fbc1de2d510, type: 3}
       propertyPath: m_LocalRotation.w
