@@ -1,13 +1,13 @@
 using UnityEngine;
-using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-using System.Collections;
 
 public class MainMenu : MonoBehaviour
 {
-  public void Play()
+    [SerializeField] private string firstLevelName = "Level1"; // change to your scene name in the Inspector
+
+    public void Play()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene(firstLevelName);
     }
 
     public void Quit()
