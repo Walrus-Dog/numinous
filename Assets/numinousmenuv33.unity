@@ -1878,7 +1878,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: d1550b14c89e4c14851c45ddc2afa29b
+  uniqueId: 0c5a62f606a64414acf07dcf85c1dfa3
 --- !u!114 &266330201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7550,7 +7550,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 9d4ad6fe156a460599b3df0c608bbbff
+  uniqueId: c5b4737d6f724480ae69f482a36c2845
 --- !u!1 &1137684569
 GameObject:
   m_ObjectHideFlags: 0
@@ -9051,15 +9051,15 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1346270647}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 11.916299, y: 6.8665915, z: 4.9187}
+  m_LocalPosition: {x: 0, y: 0, z: -0.00004101}
+  m_LocalScale: {x: 43.72871, y: 25.198025, z: 18.049934}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1929428468}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000030517578, y: -3}
+  m_AnchoredPosition: {x: -0.00012207, y: -3}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1346270649
@@ -14328,7 +14328,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 659055166046999060, guid: f55f2ff9d1c902c4fa550e5500bc340f, type: 3}
       propertyPath: mouseSensitiviy
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 659055166046999060, guid: f55f2ff9d1c902c4fa550e5500bc340f, type: 3}
       propertyPath: gravityMultiplier
