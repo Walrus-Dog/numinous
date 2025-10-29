@@ -5,31 +5,43 @@ using UnityEngine.UI;
 public class MenuPanelSwitcher : MonoBehaviour
 {
     [Header("Panels")]
-    [SerializeField] GameObject mainMenuRoot;      // Only the main menu UI (NOT your Music)
-    [SerializeField] GameObject settingsMenuRoot;  // Root GameObject of the settings UI
+    [SerializeField] private GameObject mainMenuRoot;       // Main menu-only UI
+    [SerializeField] private GameObject settingsMenuRoot;   // Settings UI root
+    [SerializeField] private GameObject creditsMenuRoot;    // Credits UI root
 
-    [Header("Optional first-selected (keyboard / gamepad)")]
-    [SerializeField] Selectable firstOnMain;
-    [SerializeField] Selectable firstOnSettings;
+    [Header("First-selected (keyboard / gamepad)")]
+    [SerializeField] private Selectable firstOnMain;
+    [SerializeField] private Selectable firstOnSettings;
+    [SerializeField] private Selectable firstOnCredits;
 
     [Header("Always keep these active (e.g., Music)")]
-    [SerializeField] GameObject[] keepAlive;       // Drag your Music GameObject(s) here
+    [SerializeField] private GameObject[] keepAlive;
+
+    [Header("Hide these when NOT on Main (e.g., NuminousImage, main BGs)")]
+    [SerializeField] private GameObject[] hideWhenNotMain;
 
     [Header("Auto-find fallback names (optional)")]
-    [SerializeField] string mainMenuName = "MainMenu";
-    [SerializeField] string settingsMenuName = "SettingsMenuScreen";
+    [SerializeField] private string mainMenuName = "MainMenu";
+    [SerializeField] private string settingsMenuName = "SettingsMenuScreen";
+    [SerializeField] private string creditsMenuName = "CreditsMenuScreen";
+
+    [Header("Startup")]
+    [SerializeField] private StartPanel defaultPanel = StartPanel.Main;
 
     [Header("Debug")]
-    [SerializeField] bool verbose = false;
+    [SerializeField] private bool verbose = false;
 
-    void Awake()
+    private enum Panel { Main, Settings, Credits }
+    public enum StartPanel { Main, Settings, Credits }
+
+    private void Awake()
     {
-        // Heal timescale/cursor just in case you arrived from gameplay.
+        // Ensure menus start in a clean state
         Time.timeScale = 1f;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
 
-        // Ensure EventSystem exists
+        // Ensure an EventSystem exists
         if (EventSystem.current == null)
         {
             var es = new GameObject("EventSystem", typeof(EventSystem));
@@ -41,44 +53,65 @@ public class MenuPanelSwitcher : MonoBehaviour
             if (verbose) Debug.Log("[MenuPanelSwitcher] Created EventSystem");
         }
 
-        // Try to auto-wire if left empty
+        // Auto-wire by names if fields are unassigned
         if (!mainMenuRoot) mainMenuRoot = GameObject.Find(mainMenuName);
         if (!settingsMenuRoot) settingsMenuRoot = GameObject.Find(settingsMenuName);
+        if (!creditsMenuRoot) creditsMenuRoot = GameObject.Find(creditsMenuName);
 
-        // Start on main by default
-        ShowMain();
+        // Force a single-active panel on startup
+        switch (defaultPanel)
+        {
+            case StartPanel.Settings: TogglePanels(Panel.Settings); break;
+            case StartPanel.Credits: TogglePanels(Panel.Credits); break;
+            default: TogglePanels(Panel.Main); break;
+        }
     }
 
-    public void ShowSettings() => TogglePanels(true);
-    public void ShowMain() => TogglePanels(false);
+    // ========== Public API (wire buttons to these) ==========
+    public void ShowMain() => TogglePanels(Panel.Main);
+    public void ShowSettings() => TogglePanels(Panel.Settings);
+    public void ShowCredits() => TogglePanels(Panel.Credits);
+    public void OnBackToMain() => ShowMain();
+    // ========================================================
 
-    private void TogglePanels(bool showSettings)
+    private void TogglePanels(Panel target)
     {
-        if (verbose) Debug.Log($"[MenuPanelSwitcher] Toggle -> showSettings={showSettings}");
+        if (verbose) Debug.Log($"[MenuPanelSwitcher] Toggle -> {target}");
 
-        // Activate target, deactivate the other
-        SafeSetActive(settingsMenuRoot, showSettings);
-        SafeSetActive(mainMenuRoot, !showSettings);
+        // Activate only the target panel
+        SafeSetActive(mainMenuRoot, target == Panel.Main);
+        SafeSetActive(settingsMenuRoot, target == Panel.Settings);
+        SafeSetActive(creditsMenuRoot, target == Panel.Credits);
 
-        // Force Settings panel to be visible & clickable (in case a CanvasGroup or Raycaster is off)
-        if (showSettings && settingsMenuRoot)
-            ForceVisible(settingsMenuRoot);
-
-        // Keep some objects (like Music) alive regardless of which panel is active
-        if (keepAlive != null)
+        // Heal target panel visibility (CanvasGroup/Raycaster/Canvas) if needed
+        switch (target)
         {
-            foreach (var go in keepAlive)
-                SafeSetActive(go, true);
+            case Panel.Settings: if (settingsMenuRoot) ForceVisible(settingsMenuRoot); break;
+            case Panel.Credits: if (creditsMenuRoot) ForceVisible(creditsMenuRoot); break;
         }
 
-        // Clear & set selected button
-        EventSystem.current?.SetSelectedGameObject(null);
-        var target = showSettings ? firstOnSettings : firstOnMain;
-        if (target) target.Select();
+        // Keep-alive objects always on (e.g., Music)
+        if (keepAlive != null)
+            foreach (var go in keepAlive) SafeSetActive(go, true);
 
-        // Keep cursor usable in menus
+        // Objects that should only show on Main (e.g., NuminousImage)
+        bool showMainExtras = (target == Panel.Main);
+        if (hideWhenNotMain != null)
+            foreach (var go in hideWhenNotMain) SafeSetActive(go, showMainExtras);
+
+        // Controller/keyboard focus
+        EventSystem.current?.SetSelectedGameObject(null);
+        Selectable first =
+            target == Panel.Main ? firstOnMain :
+            target == Panel.Settings ? firstOnSettings :
+                                       firstOnCredits;
+        if (first) first.Select();
+
+        // Cursor for menus
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+
+        if (verbose) DebugDump();
     }
 
     private static void SafeSetActive(GameObject go, bool state)
@@ -89,25 +122,80 @@ public class MenuPanelSwitcher : MonoBehaviour
 
     private void ForceVisible(GameObject root)
     {
-        // Ensure Canvas enabled and on top
-        var canvas = root.GetComponentInParent<Canvas>(true);
+        // Make sure the target panel can render & receive input
+        var canvasGroup = root.GetComponent<CanvasGroup>();
+        if (canvasGroup)
+        {
+            canvasGroup.alpha = 1f;
+            canvasGroup.interactable = true;
+            canvasGroup.blocksRaycasts = true;
+        }
+
+        var ray = root.GetComponentInParent<GraphicRaycaster>(true);
+        if (ray) ray.enabled = true;
+
+        // If the panel has its own Canvas, ensure it isn't behind everything
+        var canvas = root.GetComponent<Canvas>();
         if (canvas)
         {
             canvas.enabled = true;
             canvas.overrideSorting = true;
             if (canvas.sortingOrder < 1000) canvas.sortingOrder = 1000;
         }
+    }
 
-        // Ensure the panel itself receives input
-        var cg = root.GetComponent<CanvasGroup>();
-        if (cg)
+    private void DebugDump()
+    {
+        Debug.Log($"[MenuPanelSwitcher] Active -> " +
+                  $"Main:{(mainMenuRoot && mainMenuRoot.activeSelf)}  " +
+                  $"Settings:{(settingsMenuRoot && settingsMenuRoot.activeSelf)}  " +
+                  $"Credits:{(creditsMenuRoot && creditsMenuRoot.activeSelf)}");
+    }
+    // ---- TEMP: hard bring Credits to the front & full-screen it ----
+    [ContextMenu("Force Show Credits (Top & Full)")]
+    public void ForceShowCreditsNow()
+    {
+        // Ensure we think we're on Credits
+        ShowCredits();
+
+        if (!creditsMenuRoot)
         {
-            cg.alpha = 1f;
-            cg.interactable = true;
-            cg.blocksRaycasts = true;
+            Debug.LogError("[MenuPanelSwitcher] creditsMenuRoot not assigned.");
+            return;
         }
 
-        var ray = root.GetComponentInParent<GraphicRaycaster>(true);
-        if (ray) ray.enabled = true;
+        // Full-stretch, sane transform, render last among siblings
+        var rt = creditsMenuRoot.GetComponent<RectTransform>();
+        if (rt)
+        {
+            rt.anchorMin = Vector2.zero;
+            rt.anchorMax = Vector2.one;
+            rt.pivot = new Vector2(0.5f, 0.5f);
+            rt.offsetMin = Vector2.zero;
+            rt.offsetMax = Vector2.zero;
+            rt.anchoredPosition = Vector2.zero;
+            rt.localScale = Vector3.one;
+            rt.localRotation = Quaternion.identity;
+            rt.SetAsLastSibling(); // draw above siblings
+        }
+
+        // Make 100% sure it's visible and interactive
+        var cg = creditsMenuRoot.GetComponent<CanvasGroup>() ?? creditsMenuRoot.AddComponent<CanvasGroup>();
+        cg.alpha = 1f; cg.interactable = true; cg.blocksRaycasts = true;
+
+        // Put it on a very high sorting layer temporarily
+        var c = creditsMenuRoot.GetComponent<Canvas>() ?? creditsMenuRoot.AddComponent<Canvas>();
+        c.overrideSorting = true;
+        c.sortingOrder = 5000;
+
+        // Ensure it can receive clicks
+        if (!creditsMenuRoot.GetComponent<GraphicRaycaster>())
+            creditsMenuRoot.AddComponent<GraphicRaycaster>();
+
+        Debug.Log("[MenuPanelSwitcher] Forced Credits visible on top (order=5000).");
     }
+
+
+
+
 }
