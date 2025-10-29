@@ -1682,6 +1682,83 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1001 &229531469
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 347467064985677059, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: Loop
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 347467064985677059, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: 37fe5f5236670fa458f28d0394e117e2, type: 3}
+    - target: {fileID: 347467064985677059, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 37fe5f5236670fa458f28d0394e117e2, type: 3}
+    - target: {fileID: 1730110168257243947, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_Name
+      value: SoundTrigger (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 25.60869
+      objectReference: {fileID: 0}
+    - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.4905507
+      objectReference: {fileID: 0}
+    - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 17.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -9.94
+      objectReference: {fileID: 0}
+    - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8153393985337908858, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: playOnce
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
 --- !u!1 &230384603
 GameObject:
   m_ObjectHideFlags: 0
@@ -1878,7 +1955,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 2b713445121d4e009883580ab45b6c8b
+  uniqueId: 3c06150238e846ca93fb0990118ac9b2
 --- !u!114 &266330201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7550,7 +7627,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 06bdf333643e48fab99afc54ba11f2c3
+  uniqueId: 92e1c3ae254642babbbce668613f76e3
 --- !u!1 &1137684569
 GameObject:
   m_ObjectHideFlags: 0
@@ -15620,3 +15697,4 @@ SceneRoots:
   - {fileID: 1743610025}
   - {fileID: 1815626150}
   - {fileID: 1914054898}
+  - {fileID: 229531469}
