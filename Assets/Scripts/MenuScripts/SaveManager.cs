@@ -244,6 +244,16 @@ public class SaveManager : MonoBehaviour
         if (pm != null && pm.PauseMenuScreen != null)
             pm.PauseMenuScreen.SetActive(false);
 
+        // === 5. Fix: If we loaded the Main Menu, ensure cursor is visible ===
+        if (data.sceneName.Equals("MainMenu", StringComparison.OrdinalIgnoreCase))
+        {
+            Time.timeScale = 1f;
+            PauseMenu.Paused = false;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Debug.Log("[SaveManager] ?? Cursor re-enabled for Main Menu scene.");
+        }
+
 #if UNITY_EDITOR
         Debug.Log("[SaveManager] ? Game loaded UNPAUSED — cursor locked, ready to play.");
 #endif

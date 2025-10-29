@@ -2825,9 +2825,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98089a3c4558f554f81e1d0d4477f9bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menuSceneNames:
-  - MainMenu
-  firstSelected: {fileID: 1331402178}
 --- !u!114 &781856439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8494,7 +8491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: ef8323aa715547b6adcbf7f6142d13aa
+  uniqueId: 6d16fb2b625041e5898b607816c1f50f
 --- !u!114 &1915817215
 MonoBehaviour:
   m_ObjectHideFlags: 0
