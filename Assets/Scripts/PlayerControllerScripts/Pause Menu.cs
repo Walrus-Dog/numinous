@@ -10,7 +10,7 @@ public class PauseMenu : MonoBehaviour
 
     [Header("UI")]
     public GameObject PauseMenuScreen;
-    [SerializeField] public GameObject settingsMenuScreen;
+    [SerializeField] private GameObject settingsMenuScreen;
     [SerializeField] private GameObject firstSelectedButton;
 
     [Header("Gameplay")]
@@ -19,9 +19,9 @@ public class PauseMenu : MonoBehaviour
     public MonoBehaviour[] extraScriptsToDisable;
 
     [Header("Scenes")]
-    [SerializeField] private string mainMenuSceneName = "MainMenu";
+    [SerializeField] private string mainMenuSceneName = "MainMenu"; // set in Inspector if different
 
-    private bool inputReady = true;
+    private bool IsSettingsOpen => settingsMenuScreen != null && settingsMenuScreen.activeSelf;
 
     void Awake()
     {
@@ -38,57 +38,58 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        // Detect ESC using unscaled time — runs even while paused
-        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame && inputReady)
+        // Read ESC even when timeScale = 0
+        if (Keyboard.current == null) return;
+
+        if (Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            StartCoroutine(EscapeToggleCooldown());
-            if (settingsMenuScreen != null && settingsMenuScreen.activeSelf)
+            // If Settings is open, close it first (don’t change pause state)
+            if (IsSettingsOpen)
             {
-                CloseSettings(); // ESC closes settings first
+                CloseSettings();
                 return;
             }
 
+            // Otherwise toggle pause <-> unpause
             if (Paused) ResumeGame();
             else PauseGame();
         }
     }
 
-    private IEnumerator EscapeToggleCooldown()
-    {
-        inputReady = false;
-        yield return new WaitForSecondsRealtime(0.25f);
-        inputReady = true;
-    }
 
     public void PauseGame()
     {
         EnsureEventSystemExists();
 
-        PauseMenuScreen.SetActive(true);
+        if (PauseMenuScreen != null) PauseMenuScreen.SetActive(true);
         if (settingsMenuScreen != null) settingsMenuScreen.SetActive(false);
 
+        // initialize UI before freeze & unlock
         StartCoroutine(ShowPauseMenuRoutine());
     }
 
     private IEnumerator ShowPauseMenuRoutine()
     {
+        // wait one frame so UI event/raycast systems rebuild
         yield return new WaitForEndOfFrame();
         Canvas.ForceUpdateCanvases();
 
+        // now unlock and show cursor
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
+        // reset EventSystem focus
         EventSystem.current?.SetSelectedGameObject(null);
         if (firstSelectedButton != null)
             EventSystem.current.SetSelectedGameObject(firstSelectedButton);
 
+        // finally freeze time and disable gameplay
         Time.timeScale = 0f;
         Paused = true;
 
         if (playerInput != null) playerInput.enabled = false;
         if (player != null) player.enabled = false;
-        foreach (var s in extraScriptsToDisable)
-            if (s != null) s.enabled = false;
+        foreach (var s in extraScriptsToDisable) if (s != null) s.enabled = false;
     }
 
     public void ResumeGame()
@@ -96,13 +97,12 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         Paused = false;
 
-        PauseMenuScreen.SetActive(false);
+        if (PauseMenuScreen != null) PauseMenuScreen.SetActive(false);
         if (settingsMenuScreen != null) settingsMenuScreen.SetActive(false);
 
         if (playerInput != null) playerInput.enabled = true;
         if (player != null) player.enabled = true;
-        foreach (var s in extraScriptsToDisable)
-            if (s != null) s.enabled = true;
+        foreach (var s in extraScriptsToDisable) if (s != null) s.enabled = true;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -112,7 +112,7 @@ public class PauseMenu : MonoBehaviour
     public void OpenSettings()
     {
         if (!settingsMenuScreen) return;
-        PauseMenuScreen.SetActive(false);
+        if (PauseMenuScreen) PauseMenuScreen.SetActive(false);
         settingsMenuScreen.SetActive(true);
         Canvas.ForceUpdateCanvases();
         EventSystem.current?.SetSelectedGameObject(null);
@@ -122,30 +122,26 @@ public class PauseMenu : MonoBehaviour
     {
         if (!settingsMenuScreen) return;
         settingsMenuScreen.SetActive(false);
-        PauseMenuScreen.SetActive(true);
+        if (PauseMenuScreen) PauseMenuScreen.SetActive(true);
         Canvas.ForceUpdateCanvases();
         EventSystem.current?.SetSelectedGameObject(null);
     }
 
     public void QuitButton()
     {
+        // Unpause & set a menu-safe cursor BEFORE loading the menu scene
         Time.timeScale = 1f;
         Paused = false;
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        if (playerInput != null) playerInput.enabled = false;
-        if (player != null) player.enabled = false;
-        foreach (var s in extraScriptsToDisable)
-            if (s != null) s.enabled = false;
-
+        // Load the main menu by NAME (safer than index math)
         if (!SceneInBuild(mainMenuSceneName))
         {
-            Debug.LogError($"[PauseMenu] Scene '{mainMenuSceneName}' not found in Build Settings.");
+            Debug.LogError($"[PauseMenu] Scene '{mainMenuSceneName}' is not in Build Settings / active Build Profile.");
             return;
         }
-
         SceneManager.LoadScene(mainMenuSceneName, LoadSceneMode.Single);
     }
 

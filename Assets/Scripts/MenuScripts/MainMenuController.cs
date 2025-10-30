@@ -7,82 +7,139 @@ using TMPro;
 public class MainMenuController : MonoBehaviour
 {
     [Header("Scenes")]
-    [Tooltip("Scene to start when choosing New Game.")]
+    [Tooltip("Scene to start when choosing New Game (no saves).")]
     public string level1SceneName = "Level1";
 
     [Header("Buttons (UGUI)")]
-    public UnityEngine.UI.Button continueButton;
+    public UnityEngine.UI.Button playContinueButton;   // Play/Continue -> most recent slot
     public UnityEngine.UI.Button loadSlot1Button;
     public UnityEngine.UI.Button loadSlot2Button;
     public UnityEngine.UI.Button loadSlot3Button;
-    public UnityEngine.UI.Button newGameButton; // optional
+    public UnityEngine.UI.Button newGameButton;
+
+    [Header("Delete Buttons (UGUI)")]
+    public UnityEngine.UI.Button deleteSlot1Button;
+    public UnityEngine.UI.Button deleteSlot2Button;
+    public UnityEngine.UI.Button deleteSlot3Button;
 
     [Header("Optional labels next to buttons")]
-    public TMP_Text continueLabel;
+    public TMP_Text playContinueLabel;                 // shows “Continue • Slot X • timestamp” or “Play • No save found”
     public TMP_Text slot1Label;
     public TMP_Text slot2Label;
     public TMP_Text slot3Label;
 
     [Header("Options")]
-    [Tooltip("If true, New Game clears all slots before loading Level1.")]
-    public bool wipeSavesOnNewGame = false;
-
-    [Tooltip("If true, disable Load buttons for empty slots. If false, loads remain clickable and log 'empty'.")]
-    public bool disableLoadButtonsIfEmpty = false;
+    [Tooltip("If true, disable Load buttons for empty slots.")]
+    public bool disableLoadButtonsIfEmpty = true;
 
     [Tooltip("If true, will create a SaveManager at runtime if none exists.")]
     public bool autoBootstrapSaveManager = true;
 
-    private void Awake()
+    [Header("Confirmation")]
+    [Tooltip("Assign your ConfirmDialog panel here.")]
+    public ConfirmDialog confirmDialog;
+
+    void Awake()
     {
         if (autoBootstrapSaveManager) EnsureSaveManager();
     }
 
-    private void OnEnable()
+    void OnEnable()
     {
-        RefreshUI();
         WireButtons();
+        WireDeleteButtons();
+        RefreshUI();
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
-        if (continueButton) continueButton.onClick.RemoveListener(OnClick_Continue);
+        // remove listeners to avoid duplicate subscriptions on re-enable
+        if (playContinueButton) playContinueButton.onClick.RemoveListener(OnClick_PlayContinue);
         if (loadSlot1Button) loadSlot1Button.onClick.RemoveListener(OnClick_Load1);
         if (loadSlot2Button) loadSlot2Button.onClick.RemoveListener(OnClick_Load2);
         if (loadSlot3Button) loadSlot3Button.onClick.RemoveListener(OnClick_Load3);
         if (newGameButton) newGameButton.onClick.RemoveListener(OnClick_NewGame);
+
+        if (deleteSlot1Button) deleteSlot1Button.onClick.RemoveAllListeners();
+        if (deleteSlot2Button) deleteSlot2Button.onClick.RemoveAllListeners();
+        if (deleteSlot3Button) deleteSlot3Button.onClick.RemoveAllListeners();
     }
 
     private void WireButtons()
     {
-        if (continueButton) { continueButton.onClick.RemoveAllListeners(); continueButton.onClick.AddListener(OnClick_Continue); }
+        if (playContinueButton) { playContinueButton.onClick.RemoveAllListeners(); playContinueButton.onClick.AddListener(OnClick_PlayContinue); }
         if (loadSlot1Button) { loadSlot1Button.onClick.RemoveAllListeners(); loadSlot1Button.onClick.AddListener(OnClick_Load1); }
         if (loadSlot2Button) { loadSlot2Button.onClick.RemoveAllListeners(); loadSlot2Button.onClick.AddListener(OnClick_Load2); }
         if (loadSlot3Button) { loadSlot3Button.onClick.RemoveAllListeners(); loadSlot3Button.onClick.AddListener(OnClick_Load3); }
         if (newGameButton) { newGameButton.onClick.RemoveAllListeners(); newGameButton.onClick.AddListener(OnClick_NewGame); }
     }
 
-    // === Button handlers ===
-    public void OnClick_Continue()
+    private void WireDeleteButtons()
     {
-        int slot = GetMostRecentSlot();
-        if (slot > 0 && SaveManagerAvailable()) SaveManager.Instance.LoadFromSlot(slot);
-        else StartLevel1Fresh();
+        if (deleteSlot1Button)
+        {
+            deleteSlot1Button.onClick.RemoveAllListeners();
+            deleteSlot1Button.onClick.AddListener(() => ConfirmDelete(1));
+        }
+        if (deleteSlot2Button)
+        {
+            deleteSlot2Button.onClick.RemoveAllListeners();
+            deleteSlot2Button.onClick.AddListener(() => ConfirmDelete(2));
+        }
+        if (deleteSlot3Button)
+        {
+            deleteSlot3Button.onClick.RemoveAllListeners();
+            deleteSlot3Button.onClick.AddListener(() => ConfirmDelete(3));
+        }
     }
 
-    public void OnClick_Load1() => TryLoadSlot(1);
-    public void OnClick_Load2() => TryLoadSlot(2);
-    public void OnClick_Load3() => TryLoadSlot(3);
-
-    public void OnClick_NewGame()
+    // === Button handlers ===
+    private void OnClick_PlayContinue()
     {
-        if (wipeSavesOnNewGame && SaveManagerAvailable())
+        int slot = GetMostRecentSlot();
+        if (slot > 0 && SaveManagerAvailable())
         {
-            SaveSystem.Delete(1);
-            SaveSystem.Delete(2);
-            SaveSystem.Delete(3);
+            Debug.Log($"[MainMenu] Continue -> Loading most recent slot {slot}");
+            SaveManager.Instance.LoadFromSlot(slot);
         }
+        else
+        {
+            Debug.Log("[MainMenu] Continue -> No saves. Starting Level1 fresh.");
+            StartLevel1Fresh();
+        }
+    }
+
+    private void OnClick_Load1() => TryLoadSlot(1);
+    private void OnClick_Load2() => TryLoadSlot(2);
+    private void OnClick_Load3() => TryLoadSlot(3);
+
+    private void OnClick_NewGame()
+    {
         StartLevel1Fresh();
+    }
+
+    private void ConfirmDelete(int slot)
+    {
+        if (confirmDialog != null)
+        {
+            // Show confirmation popup
+            confirmDialog.Show(
+                $"Delete Save Slot {slot}? This cannot be undone.",
+                onYes: () =>
+                {
+                    SaveManager.Instance?.DeleteSlot(slot);
+                    RefreshUI();
+                },
+                onNo: null
+            );
+        }
+        else
+        {
+            // Fallback if dialog not assigned
+            Debug.LogWarning("[MainMenu] ConfirmDialog not assigned; deleting without confirmation.");
+            SaveManager.Instance?.DeleteSlot(slot);
+            RefreshUI();
+        }
     }
 
     // === Helpers ===
@@ -96,7 +153,7 @@ public class MainMenuController : MonoBehaviour
 
         if (SaveManager.Instance.SlotExists(slot))
         {
-            Debug.Log($"[MainMenu] Loading slot {slot}...");
+            Debug.Log($"[MainMenu] Loading slot {slot}…");
             SaveManager.Instance.LoadFromSlot(slot);
         }
         else
@@ -126,27 +183,33 @@ public class MainMenuController : MonoBehaviour
         int mostRecent = hasSM ? GetMostRecentSlot() : 0;
         bool hasAnySave = mostRecent > 0;
 
-        if (continueButton) continueButton.interactable = hasAnySave;
-        if (continueLabel)
+        if (playContinueLabel)
         {
             if (hasAnySave && SaveManager.Instance.GetSlotSavedTime(mostRecent).HasValue)
             {
                 var t = SaveManager.Instance.GetSlotSavedTime(mostRecent).Value.ToLocalTime();
-                continueLabel.text = $"Slot {mostRecent} • {t:g}";
+                playContinueLabel.text = $"Continue • Slot {mostRecent} • {t:g}";
             }
-            else continueLabel.text = "No save found";
+            else
+            {
+                playContinueLabel.text = "Play • No save found";
+            }
         }
 
         SetSlotUI(1, loadSlot1Button, slot1Label, hasSM);
         SetSlotUI(2, loadSlot2Button, slot2Label, hasSM);
         SetSlotUI(3, loadSlot3Button, slot3Label, hasSM);
+
+        // Optionally disable delete buttons if the slot is empty
+        if (deleteSlot1Button) deleteSlot1Button.interactable = hasSM && SaveManager.Instance.SlotExists(1);
+        if (deleteSlot2Button) deleteSlot2Button.interactable = hasSM && SaveManager.Instance.SlotExists(2);
+        if (deleteSlot3Button) deleteSlot3Button.interactable = hasSM && SaveManager.Instance.SlotExists(3);
     }
 
     private void SetSlotUI(int slot, UnityEngine.UI.Button btn, TMP_Text label, bool hasSM)
     {
         bool exists = hasSM && SaveManager.Instance.SlotExists(slot);
 
-        // Keep clickable unless you explicitly want to disable when empty
         if (btn) btn.interactable = !disableLoadButtonsIfEmpty || exists;
 
         if (label)
@@ -195,13 +258,11 @@ public class MainMenuController : MonoBehaviour
     {
         if (SaveManager.Instance != null) return true;
 
-        // Try new Unity 6 API (includes inactive objects)
         var existing = GameObject.FindFirstObjectByType<SaveManager>(FindObjectsInactive.Include);
         if (existing != null) return true;
 
-        // Create one if missing
         var go = GameObject.Find("SaveSystem") ?? new GameObject("SaveSystem");
-        if (go.GetComponent<SaveManager>() == null) go.AddComponent<SaveManager>();
+        if (!go.GetComponent<SaveManager>()) go.AddComponent<SaveManager>();
         return SaveManager.Instance != null;
     }
 }
