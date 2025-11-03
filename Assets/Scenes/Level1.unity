@@ -244,15 +244,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2259217279554725988, guid: de5c6f4fadf093a4ca5c0fbc1de2d510, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.703
+      value: -6.424
       objectReference: {fileID: 0}
     - target: {fileID: 2259217279554725988, guid: de5c6f4fadf093a4ca5c0fbc1de2d510, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13.397
+      value: 0.402
       objectReference: {fileID: 0}
     - target: {fileID: 2259217279554725988, guid: de5c6f4fadf093a4ca5c0fbc1de2d510, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -16.677
+      value: -3.875
       objectReference: {fileID: 0}
     - target: {fileID: 2259217279554725988, guid: de5c6f4fadf093a4ca5c0fbc1de2d510, type: 3}
       propertyPath: m_LocalRotation.w
@@ -348,6 +348,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slot: 2
+  requireConfirmation: 1
+  confirmDialog: {fileID: 0}
+  customConfirmMessage: 
 --- !u!114 &20188239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1955,7 +1958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 3c06150238e846ca93fb0990118ac9b2
+  uniqueId: 15dce8f8b0204a8fa770dbaeb6606022
 --- !u!114 &266330201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2576,6 +2579,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slot: 3
+  requireConfirmation: 1
+  confirmDialog: {fileID: 0}
+  customConfirmMessage: 
 --- !u!114 &295262666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3366,6 +3372,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slot: 1
+  requireConfirmation: 1
+  confirmDialog: {fileID: 0}
+  customConfirmMessage: 
 --- !u!114 &420881114
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3951,6 +3960,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slot: 2
+  requireConfirmation: 1
+  confirmDialog: {fileID: 0}
+  customConfirmMessage: 
 --- !u!114 &514613301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7325,6 +7337,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slot: 3
+  requireConfirmation: 1
+  confirmDialog: {fileID: 0}
+  customConfirmMessage: 
 --- !u!114 &1092904827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7592,6 +7607,75 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1113468117}
   m_CullTransparentMesh: 1
+--- !u!1001 &1127431543
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 347467064985677059, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: 6c0405eaa47e25f41b85196f5b712958, type: 3}
+    - target: {fileID: 347467064985677059, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 6c0405eaa47e25f41b85196f5b712958, type: 3}
+    - target: {fileID: 1730110168257243947, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_Name
+      value: SoundTrigger (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -28.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.35984612
+      objectReference: {fileID: 0}
+    - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 17.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8153393985337908858, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
+      propertyPath: playOnce
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
 --- !u!1 &1137346538 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4924790611583681987, guid: f55f2ff9d1c902c4fa550e5500bc340f, type: 3}
@@ -7627,7 +7711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 92e1c3ae254642babbbce668613f76e3
+  uniqueId: 985b5567fcf94311956685277a6aaf23
 --- !u!1 &1137684569
 GameObject:
   m_ObjectHideFlags: 0
@@ -8186,6 +8270,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slot: 1
+  requireConfirmation: 1
+  confirmDialog: {fileID: 0}
+  customConfirmMessage: 
 --- !u!114 &1250967646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11909,6 +11996,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slot: 1
+  requireConfirmation: 1
+  confirmDialog: {fileID: 0}
+  customConfirmMessage: 
 --- !u!114 &1673433428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12542,6 +12632,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slot: 2
+  requireConfirmation: 1
+  confirmDialog: {fileID: 0}
+  customConfirmMessage: 
 --- !u!114 &1779809802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12941,19 +13034,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
       propertyPath: m_LocalScale.x
-      value: 11.40019
+      value: 8.578872
       objectReference: {fileID: 0}
     - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
       propertyPath: m_LocalScale.y
-      value: 11.40019
+      value: 8.578872
       objectReference: {fileID: 0}
     - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
       propertyPath: m_LocalScale.z
-      value: 11.40019
+      value: 6.150926
       objectReference: {fileID: 0}
     - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.306848
+      value: -2.03
       objectReference: {fileID: 0}
     - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
       propertyPath: m_LocalPosition.y
@@ -12961,7 +13054,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 18.179974
+      value: 17.19
       objectReference: {fileID: 0}
     - target: {fileID: 5873879989948757052, guid: 9ff83511756579d4ba169d217a1ff2bc, type: 3}
       propertyPath: m_LocalRotation.w
@@ -15091,6 +15184,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slot: 3
+  requireConfirmation: 1
+  confirmDialog: {fileID: 0}
+  customConfirmMessage: 
 --- !u!114 &2118959208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15698,3 +15794,4 @@ SceneRoots:
   - {fileID: 1815626150}
   - {fileID: 1914054898}
   - {fileID: 229531469}
+  - {fileID: 1127431543}
