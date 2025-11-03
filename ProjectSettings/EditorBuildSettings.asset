@@ -16,8 +16,8 @@ EditorBuildSettings:
     guid: 1390b27adf6611c45b1514d59263a209
   - enabled: 1
     path: Assets/Scenes/Credits.unity
-    guid: 7babef87643065e4888088a146e6b4d0
-  - enabled: 1
+    guid: 857d2809e27b675429c85a5009135e16
+  - enabled: 0
     path: Assets/numinousmenuv27.unity
     guid: 6bb849db83048a046a2040ef691c4014
   m_configObjects: {}
