@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Audio;
@@ -17,15 +18,21 @@ public class SettingsMenuManager : MonoBehaviour
     public Slider masterVol, musicVol, sfxVol;
     public Toggle vibrateToggle;
 
-    [Header("Audio")]
-    public AudioMixer MainMixer;
-
     [Header("Brightness")]
     [SerializeField] private Slider brightnessSlider;
     [SerializeField] private Image uiOverlay;
 
     [Header("Controls")]
     [SerializeField] private Slider sensitivitySlider;
+
+    [Header("Audio")]
+    public AudioMixer MainMixer;
+
+    [Header("Display / Resolution")]
+    public TMP_Dropdown resolutionDropdown;   // NEW
+    public TMP_Dropdown displayModeDropdown;  // NEW
+
+    private Resolution[] availableResolutions; // NEW
 
     private Volume globalVolume;
     private ColorAdjustments colorAdjustments;
@@ -50,6 +57,10 @@ public class SettingsMenuManager : MonoBehaviour
     private const bool DefaultVibrate = true;
     private const float DefaultBrightness = 0f;
     private const float DefaultSensitivity = 1f;
+
+    // Display prefs keys (NEW)
+    private const string PP_ResIndex = "ResolutionIndex";
+    private const string PP_DisplayMode = "DisplayMode"; // 0=Fullscreen, 1=Borderless, 2=Windowed
 
     // === VOLUME HELPERS (linear <-> dB) ===
     private static float LinearToDb(float linear)
@@ -88,6 +99,9 @@ public class SettingsMenuManager : MonoBehaviour
     {
         InitializeSettings();
         InitializeBrightness();
+        InitResolutionUI();    // NEW
+        InitDisplayModeUI();   // NEW
+
         SceneManager.sceneLoaded += OnSceneLoaded;
 
         EnsureActiveAudioListener();
@@ -105,8 +119,16 @@ public class SettingsMenuManager : MonoBehaviour
     private void InitializeSettings()
     {
         // Graphics
-        graphicsDropdown.value = PlayerPrefs.GetInt("GraphicsQuality", QualitySettings.GetQualityLevel());
-        QualitySettings.SetQualityLevel(graphicsDropdown.value);
+        if (graphicsDropdown)
+        {
+            // Auto-populate with actual quality names
+            graphicsDropdown.ClearOptions();
+            graphicsDropdown.AddOptions(new List<string>(QualitySettings.names));
+
+            graphicsDropdown.value = PlayerPrefs.GetInt("GraphicsQuality", QualitySettings.GetQualityLevel());
+            graphicsDropdown.RefreshShownValue();
+        }
+        QualitySettings.SetQualityLevel(graphicsDropdown ? graphicsDropdown.value : QualitySettings.GetQualityLevel());
 
         // Audio (linear sliders 0..1, with migration)
         float masterValue = LoadVolumeLinear("MasterVolume", DefaultMaster);
@@ -177,6 +199,108 @@ public class SettingsMenuManager : MonoBehaviour
             brightnessSlider.onValueChanged.RemoveAllListeners();
             brightnessSlider.onValueChanged.AddListener(SetBrightness);
         }
+    }
+
+    // === DISPLAY / RESOLUTION (NEW) ===
+
+    private void InitResolutionUI()
+    {
+        if (!resolutionDropdown) return;
+
+        // Build unique resolution list by width/height
+        List<Resolution> unique = new List<Resolution>();
+        foreach (var r in Screen.resolutions)
+        {
+            if (!unique.Exists(u => u.width == r.width && u.height == r.height))
+                unique.Add(r);
+        }
+        availableResolutions = unique.ToArray();
+
+        List<string> labels = new List<string>();
+        int currentIndex = 0;
+        for (int i = 0; i < availableResolutions.Length; i++)
+        {
+            var r = availableResolutions[i];
+            labels.Add($"{r.width} x {r.height}");
+            if (r.width == Screen.currentResolution.width &&
+                r.height == Screen.currentResolution.height)
+            {
+                currentIndex = i;
+            }
+        }
+
+        resolutionDropdown.ClearOptions();
+        resolutionDropdown.AddOptions(labels);
+
+        int savedIndex = PlayerPrefs.GetInt(PP_ResIndex, currentIndex);
+        savedIndex = Mathf.Clamp(savedIndex, 0, Mathf.Max(0, availableResolutions.Length - 1));
+        resolutionDropdown.value = savedIndex;
+        resolutionDropdown.RefreshShownValue();
+
+        resolutionDropdown.onValueChanged.AddListener(OnResolutionChanged);
+    }
+
+    private void InitDisplayModeUI()
+    {
+        if (!displayModeDropdown) return;
+
+        int savedMode = PlayerPrefs.GetInt(PP_DisplayMode, 0); // 0=Fullscreen,1=Borderless,2=Windowed
+        savedMode = Mathf.Clamp(savedMode, 0, 2);
+
+        displayModeDropdown.value = savedMode;
+        displayModeDropdown.RefreshShownValue();
+
+        displayModeDropdown.onValueChanged.AddListener(OnDisplayModeChanged);
+    }
+
+    private FullScreenMode GetFullScreenModeFromIndex(int index)
+    {
+        switch (index)
+        {
+            case 0: return FullScreenMode.ExclusiveFullScreen; // "Fullscreen"
+            case 1: return FullScreenMode.FullScreenWindow;    // "Borderless"
+            default: return FullScreenMode.Windowed;           // "Windowed"
+        }
+    }
+
+    private int GetCurrentDisplayModeIndex()
+    {
+        return Mathf.Clamp(PlayerPrefs.GetInt(PP_DisplayMode, 0), 0, 2);
+    }
+
+    private void ApplyResolutionAndMode(int resIndex, int modeIndex)
+    {
+        if (availableResolutions == null ||
+            availableResolutions.Length == 0) return;
+
+        resIndex = Mathf.Clamp(resIndex, 0, availableResolutions.Length - 1);
+        var res = availableResolutions[resIndex];
+        var mode = GetFullScreenModeFromIndex(modeIndex);
+
+#if UNITY_6000_0_OR_NEWER
+        Screen.SetResolution(res.width, res.height, mode);
+#else
+        // Fallback: fullscreen bool based on mode (Windowed vs other)
+        bool fullscreen = mode != FullScreenMode.Windowed;
+        Screen.fullScreenMode = mode;
+        Screen.SetResolution(res.width, res.height, fullscreen);
+#endif
+
+        PlayerPrefs.SetInt(PP_ResIndex, resIndex);
+        PlayerPrefs.SetInt(PP_DisplayMode, modeIndex);
+        PlayerPrefs.Save();
+    }
+
+    public void OnResolutionChanged(int index)
+    {
+        int modeIndex = GetCurrentDisplayModeIndex();
+        ApplyResolutionAndMode(index, modeIndex);
+    }
+
+    public void OnDisplayModeChanged(int index)
+    {
+        int resIndex = resolutionDropdown ? resolutionDropdown.value : 0;
+        ApplyResolutionAndMode(resIndex, index);
     }
 
     // === SETTINGS CHANGES ===
@@ -505,6 +629,11 @@ public class SettingsMenuManager : MonoBehaviour
         PlayerPrefs.SetInt("Vibrate", DefaultVibrate ? 1 : 0);
         PlayerPrefs.SetFloat(BrightnessKey, DefaultBrightness);
         PlayerPrefs.SetFloat(SensitivityKey, DefaultSensitivity);
+
+        // Optional: reset display to current native
+        PlayerPrefs.SetInt(PP_DisplayMode, 0); // Fullscreen
+        PlayerPrefs.SetInt(PP_ResIndex, Mathf.Clamp(availableResolutions != null ? availableResolutions.Length - 1 : 0, 0, 100));
+
         PlayerPrefs.Save();
 
         // 2) UI -> defaults
@@ -522,6 +651,18 @@ public class SettingsMenuManager : MonoBehaviour
         if (brightnessSlider) brightnessSlider.value = DefaultBrightness;
         if (sensitivitySlider) sensitivitySlider.value = Mathf.Clamp(DefaultSensitivity, 0.1f, 2.0f);
 
+        if (resolutionDropdown && availableResolutions != null && availableResolutions.Length > 0)
+        {
+            int idx = Mathf.Clamp(availableResolutions.Length - 1, 0, availableResolutions.Length - 1);
+            resolutionDropdown.value = idx;
+            resolutionDropdown.RefreshShownValue();
+        }
+        if (displayModeDropdown)
+        {
+            displayModeDropdown.value = 0;
+            displayModeDropdown.RefreshShownValue();
+        }
+
         // 3) Apply systems
         SetMixerVolume("MasterVolume", DefaultMaster);
         SetMixerVolume("MusicVolume", DefaultMusic);
@@ -529,6 +670,13 @@ public class SettingsMenuManager : MonoBehaviour
 
         ApplyBrightness(DefaultBrightness);
         ApplySensitivityToPlayer(DefaultSensitivity);
+
+        // Re-apply resolution+mode
+        if (availableResolutions != null && availableResolutions.Length > 0)
+        {
+            int idx = Mathf.Clamp(availableResolutions.Length - 1, 0, availableResolutions.Length - 1);
+            ApplyResolutionAndMode(idx, 0);
+        }
 
         // 4) Apply quality safely (even if paused)
         int q = ClampQuality(DefaultQualityLevel);
@@ -549,7 +697,6 @@ public class SettingsMenuManager : MonoBehaviour
         yield return StartCoroutine(BlockerKillerBurst());
         ForceRestoreSettingsMenuScreen();
 
-        // optional: clear selection
         if (EventSystem.current) EventSystem.current.SetSelectedGameObject(null);
     }
 
