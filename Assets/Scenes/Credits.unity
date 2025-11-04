@@ -1386,6 +1386,7 @@ GameObject:
   - component: {fileID: 787711324}
   - component: {fileID: 787711326}
   - component: {fileID: 787711325}
+  - component: {fileID: 787711327}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -1465,6 +1466,24 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &787711327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 787711323}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0671ef415a4dc144934612de04dde35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startDelay: 0
+  scrollSpeed: 50
+  extraDistance: 200
+  endHold: 2
+  allowSkip: 0
+  exitSceneName: MainMenu
 --- !u!1 &846183342
 GameObject:
   m_ObjectHideFlags: 0
@@ -2789,7 +2808,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 666130061}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.41908044
+  m_Size: 0.42887524
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2861,7 +2880,7 @@ RectTransform:
   m_GameObject: {fileID: 1878235384}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5486631, y: 2.5158808, z: 1.2947}
+  m_LocalScale: {x: 2.5042017, y: 2.4719913, z: 1.272114}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 737588800}
@@ -2870,7 +2889,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -16, y: -19.490845}
+  m_AnchoredPosition: {x: -16, y: -29.214}
   m_SizeDelta: {x: -48, y: -348}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1878235386
@@ -2880,7 +2899,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1878235384}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8aa7d35523a15cd4caeb074c08873ff6, type: 3}
   m_Name: 

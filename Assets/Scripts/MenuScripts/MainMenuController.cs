@@ -161,18 +161,21 @@ public class MainMenuController : MonoBehaviour
             Debug.Log($"[MainMenu] Slot {slot} is empty.");
         }
     }
-
     private void StartLevel1Fresh()
     {
+        // Make sure the game is running at normal speed
         Time.timeScale = 1f;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+
+        // We are leaving the menu and going into gameplay ? FPS cursor
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
         if (!SceneInBuild(level1SceneName))
         {
             Debug.LogError($"[MainMenu] Scene '{level1SceneName}' not in Build Settings.");
             return;
         }
+
         SceneManager.LoadScene(level1SceneName, LoadSceneMode.Single);
     }
 

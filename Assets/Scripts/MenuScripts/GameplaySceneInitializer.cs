@@ -3,18 +3,21 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
+[DefaultExecutionOrder(1000)] // run after most other scripts
 public class GameplaySceneInitializer : MonoBehaviour
 {
     [Tooltip("Optionally assign your PauseMenu in the Inspector. If left empty, we'll find it.")]
     public PauseMenu pauseMenuExplicit;
 
+    private PauseMenu _pauseMenu;
+
     private void Awake()
     {
         // Start gameplay unpaused with FPS-style cursor.
         Time.timeScale = 1f;
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        PauseMenu.Paused = false;
 
+        ForceGameplayCursor();
         EnsureEventSystem();
     }
 
@@ -28,34 +31,34 @@ public class GameplaySceneInitializer : MonoBehaviour
     {
         yield return null;
 
-        var pm = pauseMenuExplicit
-                 ? pauseMenuExplicit
-                 : Object.FindFirstObjectByType<PauseMenu>(FindObjectsInactive.Include);
+        _pauseMenu = pauseMenuExplicit
+                     ? pauseMenuExplicit
+                     : Object.FindFirstObjectByType<PauseMenu>(FindObjectsInactive.Include);
 
-        if (!pm)
+        if (!_pauseMenu)
         {
             Debug.LogWarning("[GameplaySceneInitializer] No PauseMenu found in this scene.");
             yield break;
         }
 
         // Ensure pause menu starts closed
-        if (pm.PauseMenuScreen != null)
-            pm.PauseMenuScreen.SetActive(false);
+        if (_pauseMenu.PauseMenuScreen != null)
+            _pauseMenu.PauseMenuScreen.SetActive(false);
 
         // Rebind Player
-        if (pm.player == null)
+        if (_pauseMenu.player == null)
         {
             var player = Object.FindFirstObjectByType<Player>(FindObjectsInactive.Exclude);
-            if (player != null) pm.player = player;
+            if (player != null) _pauseMenu.player = player;
         }
 
         // Rebind gameplay PlayerInput (not the UI/EventSystem one)
-        if (pm.playerInput == null)
+        if (_pauseMenu.playerInput == null)
         {
             PlayerInput candidate = null;
 
-            if (pm.player != null)
-                candidate = pm.player.GetComponent<PlayerInput>();
+            if (_pauseMenu.player != null)
+                candidate = _pauseMenu.player.GetComponent<PlayerInput>();
 
             if (candidate == null)
             {
@@ -66,14 +69,29 @@ public class GameplaySceneInitializer : MonoBehaviour
                 }
             }
 
-            if (candidate != null) pm.playerInput = candidate;
+            if (candidate != null) _pauseMenu.playerInput = candidate;
         }
 
         // Make sure gameplay input is enabled
-        if (pm.playerInput != null && !pm.playerInput.enabled) pm.playerInput.enabled = true;
-        if (pm.player != null && !pm.player.enabled) pm.player.enabled = true;
+        if (_pauseMenu.playerInput != null && !_pauseMenu.playerInput.enabled) _pauseMenu.playerInput.enabled = true;
+        if (_pauseMenu.player != null && !_pauseMenu.player.enabled) _pauseMenu.player.enabled = true;
 
         Debug.Log("[GameplaySceneInitializer] PauseMenu bound and gameplay input ready.");
+    }
+
+    private void LateUpdate()
+    {
+        // While NOT paused, always enforce gameplay cursor (FPS-style).
+        if (!PauseMenu.Paused)
+        {
+            ForceGameplayCursor();
+        }
+    }
+
+    private static void ForceGameplayCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void EnsureEventSystem()
