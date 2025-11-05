@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;        // for GraphicRaycaster
 using System.Collections;
 
 public class PauseMenu : MonoBehaviour
@@ -9,11 +10,11 @@ public class PauseMenu : MonoBehaviour
     public static bool Paused;
 
     [Header("UI")]
-    public GameObject PauseMenuScreen;
-    [SerializeField] private GameObject settingsMenuScreen;
+    public GameObject PauseMenuScreen;              // Canvas with Resume/Settings/Quit
+    [SerializeField] private GameObject settingsMenuScreen;  // Canvas with pause Settings
     [SerializeField] private GameObject firstSelectedButton;
 
-    [Header("Gameplay (no longer required to be assigned)")]
+    [Header("Gameplay (can be left empty)")]
     public Player player;
     public PlayerInput playerInput;
     public MonoBehaviour[] extraScriptsToDisable;
@@ -30,42 +31,38 @@ public class PauseMenu : MonoBehaviour
     void Start()
     {
         EnsureEventSystemExists();
-
-        // Start in gameplay mode
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
-        if (PauseMenuScreen != null) PauseMenuScreen.SetActive(false);
-        if (settingsMenuScreen != null) settingsMenuScreen.SetActive(false);
     }
 
     void Update()
     {
-        // ESC toggles pause
-        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+        // If we're NOT paused, keep FPS-style cursor.
+        if (!Paused && (Cursor.visible || Cursor.lockState != CursorLockMode.Locked))
         {
-            if (Paused) ResumeGame();   // same path as Resume button
-            else PauseGame();
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
 
-        // Enforce cursor state AFTER we handle ESC, so we always win.
-        if (!Paused)
+        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
-            if (Cursor.lockState != CursorLockMode.Locked)
-                Cursor.lockState = CursorLockMode.Locked;
-            if (Cursor.visible)
-                Cursor.visible = false;
+            if (Paused) ResumeGame();
+            else PauseGame();
         }
     }
 
     public void PauseGame()
     {
-        if (PauseMenuScreen == null) return;
-
         EnsureEventSystemExists();
 
-        PauseMenuScreen.SetActive(true);
-        if (settingsMenuScreen != null) settingsMenuScreen.SetActive(false);
+        if (PauseMenuScreen != null)
+        {
+            PauseMenuScreen.SetActive(true);
+            ForceShowPanel(PauseMenuScreen);
+        }
+
+        if (settingsMenuScreen != null)
+            settingsMenuScreen.SetActive(false);
 
         StartCoroutine(ShowPauseMenuRoutine());
     }
@@ -75,13 +72,15 @@ public class PauseMenu : MonoBehaviour
         yield return new WaitForEndOfFrame();
         Canvas.ForceUpdateCanvases();
 
-        // UI cursor
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        EventSystem.current?.SetSelectedGameObject(null);
-        if (firstSelectedButton != null)
-            EventSystem.current.SetSelectedGameObject(firstSelectedButton);
+        if (EventSystem.current != null)
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+            if (firstSelectedButton != null)
+                EventSystem.current.SetSelectedGameObject(firstSelectedButton);
+        }
 
         Time.timeScale = 0f;
         Paused = true;
@@ -92,34 +91,60 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f;
         Paused = false;
 
-        if (PauseMenuScreen != null) PauseMenuScreen.SetActive(false);
-        if (settingsMenuScreen != null) settingsMenuScreen.SetActive(false);
+        if (PauseMenuScreen != null)
+            PauseMenuScreen.SetActive(false);
+        if (settingsMenuScreen != null)
+            settingsMenuScreen.SetActive(false);
 
-        // Gameplay cursor
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
-        EventSystem.current?.SetSelectedGameObject(null);
+        if (EventSystem.current != null)
+            EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void OpenSettings()
     {
-        if (!settingsMenuScreen || !PauseMenuScreen) return;
+        if (!settingsMenuScreen)
+        {
+            Debug.LogWarning("[PauseMenu] OpenSettings called but settingsMenuScreen is null.");
+            return;
+        }
 
-        PauseMenuScreen.SetActive(false);
+        Debug.Log("[PauseMenu] OpenSettings -> enabling settingsMenuScreen");
+
+        if (PauseMenuScreen != null)
+            PauseMenuScreen.SetActive(false);
+
         settingsMenuScreen.SetActive(true);
+        ForceShowPanel(settingsMenuScreen);
+
         Canvas.ForceUpdateCanvases();
-        EventSystem.current?.SetSelectedGameObject(null);
+
+        if (EventSystem.current != null)
+            EventSystem.current.SetSelectedGameObject(null);
     }
 
     public void CloseSettings()
     {
-        if (!settingsMenuScreen || !PauseMenuScreen) return;
+        Debug.Log("[PauseMenu] CloseSettings called");
 
-        settingsMenuScreen.SetActive(false);
-        PauseMenuScreen.SetActive(true);
+        if (settingsMenuScreen != null)
+            settingsMenuScreen.SetActive(false);
+
+        if (PauseMenuScreen != null)
+        {
+            PauseMenuScreen.SetActive(true);
+            ForceShowPanel(PauseMenuScreen);
+        }
+
         Canvas.ForceUpdateCanvases();
-        EventSystem.current?.SetSelectedGameObject(null);
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        if (EventSystem.current != null && firstSelectedButton != null)
+            EventSystem.current.SetSelectedGameObject(firstSelectedButton);
     }
 
     public void QuitButton()
@@ -135,15 +160,54 @@ public class PauseMenu : MonoBehaviour
             Debug.LogError($"[PauseMenu] Scene '{mainMenuSceneName}' is not in Build Settings / active Build Profile.");
             return;
         }
-
         SceneManager.LoadScene(mainMenuSceneName, LoadSceneMode.Single);
+    }
+
+    // --- Panel visibility / raycast helper ---
+    private void ForceShowPanel(GameObject root)
+    {
+        if (!root) return;
+
+        // Ensure the root is active
+        if (!root.activeSelf) root.SetActive(true);
+
+        // CanvasGroup: make sure it’s visible & interactive
+        var cg = root.GetComponent<CanvasGroup>();
+        if (!cg) cg = root.AddComponent<CanvasGroup>();
+
+        cg.alpha = 1f;
+        cg.interactable = true;
+        cg.blocksRaycasts = true;
+
+        // Ensure there's a GraphicRaycaster so the panel can receive clicks
+        var canvas = root.GetComponentInParent<Canvas>(true);
+        if (canvas)
+        {
+            var ray = canvas.GetComponent<GraphicRaycaster>();
+            if (!ray) ray = canvas.gameObject.AddComponent<GraphicRaycaster>();
+
+            canvas.enabled = true;
+            canvas.overrideSorting = true;
+            if (canvas.sortingOrder < 2000) canvas.sortingOrder = 2000;
+        }
+        else
+        {
+            // Fallback: put a Canvas + Raycaster on the root itself
+            canvas = root.GetComponent<Canvas>();
+            if (!canvas) canvas = root.AddComponent<Canvas>();
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas.overrideSorting = true;
+            canvas.sortingOrder = 2000;
+
+            var ray = root.GetComponent<GraphicRaycaster>();
+            if (!ray) root.AddComponent<GraphicRaycaster>();
+        }
     }
 
     private void EnsureEventSystemExists()
     {
         if (EventSystem.current != null) return;
-
-        GameObject es = new GameObject("EventSystem", typeof(EventSystem));
+        var es = new GameObject("EventSystem", typeof(EventSystem));
 #if ENABLE_INPUT_SYSTEM
         es.AddComponent<UnityEngine.InputSystem.UI.InputSystemUIInputModule>();
 #else
