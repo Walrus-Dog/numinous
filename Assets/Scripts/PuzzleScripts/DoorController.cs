@@ -21,7 +21,7 @@ public class DoorController : MonoBehaviour
     public List<GameObject> item;
     public List<GameObject> puzzle;
 
-    bool hasOpened = false;
+    public bool hasOpened = false;
 
     //How long till door unlocks after having fufilled the requirments
     public float unlockTimer = 2.5f;
