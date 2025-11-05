@@ -959,6 +959,7 @@ MonoBehaviour:
   door: {fileID: 632237052}
   maxTrainSpeed: 10
   currentTrainSpeed: 0
+  backForward: 0
 --- !u!4 &1039402548
 Transform:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class TrainMoverScript : MonoBehaviour
     public DoorController door;
     public float maxTrainSpeed;
     public float currentTrainSpeed;
+    public bool backForward = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -28,9 +29,15 @@ public class TrainMoverScript : MonoBehaviour
 
     void MoveTrain()
     {
-        transform.Translate(Vector3.back * Time.deltaTime * currentTrainSpeed);
+        int i = 1;
+        if (backForward)
+        {
+            i = -1;
+        }
 
-        currentTrainSpeed = Mathf.Lerp(currentTrainSpeed, maxTrainSpeed, Time.deltaTime);
+        transform.Translate(Vector3.back * Time.deltaTime * currentTrainSpeed * i);
+
+        currentTrainSpeed = Mathf.Lerp(currentTrainSpeed, maxTrainSpeed, Time.deltaTime / 10);
     }
 
     void StartCutscene()
