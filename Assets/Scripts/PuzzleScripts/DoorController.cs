@@ -13,6 +13,8 @@ public class DoorController : MonoBehaviour
 
     public TextMeshProUGUI codeDisplay;
 
+    public GameObject[] clocks;
+
     public GameObject player;
 
     //What Items are needed to open door (set by doorTypes)
@@ -158,6 +160,14 @@ public class DoorController : MonoBehaviour
                     }
                 }
                 codeDisplay.text = codeToDisplay;
+
+                int j = 0;
+
+                foreach (var clock in clocks)
+                {
+                    clock.GetComponent<TimeManager>().hourInput = code[j];
+                    j++;
+                }
             }
             else
             {
