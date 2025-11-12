@@ -174,15 +174,37 @@ public class SettingsMenuManager : MonoBehaviour
 
     private void InitializeBrightness()
     {
-        globalVolume = Object.FindFirstObjectByType<Volume>();
-        if (globalVolume == null) { Debug.LogWarning("No Global Volume found in scene!"); return; }
+        // Reset cached refs
+        globalVolume = null;
+        colorAdjustments = null;
 
-        if (!globalVolume.profile.TryGet(out colorAdjustments))
+        // 1) Find a Volume in the *active scene* that actually has ColorAdjustments
+        var activeScene = SceneManager.GetActiveScene();
+        var volumes = Object.FindObjectsByType<Volume>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None
+        );
+
+        foreach (var v in volumes)
         {
-            Debug.LogWarning("No Color Adjustments override found in Global Volume!");
+            if (v == null) continue;
+            if (v.gameObject.scene != activeScene) continue; // ignore other scenes / DDOL
+
+            if (v.profile != null && v.profile.TryGet(out ColorAdjustments ca))
+            {
+                globalVolume = v;
+                colorAdjustments = ca;
+                break;
+            }
+        }
+
+        if (globalVolume == null || colorAdjustments == null)
+        {
+            Debug.LogWarning($"[SettingsMenuManager] No Volume with ColorAdjustments found in scene '{activeScene.name}'.");
             return;
         }
 
+        // 2) Wire up UI references (scene-local)
         if (brightnessSlider == null)
             brightnessSlider = GameObject.Find("BrightnessSlider")?.GetComponent<Slider>();
         if (uiOverlay == null)
@@ -199,7 +221,10 @@ public class SettingsMenuManager : MonoBehaviour
             brightnessSlider.onValueChanged.RemoveAllListeners();
             brightnessSlider.onValueChanged.AddListener(SetBrightness);
         }
+
+        Debug.Log($"[SettingsMenuManager] Brightness wired to Volume '{globalVolume.name}' in scene '{activeScene.name}'.");
     }
+
 
     // === DISPLAY / RESOLUTION (NEW) ===
 
