@@ -12261,9 +12261,9 @@ MonoBehaviour:
   musicVol: {fileID: 260978937}
   sfxVol: {fileID: 1963395970}
   vibrateToggle: {fileID: 0}
-  brightnessSlider: {fileID: 0}
-  uiOverlay: {fileID: 0}
-  sensitivitySlider: {fileID: 0}
+  brightnessSlider: {fileID: 1139972717}
+  uiOverlay: {fileID: 1727409422}
+  sensitivitySlider: {fileID: 1814405833}
   MainMixer: {fileID: 24100000, guid: 23c79154fc5129242ad1dd177c67712f, type: 2}
   resolutionDropdown: {fileID: 2084028886}
   displayModeDropdown: {fileID: 1285132226}
@@ -12293,7 +12293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 55369f22b00e4f43b792d318f20beedf
+  uniqueId: 818f8e272dc9498aa465d73c876ddc2f
 --- !u!114 &1915817215
 MonoBehaviour:
   m_ObjectHideFlags: 0

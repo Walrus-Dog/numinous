@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 606aa3bd6e37728429854bf5ca093042
+guid: c0aae2d0d69191040ab6faafd732bd7e
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: neon punkz logo_0
+      name: deletesave2png_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 500
-        height: 500
+        x: 255
+        y: 283
+        width: 937
+        height: 96
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -112,8 +112,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7ddb48797c40c2c43b48d15df1a3c466
-      internalID: -50025124
+      spriteID: 429f89c0a8c91544d8e3d6943a8ea7b9
+      internalID: -1561690132
       vertices: []
       indices: 
       edges: []
@@ -122,7 +122,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: ac9a3296ae7bd9840975bf679744be97
+    spriteID: df1d04a4870a3854f97f7d890ff0041f
     internalID: 0
     vertices: []
     indices: 
@@ -132,7 +132,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      neon punkz logo_0: -50025124
+      deletesave2png_0: -1561690132
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
