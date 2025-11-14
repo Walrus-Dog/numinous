@@ -17,6 +17,7 @@ public class StairTeleportCounter : MonoBehaviour
         if (numOfTeleports >= targetNumOfTeleports)
         {
             key.SetActive(true);
+            Debug.Log("key spawned");
         }
     }
 }
