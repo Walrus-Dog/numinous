@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class TrainCarWalkedThroughTracker : MonoBehaviour
 {
-    public InteractorMain interactor;
-    public ButtonStats buttonStats;
+    InteractorMain interactor;
+    ButtonStats buttonStats;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
