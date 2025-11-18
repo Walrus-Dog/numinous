@@ -2588,7 +2588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 353cfbc3293c4c76ad2e4eac77c23960
+  uniqueId: 3389e24054724ce7a157ceefb5068298
 --- !u!114 &225648849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5186,6 +5186,7 @@ GameObject:
   m_Component:
   - component: {fileID: 593768879}
   - component: {fileID: 593768878}
+  - component: {fileID: 593768880}
   m_Layer: 0
   m_Name: GameplayBootstrap
   m_TagString: Untagged
@@ -5221,6 +5222,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &593768880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593768877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0e2af5c6588f5e469575c9095807997, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  freezeSeconds: 0.3
+  playerActionMapName: Player
 --- !u!1 &599282589
 GameObject:
   m_ObjectHideFlags: 0

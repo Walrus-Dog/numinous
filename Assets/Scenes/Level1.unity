@@ -1324,7 +1324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: ab0552d3c0284e538d4c4fe5b3bee591
+  uniqueId: 59b9206a5ad04e708ec47bc981c38109
 --- !u!114 &33558549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3699,7 +3699,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 1caaa07702324999a93507f1a3ef89e9
+  uniqueId: fc8b72c43d8f455caebf2f10297c054c
 --- !u!65 &324353645
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7366,7 +7366,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 189ddbc898f74fe8862f25418c0471ec
+  uniqueId: 30226302cbe74537938342fb4dcdf78f
 --- !u!114 &785138292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8135,6 +8135,7 @@ GameObject:
   m_Component:
   - component: {fileID: 875169088}
   - component: {fileID: 875169087}
+  - component: {fileID: 875169089}
   m_Layer: 0
   m_Name: GameplayBootstrap
   m_TagString: Untagged
@@ -8170,6 +8171,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &875169089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 875169086}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0e2af5c6588f5e469575c9095807997, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  freezeSeconds: 0.3
+  playerActionMapName: Player
 --- !u!1 &915852404
 GameObject:
   m_ObjectHideFlags: 0
@@ -10969,7 +10984,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 475243d0bf7c43e992bf659bce92fde0
+  uniqueId: 36b01d06b4c141afbdd0616cd344a261
 --- !u!114 &1137346556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13154,7 +13169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: bdc9f7f4c32d4f08a45ca94d190757f9
+  uniqueId: c87e8e77df934152a29069e8dd76264b
 --- !u!114 &1321354505
 MonoBehaviour:
   m_ObjectHideFlags: 0
