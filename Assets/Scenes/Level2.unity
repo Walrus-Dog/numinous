@@ -2588,7 +2588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 63608b61b5ac42f2afd24f34c9eb59a8
+  uniqueId: 353cfbc3293c4c76ad2e4eac77c23960
 --- !u!114 &225648849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8647,7 +8647,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cutsceneCam: {fileID: 1723429563}
-  door: {fileID: 0}
+  door: {fileID: 1491644372}
   maxTrainSpeed: 10
   currentTrainSpeed: 0
   backForward: 0
@@ -12483,6 +12483,17 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1491644372 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5115269801712852040, guid: 1242586ae4aa9a549bae1d5872beda8f, type: 3}
+  m_PrefabInstance: {fileID: 1870653423}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cb595c39f2571b45aafd152801f81d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!64 &1496168262
 MeshCollider:
   m_ObjectHideFlags: 0

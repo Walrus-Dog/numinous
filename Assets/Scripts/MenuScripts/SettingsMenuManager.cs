@@ -174,23 +174,21 @@ public class SettingsMenuManager : MonoBehaviour
 
     private void InitializeBrightness()
     {
-        // Reset cached refs
+        // Clear cached refs
         globalVolume = null;
         colorAdjustments = null;
 
-        // 1) Find a Volume in the *active scene* that actually has ColorAdjustments
-        var activeScene = SceneManager.GetActiveScene();
-        var volumes = Object.FindObjectsByType<Volume>(
-            FindObjectsInactive.Include,
-            FindObjectsSortMode.None
-        );
+        // Find any Volume (active or inactive) in the scene that already has ColorAdjustments
+#if UNITY_2023_1_OR_NEWER
+        var volumes = FindObjectsByType<Volume>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+#else
+    var volumes = Resources.FindObjectsOfTypeAll<Volume>(); // fallback for older API
+#endif
 
         foreach (var v in volumes)
         {
-            if (v == null) continue;
-            if (v.gameObject.scene != activeScene) continue; // ignore other scenes / DDOL
-
-            if (v.profile != null && v.profile.TryGet(out ColorAdjustments ca))
+            if (v == null || v.profile == null) continue;
+            if (v.profile.TryGet(out ColorAdjustments ca))
             {
                 globalVolume = v;
                 colorAdjustments = ca;
@@ -198,31 +196,27 @@ public class SettingsMenuManager : MonoBehaviour
             }
         }
 
-        if (globalVolume == null || colorAdjustments == null)
-        {
-            Debug.LogWarning($"[SettingsMenuManager] No Volume with ColorAdjustments found in scene '{activeScene.name}'.");
-            return;
-        }
-
-        // 2) Wire up UI references (scene-local)
         if (brightnessSlider == null)
             brightnessSlider = GameObject.Find("BrightnessSlider")?.GetComponent<Slider>();
         if (uiOverlay == null)
             uiOverlay = GameObject.Find("UIBrightnessOverlay")?.GetComponent<Image>();
 
-        float savedBrightness = PlayerPrefs.GetFloat(BrightnessKey, DefaultBrightness);
-        ApplyBrightness(savedBrightness);
+        float saved = PlayerPrefs.GetFloat(BrightnessKey, DefaultBrightness);
 
         if (brightnessSlider)
         {
             brightnessSlider.minValue = -2f;
             brightnessSlider.maxValue = 2f;
-            brightnessSlider.value = savedBrightness;
+            brightnessSlider.value = saved;
             brightnessSlider.onValueChanged.RemoveAllListeners();
             brightnessSlider.onValueChanged.AddListener(SetBrightness);
         }
 
-        Debug.Log($"[SettingsMenuManager] Brightness wired to Volume '{globalVolume.name}' in scene '{activeScene.name}'.");
+        // Apply to URP if we found a ColorAdjustments; the overlay always updates as a fallback
+        ApplyBrightness(saved);
+
+        if (globalVolume == null || colorAdjustments == null)
+            Debug.LogWarning("[SettingsMenuManager] No Volume with ColorAdjustments found; slider will only affect the dark overlay in this scene.");
     }
 
 
