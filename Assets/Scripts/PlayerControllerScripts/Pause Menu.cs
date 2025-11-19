@@ -26,6 +26,7 @@ public class PauseMenu : MonoBehaviour
     {
         Paused = false;
         Time.timeScale = 1f;
+        AudioListener.pause = false;
     }
 
     void Start()
@@ -84,6 +85,8 @@ public class PauseMenu : MonoBehaviour
 
         Time.timeScale = 0f;
         Paused = true;
+
+        AudioListener.pause = true;
     }
 
     public void ResumeGame()
@@ -101,6 +104,8 @@ public class PauseMenu : MonoBehaviour
 
         if (EventSystem.current != null)
             EventSystem.current.SetSelectedGameObject(null);
+
+        AudioListener.pause = false;
     }
 
     public void OpenSettings()
