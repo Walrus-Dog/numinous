@@ -8,11 +8,13 @@ public class MenuPanelSwitcher : MonoBehaviour
     [SerializeField] private GameObject mainMenuRoot;       // Main menu-only UI
     [SerializeField] private GameObject settingsMenuRoot;   // Settings UI root
     [SerializeField] private GameObject creditsMenuRoot;    // Credits UI root
+    [SerializeField] private GameObject loadMenuRoot;       // NEW: Load UI root
 
     [Header("First-selected (keyboard / gamepad)")]
     [SerializeField] private Selectable firstOnMain;
     [SerializeField] private Selectable firstOnSettings;
     [SerializeField] private Selectable firstOnCredits;
+    [SerializeField] private Selectable firstOnLoad;        // NEW
 
     [Header("Always keep these active (e.g., Music)")]
     [SerializeField] private GameObject[] keepAlive;
@@ -24,6 +26,7 @@ public class MenuPanelSwitcher : MonoBehaviour
     [SerializeField] private string mainMenuName = "MainMenu";
     [SerializeField] private string settingsMenuName = "SettingsMenuScreen";
     [SerializeField] private string creditsMenuName = "CreditsMenuScreen";
+    [SerializeField] private string loadMenuName = "LoadMenuScreen"; // NEW
 
     [Header("Startup")]
     [SerializeField] private StartPanel defaultPanel = StartPanel.Main;
@@ -31,8 +34,8 @@ public class MenuPanelSwitcher : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool verbose = false;
 
-    private enum Panel { Main, Settings, Credits }
-    public enum StartPanel { Main, Settings, Credits }
+    private enum Panel { Main, Settings, Credits, Load }
+    public enum StartPanel { Main, Settings, Credits, Load }
 
     private void Awake()
     {
@@ -57,12 +60,14 @@ public class MenuPanelSwitcher : MonoBehaviour
         if (!mainMenuRoot) mainMenuRoot = GameObject.Find(mainMenuName);
         if (!settingsMenuRoot) settingsMenuRoot = GameObject.Find(settingsMenuName);
         if (!creditsMenuRoot) creditsMenuRoot = GameObject.Find(creditsMenuName);
+        if (!loadMenuRoot) loadMenuRoot = GameObject.Find(loadMenuName);
 
         // Force a single-active panel on startup
         switch (defaultPanel)
         {
             case StartPanel.Settings: TogglePanels(Panel.Settings); break;
             case StartPanel.Credits: TogglePanels(Panel.Credits); break;
+            case StartPanel.Load: TogglePanels(Panel.Load); break;
             default: TogglePanels(Panel.Main); break;
         }
     }
@@ -71,6 +76,7 @@ public class MenuPanelSwitcher : MonoBehaviour
     public void ShowMain() => TogglePanels(Panel.Main);
     public void ShowSettings() => TogglePanels(Panel.Settings);
     public void ShowCredits() => TogglePanels(Panel.Credits);
+    public void ShowLoad() => TogglePanels(Panel.Load);   // NEW
     public void OnBackToMain() => ShowMain();
     // ========================================================
 
@@ -82,12 +88,14 @@ public class MenuPanelSwitcher : MonoBehaviour
         SafeSetActive(mainMenuRoot, target == Panel.Main);
         SafeSetActive(settingsMenuRoot, target == Panel.Settings);
         SafeSetActive(creditsMenuRoot, target == Panel.Credits);
+        SafeSetActive(loadMenuRoot, target == Panel.Load);
 
         // Heal target panel visibility (CanvasGroup/Raycaster/Canvas) if needed
         switch (target)
         {
             case Panel.Settings: if (settingsMenuRoot) ForceVisible(settingsMenuRoot); break;
             case Panel.Credits: if (creditsMenuRoot) ForceVisible(creditsMenuRoot); break;
+            case Panel.Load: if (loadMenuRoot) ForceVisible(loadMenuRoot); break;
         }
 
         // Keep-alive objects always on (e.g., Music)
@@ -104,7 +112,9 @@ public class MenuPanelSwitcher : MonoBehaviour
         Selectable first =
             target == Panel.Main ? firstOnMain :
             target == Panel.Settings ? firstOnSettings :
-                                       firstOnCredits;
+            target == Panel.Credits ? firstOnCredits :
+                                       firstOnLoad;
+
         if (first) first.Select();
 
         // Cursor for menus
@@ -149,9 +159,10 @@ public class MenuPanelSwitcher : MonoBehaviour
         Debug.Log($"[MenuPanelSwitcher] Active -> " +
                   $"Main:{(mainMenuRoot && mainMenuRoot.activeSelf)}  " +
                   $"Settings:{(settingsMenuRoot && settingsMenuRoot.activeSelf)}  " +
-                  $"Credits:{(creditsMenuRoot && creditsMenuRoot.activeSelf)}");
+                  $"Credits:{(creditsMenuRoot && creditsMenuRoot.activeSelf)}  " +
+                  $"Load:{(loadMenuRoot && loadMenuRoot.activeSelf)}");
     }
-    // ---- TEMP: hard bring Credits to the front & full-screen it ----
+
     [ContextMenu("Force Show Credits (Top & Full)")]
     public void ForceShowCreditsNow()
     {
@@ -194,8 +205,4 @@ public class MenuPanelSwitcher : MonoBehaviour
 
         Debug.Log("[MenuPanelSwitcher] Forced Credits visible on top (order=5000).");
     }
-
-
-
-
 }
