@@ -33,7 +33,7 @@ public class TimeManager : MonoBehaviour
         }
 
 
-            hourHand.transform.localRotation = Quaternion.Euler(0f, 0f, hourRotation);
+        hourHand.transform.localRotation = Quaternion.Euler(0f, 0f, hourRotation);
         minuteHand.transform.localRotation = Quaternion.Euler(0f, 0f, minuteRotation);
         secondHand.transform.localRotation = Quaternion.Euler(0f, 0f, secondRotation);
     }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class TrainMoverScript : MonoBehaviour
@@ -11,6 +12,10 @@ public class TrainMoverScript : MonoBehaviour
     public float maxTrainSpeed;
     public float currentTrainSpeed;
     public bool backForward = false;
+    public bool increasingOpacity = false;
+
+    public Image blackOutScreen;
+    public float blackoutSpeed = 1;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -24,6 +29,13 @@ public class TrainMoverScript : MonoBehaviour
         {
             MoveTrain();
             StartCutscene();
+        }
+
+        if (increasingOpacity)
+        {
+            Color tempColor = blackOutScreen.color;
+            tempColor.a += Time.deltaTime * blackoutSpeed;
+            blackOutScreen.color = tempColor;
         }
     }
 
@@ -43,5 +55,7 @@ public class TrainMoverScript : MonoBehaviour
     void StartCutscene()
     {
         cutsceneCam.SetActive(true);
+
+        increasingOpacity = true;
     }
 }
