@@ -2677,7 +2677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 6231fc5968d64757a5a3b131103a118d
+  uniqueId: 650050629f954ceeadf12f50497c891e
 --- !u!114 &225648849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8777,10 +8777,11 @@ MonoBehaviour:
   door: {fileID: 850223796}
   maxTrainSpeed: 10
   currentTrainSpeed: 0
+  trainAcceleration: 0.1
   backForward: 0
   increasingOpacity: 0
   blackOutScreen: {fileID: 1741918958}
-  blackoutSpeed: 0.25
+  blackoutSpeed: 0.1
 --- !u!4 &1039402548
 Transform:
   m_ObjectHideFlags: 0
@@ -14602,7 +14603,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1723429564}
   - component: {fileID: 1723429567}
-  - component: {fileID: 1723429566}
   - component: {fileID: 1723429565}
   m_Layer: 0
   m_Name: CutsceneCam
@@ -14670,14 +14670,6 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!81 &1723429566
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1723429563}
-  m_Enabled: 1
 --- !u!20 &1723429567
 Camera:
   m_ObjectHideFlags: 0

@@ -11,6 +11,7 @@ public class TrainMoverScript : MonoBehaviour
     public DoorController door;
     public float maxTrainSpeed;
     public float currentTrainSpeed;
+    public float trainAcceleration = .1f;
     public bool backForward = false;
     public bool increasingOpacity = false;
 
@@ -49,7 +50,7 @@ public class TrainMoverScript : MonoBehaviour
 
         transform.Translate(Vector3.back * Time.deltaTime * currentTrainSpeed * i);
 
-        currentTrainSpeed = Mathf.Lerp(currentTrainSpeed, maxTrainSpeed, Time.deltaTime / 10);
+        currentTrainSpeed = Mathf.Lerp(currentTrainSpeed, maxTrainSpeed, Time.deltaTime * trainAcceleration);
     }
 
     void StartCutscene()
