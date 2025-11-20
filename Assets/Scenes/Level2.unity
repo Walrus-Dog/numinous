@@ -2677,7 +2677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 650050629f954ceeadf12f50497c891e
+  uniqueId: b5ef2f737608491caf9a1b76e17e57ad
 --- !u!114 &225648849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7548,9 +7548,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fd2a21babd910b48a9aafc46711a9a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PauseMenuScreen: {fileID: 1100024127}
-  settingsMenuScreen: {fileID: 1191315831}
-  firstSelectedButton: {fileID: 44634689}
+  PauseMenuScreen: {fileID: 0}
+  settingsMenuScreen: {fileID: 0}
+  firstSelectedButton: {fileID: 0}
   player: {fileID: 0}
   playerInput: {fileID: 0}
   extraScriptsToDisable: []
