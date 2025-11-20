@@ -6526,6 +6526,7 @@ GameObject:
   m_Component:
   - component: {fileID: 627173469}
   - component: {fileID: 627173470}
+  - component: {fileID: 627173471}
   m_Layer: 0
   m_Name: Scream Source
   m_TagString: Untagged
@@ -6645,6 +6646,22 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &627173471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 627173468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75bda5fd436faaa4faa92a8e7d8ddbef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  innerRadius: 2
+  outerRadius: 15
+  maxVolume: 0.8
+  listener: {fileID: 0}
 --- !u!1 &630546545
 GameObject:
   m_ObjectHideFlags: 0
