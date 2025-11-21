@@ -1716,6 +1716,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: 'PauseMenu '
       objectReference: {fileID: 0}
+    - target: {fileID: 5888092734464661158, guid: e88b1e2ef110e05458adbdad951b8592, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 880637127}
+    - target: {fileID: 5888092734464661158, guid: e88b1e2ef110e05458adbdad951b8592, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseSettings
+      objectReference: {fileID: 0}
     - target: {fileID: 6691231002948613256, guid: e88b1e2ef110e05458adbdad951b8592, type: 3}
       propertyPath: uniqueId
       value: 0127dbd723e4490c86e85754026ee2c5
