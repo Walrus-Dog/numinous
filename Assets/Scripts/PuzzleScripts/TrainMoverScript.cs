@@ -19,6 +19,8 @@ public class TrainMoverScript : MonoBehaviour
     public Image blackOutScreen;
     public float blackoutSpeed = 1;
 
+    public AudioClip trainMovingSound;
+
     public AudioClip trainCrashSound;
     public AudioSource audioSource;
     public float audioDelay = 5f;
@@ -49,7 +51,7 @@ public class TrainMoverScript : MonoBehaviour
             audioDelay -= Time.deltaTime;
             creditsDelay -= Time.deltaTime;
 
-            if (audioDelay <= 0 && !audioSource.isPlaying)
+            if (audioDelay <= 0)
             {
                 audioDelay += 10000f; // Prevent replaying
                 audioSource.PlayOneShot(trainCrashSound);
@@ -70,6 +72,11 @@ public class TrainMoverScript : MonoBehaviour
         if (backForward)
         {
             i = -1;
+        }
+
+        if (audioSource.isPlaying == false)
+        {
+            audioSource.PlayOneShot(trainMovingSound);
         }
 
         transform.Translate(Vector3.back * Time.deltaTime * currentTrainSpeed * i);
