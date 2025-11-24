@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class TrainMoverScript : MonoBehaviour
@@ -17,6 +18,13 @@ public class TrainMoverScript : MonoBehaviour
 
     public Image blackOutScreen;
     public float blackoutSpeed = 1;
+
+    public AudioClip trainCrashSound;
+    public AudioSource audioSource;
+    public float audioDelay = 5f;
+
+    public float creditsDelay = 10f;
+    public Scene credits;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -37,6 +45,22 @@ public class TrainMoverScript : MonoBehaviour
             Color tempColor = blackOutScreen.color;
             tempColor.a += Time.deltaTime * blackoutSpeed;
             blackOutScreen.color = tempColor;
+
+            audioDelay -= Time.deltaTime;
+            creditsDelay -= Time.deltaTime;
+
+            if (audioDelay <= 0 && !audioSource.isPlaying)
+            {
+                audioDelay += 10000f; // Prevent replaying
+                audioSource.PlayOneShot(trainCrashSound);
+            }
+
+            if (creditsDelay <= 0)
+            {
+                SceneManager.LoadScene("Credits");
+            }
+
+
         }
     }
 
