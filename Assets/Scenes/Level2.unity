@@ -166,7 +166,7 @@ MonoBehaviour:
   doorType: 1
   codeDisplay: {fileID: 0}
   clocks: []
-  player: {fileID: 0}
+  player: {fileID: 1654321489}
   code: 
   randCode: 0
   item:
@@ -232,7 +232,7 @@ MonoBehaviour:
   doorType: 1
   codeDisplay: {fileID: 0}
   clocks: []
-  player: {fileID: 0}
+  player: {fileID: 1654321489}
   code: 
   randCode: 0
   item:
@@ -1051,7 +1051,7 @@ MonoBehaviour:
   doorType: 1
   codeDisplay: {fileID: 0}
   clocks: []
-  player: {fileID: 0}
+  player: {fileID: 1654321489}
   code: 
   randCode: 0
   item:
@@ -2042,7 +2042,7 @@ MonoBehaviour:
   doorType: 1
   codeDisplay: {fileID: 0}
   clocks: []
-  player: {fileID: 0}
+  player: {fileID: 1654321489}
   code: 
   randCode: 0
   item:
@@ -2431,7 +2431,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6691231002948613256, guid: e88b1e2ef110e05458adbdad951b8592, type: 3}
       propertyPath: uniqueId
-      value: 25cf8a9cb4cd4d39a9df3b7f588b6d05
+      value: 52b0dd821d8047d6a933a225c95d9726
       objectReference: {fileID: 0}
     - target: {fileID: 7498724908069997151, guid: e88b1e2ef110e05458adbdad951b8592, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2769,7 +2769,7 @@ MonoBehaviour:
   doorType: 1
   codeDisplay: {fileID: 0}
   clocks: []
-  player: {fileID: 0}
+  player: {fileID: 1654321489}
   code: 
   randCode: 0
   item:
@@ -2889,7 +2889,7 @@ MonoBehaviour:
   doorType: 1
   codeDisplay: {fileID: 0}
   clocks: []
-  player: {fileID: 0}
+  player: {fileID: 1654321489}
   code: 
   randCode: 0
   item:
@@ -4006,10 +4006,11 @@ MonoBehaviour:
   increasingOpacity: 0
   blackOutScreen: {fileID: 1741918958}
   blackoutSpeed: 0.25
-  trainCrashSound: {fileID: 8300000, guid: adca564b06f238c45bc6b96f752a224f, type: 3}
+  trainMovingSound: {fileID: 8300000, guid: 5817b88b1907e85498b24791df63993d, type: 3}
+  trainCrashSound: {fileID: 8300000, guid: decc910847a6c054c84916fd4bc71e43, type: 3}
   audioSource: {fileID: 2106925331}
   audioDelay: 5
-  creditsDelay: 15
+  creditsDelay: 10
   credits:
     m_Handle: 0
 --- !u!4 &1039402548
@@ -4260,7 +4261,7 @@ MonoBehaviour:
   doorType: 1
   codeDisplay: {fileID: 0}
   clocks: []
-  player: {fileID: 0}
+  player: {fileID: 1654321489}
   code: 
   randCode: 0
   item:
@@ -4348,7 +4349,7 @@ MonoBehaviour:
   doorType: 1
   codeDisplay: {fileID: 0}
   clocks: []
-  player: {fileID: 0}
+  player: {fileID: 1654321489}
   code: 
   randCode: 0
   item:
@@ -4596,7 +4597,7 @@ MonoBehaviour:
   doorType: 1
   codeDisplay: {fileID: 0}
   clocks: []
-  player: {fileID: 0}
+  player: {fileID: 1654321489}
   code: 
   randCode: 0
   item:
@@ -4800,7 +4801,7 @@ MonoBehaviour:
   doorType: 1
   codeDisplay: {fileID: 0}
   clocks: []
-  player: {fileID: 0}
+  player: {fileID: 1654321489}
   code: 
   randCode: 0
   item:
@@ -4866,7 +4867,7 @@ MonoBehaviour:
   doorType: 1
   codeDisplay: {fileID: 0}
   clocks: []
-  player: {fileID: 0}
+  player: {fileID: 1654321489}
   code: 
   randCode: 0
   item:
@@ -4954,7 +4955,7 @@ MonoBehaviour:
   doorType: 1
   codeDisplay: {fileID: 0}
   clocks: []
-  player: {fileID: 0}
+  player: {fileID: 1654321489}
   code: 
   randCode: 0
   item:
@@ -5311,7 +5312,7 @@ MonoBehaviour:
   doorType: 1
   codeDisplay: {fileID: 0}
   clocks: []
-  player: {fileID: 0}
+  player: {fileID: 1654321489}
   code: 
   randCode: 0
   item:
@@ -5725,8 +5726,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
+  m_sharedMaterial: {fileID: -574617224119885795, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -6624,7 +6625,7 @@ MonoBehaviour:
   doorType: 1
   codeDisplay: {fileID: 0}
   clocks: []
-  player: {fileID: 0}
+  player: {fileID: 1654321489}
   code: 
   randCode: 0
   item:
@@ -7372,7 +7373,7 @@ MonoBehaviour:
   doorType: 1
   codeDisplay: {fileID: 0}
   clocks: []
-  player: {fileID: 0}
+  player: {fileID: 1654321489}
   code: 
   randCode: 0
   item:
