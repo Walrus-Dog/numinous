@@ -27,6 +27,8 @@ public class ResetOnWrongNumber : MonoBehaviour
     {
         interactor.numbersCollected.Clear();
 
-        this.gameObject.transform.position = startPosition.position;
+        var player = GetComponent<Player>();
+
+        player.Teleport(startPosition.position);
     }
 }
