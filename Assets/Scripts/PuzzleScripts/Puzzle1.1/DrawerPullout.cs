@@ -31,8 +31,6 @@ public class DrawerPullout : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // ? Removed base.Update() — was referencing UnityEngine.UI.Button.Update()
-
         //Set position
         newPos = new Vector3(startPos.x, startPos.y, startPos.z + Mathf.Clamp(pulloutAmount, 0f, .8f));
 

@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(Light))]
 public class RandomLightFlicker : MonoBehaviour
 {
     [Header("Target Light")]
