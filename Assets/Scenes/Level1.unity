@@ -24650,7 +24650,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 0a4c03f01cab4dcdb31d5890bfc5f3e1
+  uniqueId: 02be9bb2497d4db5b3c67f40a532ab8d
 --- !u!114 &1137346556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27827,6 +27827,75 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 9b5f302e7fe91f14c907644fda2ba57d, type: 3}
   m_PrefabInstance: {fileID: 1282689483}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1287160971
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 40412b96c22cf98459cc11374605ef75, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 9.183587
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 40412b96c22cf98459cc11374605ef75, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 9.183587
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 40412b96c22cf98459cc11374605ef75, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 9.183587
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 40412b96c22cf98459cc11374605ef75, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -26.19
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 40412b96c22cf98459cc11374605ef75, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.9
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 40412b96c22cf98459cc11374605ef75, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 60.01
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 40412b96c22cf98459cc11374605ef75, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 40412b96c22cf98459cc11374605ef75, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 40412b96c22cf98459cc11374605ef75, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.70710677
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 40412b96c22cf98459cc11374605ef75, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 40412b96c22cf98459cc11374605ef75, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 40412b96c22cf98459cc11374605ef75, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 40412b96c22cf98459cc11374605ef75, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 40412b96c22cf98459cc11374605ef75, type: 3}
+      propertyPath: m_Name
+      value: office_waterfall_sky
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 40412b96c22cf98459cc11374605ef75, type: 3}
 --- !u!1001 &1289395253
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48104,3 +48173,4 @@ SceneRoots:
   - {fileID: 1551196689}
   - {fileID: 1363748385}
   - {fileID: 2030453949}
+  - {fileID: 1287160971}
