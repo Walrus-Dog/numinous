@@ -7614,6 +7614,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2997206607792068701, guid: f26bd01cf8f181b4d83f30948cfa5a0e, type: 3}
+      propertyPath: hourHand
+      value: 
+      objectReference: {fileID: 1755143154}
+    - target: {fileID: 2997206607792068701, guid: f26bd01cf8f181b4d83f30948cfa5a0e, type: 3}
+      propertyPath: secondHand
+      value: 
+      objectReference: {fileID: 1510902565}
     - target: {fileID: 6172292178020059414, guid: f26bd01cf8f181b4d83f30948cfa5a0e, type: 3}
       propertyPath: m_Name
       value: ClockFace (1)
@@ -24653,7 +24661,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: dc8a3e91b1324a38852893a92ee6efb1
+  uniqueId: ce0a88e9bd824dccbd01acefc7e69efd
 --- !u!114 &1137346556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33474,6 +33482,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!1 &1510902565 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 514802812786763364, guid: f26bd01cf8f181b4d83f30948cfa5a0e, type: 3}
+  m_PrefabInstance: {fileID: 354094588}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1515685465
 GameObject:
   m_ObjectHideFlags: 0
@@ -39817,6 +39830,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1484b69b937c1424c815228e4a644520, type: 3}
   m_PrefabInstance: {fileID: 1749473909}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1755143154 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5840908882153898326, guid: f26bd01cf8f181b4d83f30948cfa5a0e, type: 3}
+  m_PrefabInstance: {fileID: 354094588}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1758134277
 PrefabInstance:
