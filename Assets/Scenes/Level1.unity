@@ -24793,7 +24793,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 73e502d213d54b41ad92dbdd001fce9b
+  uniqueId: 6dd605fee4db4568b3c676489ed9cdf2
 --- !u!114 &1137346556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -39987,6 +39987,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7547298470715172635, guid: 1242586ae4aa9a549bae1d5872beda8f, type: 3}
   m_PrefabInstance: {fileID: 344264915}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1745327854 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5115269801712852040, guid: 1242586ae4aa9a549bae1d5872beda8f, type: 3}
+  m_PrefabInstance: {fileID: 344264915}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cb595c39f2571b45aafd152801f81d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1746756928
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46299,6 +46310,10 @@ PrefabInstance:
       propertyPath: OutputAudioMixerGroup
       value: 
       objectReference: {fileID: -7702377275053938126, guid: 23c79154fc5129242ad1dd177c67712f, type: 2}
+    - target: {fileID: 9171278551872598047, guid: f55f2ff9d1c902c4fa550e5500bc340f, type: 3}
+      propertyPath: codeDoor
+      value: 
+      objectReference: {fileID: 1745327854}
     - target: {fileID: 9171278551872598047, guid: f55f2ff9d1c902c4fa550e5500bc340f, type: 3}
       propertyPath: CodeDisplay
       value: 
