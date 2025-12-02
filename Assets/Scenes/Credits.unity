@@ -178,8 +178,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Programming - canaan hutton / brandon wheeler / patrick tierce
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
+  m_sharedMaterial: {fileID: -574617224119885795, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -390,8 +390,8 @@ MonoBehaviour:
   m_text: 3d art - caleb powers / tristen jennings / patrick tierce / sean day /
     lucy albrittion / christian thomas
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
+  m_sharedMaterial: {fileID: -574617224119885795, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -655,8 +655,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Thank you for playing!
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
+  m_sharedMaterial: {fileID: -574617224119885795, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1077,8 +1077,8 @@ MonoBehaviour:
   m_text: Sound - Brandon Wheeler / Christopher Seals / Patrick Tierce / Winter Path
     / Canaan Hutton
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
+  m_sharedMaterial: {fileID: -574617224119885795, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1349,8 +1349,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: play testers - Patrick Tierce / Canaan Hutton / Brandon Wheeler
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
+  m_sharedMaterial: {fileID: -574617224119885795, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1486,8 +1486,8 @@ MonoBehaviour:
   m_text: 2d art - Lucy Albrittion / winter path / tristen jennings / patrick tierce
     / christian thomas
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
+  m_sharedMaterial: {fileID: -574617224119885795, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1622,8 +1622,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: (you know what you did)
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
+  m_sharedMaterial: {fileID: -574617224119885795, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1790,8 +1790,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "special thanks - evan nave / oliver buckland / luke thomson \n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
+  m_sharedMaterial: {fileID: -574617224119885795, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1924,10 +1924,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Design - Patrick tierce / canaan hutton
+  m_text: Design - Patrick tierce / canaan hutton / brandon wheeler
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
+  m_sharedMaterial: {fileID: -574617224119885795, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1989,7 +1989,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -47.043, y: 0, z: -1020.5378, w: -45.15029}
+  m_margin: {x: -47.043, y: 0, z: -1268.757, w: -45.15029}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2201,8 +2201,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
+  m_sharedMaterial: {fileID: -574617224119885795, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2337,8 +2337,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Music - Christopher Seals / Lionel Washington II
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
+  m_sharedMaterial: {fileID: -574617224119885795, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2473,8 +2473,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: UI - Brandon Wheeler / patrick tierce / winter path
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
+  m_sharedMaterial: {fileID: -574617224119885795, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2790,8 +2790,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Directed by Patrick Tierce
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
-  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
+  m_sharedMaterial: {fileID: -574617224119885795, guid: ac97e3280f3a5c24eabfe6e2767cea1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
