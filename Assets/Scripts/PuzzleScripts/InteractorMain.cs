@@ -15,6 +15,8 @@ public class InteractorMain : MonoBehaviour
 
     public int codeCount;
 
+    public DoorController codeDoor;
+
     GameObject lastDrawer;
 
     public PlayerInput playerInput;
@@ -129,7 +131,8 @@ public class InteractorMain : MonoBehaviour
             if (CodeDisplay != null)                      // FIX: guard to prevent NRE
                 CodeDisplay.text = codeToDisplay;
         }
-        else
+
+        if (numbersCollected.Count == 0 || codeDoor.hasOpened)
         {
             if (CodeDisplay != null)                      // FIX: guard to prevent NRE
                 CodeDisplay.text = string.Empty;

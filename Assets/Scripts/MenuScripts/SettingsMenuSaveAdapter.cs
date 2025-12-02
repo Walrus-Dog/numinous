@@ -10,12 +10,12 @@ public class SettingsMenuSaveAdapter : MonoBehaviour, ISaveable
     public struct State
     {
         public int graphicsQuality;
-        public float masterVol;
-        public float musicVol;
-        public float sfxVol;
+        public float masterVol;   // linear 0..1
+        public float musicVol;    // linear 0..1
+        public float sfxVol;      // linear 0..1
         public bool vibrate;
-        public float brightness;   // postExposure slider value
-        public float sensitivity;  // mouse sensitivity slider value
+        public float brightness;  // postExposure slider value
+        public float sensitivity; // mouse sensitivity slider value
     }
 
     private SettingsMenuManager mgr;
@@ -34,9 +34,12 @@ public class SettingsMenuSaveAdapter : MonoBehaviour, ISaveable
         var st = new State
         {
             graphicsQuality = QualitySettings.GetQualityLevel(),
-            masterVol = TryGetMixerFloat(mgr.MainMixer, "MasterVolume", PlayerPrefs.GetFloat("MasterVolume", 0.75f)),
-            musicVol = TryGetMixerFloat(mgr.MainMixer, "MusicVolume", PlayerPrefs.GetFloat("MusicVolume", 0.75f)),
-            sfxVol = TryGetMixerFloat(mgr.MainMixer, "SFXVolume", PlayerPrefs.GetFloat("SFXVolume", 0.75f)),
+
+            // IMPORTANT: use the same linear [0..1] values as SettingsMenuManager
+            masterVol = PlayerPrefs.GetFloat("MasterVolume", 0.75f),
+            musicVol = PlayerPrefs.GetFloat("MusicVolume", 0.75f),
+            sfxVol = PlayerPrefs.GetFloat("SFXVolume", 0.75f),
+
             vibrate = SettingsMenuManager.isVibrate,
             brightness = PlayerPrefs.GetFloat("BrightnessValue", 0f),
             sensitivity = PlayerPrefs.GetFloat("MouseSensitivity", 1f)
@@ -50,29 +53,52 @@ public class SettingsMenuSaveAdapter : MonoBehaviour, ISaveable
 
         var s = (State)state;
 
-        // Graphics
+        // -------- GRAPHICS --------
+        int clampedQuality = Mathf.Clamp(s.graphicsQuality, 0, QualitySettings.names.Length - 1);
+
         if (mgr.graphicsDropdown != null)
         {
-            mgr.graphicsDropdown.value = Mathf.Clamp(s.graphicsQuality, 0, QualitySettings.names.Length - 1);
+            mgr.graphicsDropdown.value = clampedQuality;
             mgr.ChangeGraphicsQuality();
         }
         else
         {
-            QualitySettings.SetQualityLevel(Mathf.Clamp(s.graphicsQuality, 0, QualitySettings.names.Length - 1));
-            PlayerPrefs.SetInt("GraphicsQuality", s.graphicsQuality);
+            QualitySettings.SetQualityLevel(clampedQuality);
+            PlayerPrefs.SetInt("GraphicsQuality", clampedQuality);
         }
 
-        // Audio
-        if (mgr.masterVol != null) { mgr.masterVol.value = s.masterVol; mgr.ChangeMasterVolume(); }
-        else SetMixerAndPref(mgr.MainMixer, "MasterVolume", s.masterVol, "MasterVolume");
+        // -------- AUDIO (linear 0..1) --------
+        if (mgr.masterVol != null)
+        {
+            mgr.masterVol.value = Mathf.Clamp01(s.masterVol);
+            mgr.ChangeMasterVolume();
+        }
+        else
+        {
+            SetMixerAndPref(mgr.MainMixer, "MasterVolume", s.masterVol, "MasterVolume");
+        }
 
-        if (mgr.musicVol != null) { mgr.musicVol.value = s.musicVol; mgr.ChangeMusicVolume(); }
-        else SetMixerAndPref(mgr.MainMixer, "MusicVolume", s.musicVol, "MusicVolume");
+        if (mgr.musicVol != null)
+        {
+            mgr.musicVol.value = Mathf.Clamp01(s.musicVol);
+            mgr.ChangeMusicVolume();
+        }
+        else
+        {
+            SetMixerAndPref(mgr.MainMixer, "MusicVolume", s.musicVol, "MusicVolume");
+        }
 
-        if (mgr.sfxVol != null) { mgr.sfxVol.value = s.sfxVol; mgr.ChangeSFXVolume(); }
-        else SetMixerAndPref(mgr.MainMixer, "SFXVolume", s.sfxVol, "SFXVolume");
+        if (mgr.sfxVol != null)
+        {
+            mgr.sfxVol.value = Mathf.Clamp01(s.sfxVol);
+            mgr.ChangeSFXVolume();
+        }
+        else
+        {
+            SetMixerAndPref(mgr.MainMixer, "SFXVolume", s.sfxVol, "SFXVolume");
+        }
 
-        // Vibrate
+        // -------- VIBRATE --------
         if (mgr.vibrateToggle != null)
         {
             mgr.vibrateToggle.isOn = s.vibrate;
@@ -84,13 +110,18 @@ public class SettingsMenuSaveAdapter : MonoBehaviour, ISaveable
             PlayerPrefs.SetInt("Vibrate", s.vibrate ? 1 : 0);
         }
 
-        // Brightness
+        // -------- BRIGHTNESS --------
+        // SettingsMenuManager already handles mixer + overlay
         mgr.SetBrightness(s.brightness);
 
-        // Sensitivity
+        // -------- SENSITIVITY --------
+        // Try to drive the slider if it exists (it's private in SettingsMenuManager)
         var sliderField = typeof(SettingsMenuManager)
-            .GetField("sensitivitySlider", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-        var sensSlider = sliderField != null ? sliderField.GetValue(mgr) as UnityEngine.UI.Slider : null;
+            .GetField("sensitivitySlider",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+        var sensSlider = sliderField != null
+            ? sliderField.GetValue(mgr) as UnityEngine.UI.Slider
+            : null;
 
         if (sensSlider != null)
         {
@@ -101,20 +132,28 @@ public class SettingsMenuSaveAdapter : MonoBehaviour, ISaveable
         {
             PlayerPrefs.SetFloat("MouseSensitivity", s.sensitivity);
             PlayerPrefs.Save();
+
             var player = UnityEngine.Object.FindFirstObjectByType<Player>();
             if (player != null) player.SetSensitivity(s.sensitivity);
         }
     }
 
-    private static float TryGetMixerFloat(AudioMixer mixer, string param, float fallback)
+    // ------- helpers -------
+
+    private static float LinearToDb(float linear)
     {
-        if (mixer != null && mixer.GetFloat(param, out float v)) return v;
-        return fallback;
+        if (linear <= 0.0001f) return -80f;
+        return Mathf.Log10(linear) * 20f;
     }
 
-    private static void SetMixerAndPref(AudioMixer mixer, string param, float value, string prefKey)
+    private static void SetMixerAndPref(AudioMixer mixer, string param, float linearValue, string prefKey)
     {
-        if (mixer != null) mixer.SetFloat(param, value);
-        PlayerPrefs.SetFloat(prefKey, value);
+        float lin = Mathf.Clamp01(linearValue);
+
+        if (mixer != null)
+            mixer.SetFloat(param, LinearToDb(lin));
+
+        PlayerPrefs.SetFloat(prefKey, lin);
+        PlayerPrefs.Save();
     }
 }
