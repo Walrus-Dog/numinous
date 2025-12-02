@@ -3,7 +3,12 @@ guid: b36264106329eef40bd5d8d2d1bb9a68
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Wood_Shelf
+    second: {fileID: 2100000, guid: 0780c4f4f4dc83b488dc2a670103cc4a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
