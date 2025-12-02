@@ -25828,7 +25828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: aced196f1b5d4989bf40e39215023dfa
+  uniqueId: 061540ff9a784bc08531d3e4bf16af05
 --- !u!114 &1137346556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29192,7 +29192,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 40412b96c22cf98459cc11374605ef75, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -49277,7 +49277,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6691231002948613256, guid: e88b1e2ef110e05458adbdad951b8592, type: 3}
       propertyPath: uniqueId
-      value: 0738846851dd41b58c1bf12ab1d5d9d5
+      value: f829185e67ea40b7861ed0fedb9de725
       objectReference: {fileID: 0}
     - target: {fileID: 6716888952022049982, guid: e88b1e2ef110e05458adbdad951b8592, type: 3}
       propertyPath: m_AnchorMax.x
