@@ -11,7 +11,7 @@ public class DoorController : MonoBehaviour
     public enum doorTypes { codeDoor, itemDoor, puzzleDoor }
     public doorTypes doorType;
 
-    public TextMeshProUGUI codeDisplay;
+    public TMP_Text codeDisplay;
 
     public GameObject[] clocks;
 
