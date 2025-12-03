@@ -445,7 +445,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -511,7 +511,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -1062,7 +1062,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: eb46b70e8dd1485cb08247101a6a9c5a
+  uniqueId: 73c659b1bf8e46698d698ef52f43529f
 --- !u!1 &44679400 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2067244019749802320, guid: 2f4f572fd6157774f996a5c23eaa9d5e, type: 3}
@@ -2008,7 +2008,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -3905,7 +3905,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -4692,7 +4692,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -7577,7 +7577,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -7652,7 +7652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 97d2511fb8fc4952a62a52e960a8cd35
+  uniqueId: 9b6c53cfc1144b8eb4a0f5e03946a764
 --- !u!1001 &302074144
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8524,7 +8524,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -8585,7 +8585,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -8721,7 +8721,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -11897,7 +11897,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -14508,7 +14508,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -14708,6 +14708,32 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 539634938}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &546639276 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 3dd0c664987195f4da434fb3076f99f4, type: 3}
+  m_PrefabInstance: {fileID: 2122689860}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &546639277
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546639276}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.009870656, y: 0.028469164, z: 0.0010338894}
+  m_Center: {x: 0.008891932, y: 0.0060900617, z: -0.00043305205}
 --- !u!1 &547682844
 GameObject:
   m_ObjectHideFlags: 0
@@ -15950,7 +15976,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -17568,7 +17594,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -18628,7 +18654,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -18856,7 +18882,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -19363,7 +19389,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -19825,7 +19851,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -20071,7 +20097,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -21738,7 +21764,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -25730,7 +25756,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -26637,7 +26663,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -27119,7 +27145,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -30291,7 +30317,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -34017,7 +34043,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -34065,7 +34091,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 8e14c199959f4198ac88f6ae6028e477
+  uniqueId: cbd516e062514b28b5367cec588e582a
 --- !u!64 &1243073212
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -35658,7 +35684,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -36132,7 +36158,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2444984859286849632, guid: 3b692ce9cae838e46801d051d02d6982, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.65
+      value: -6.71
       objectReference: {fileID: 0}
     - target: {fileID: 2444984859286849632, guid: 3b692ce9cae838e46801d051d02d6982, type: 3}
       propertyPath: m_LocalPosition.y
@@ -36140,7 +36166,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2444984859286849632, guid: 3b692ce9cae838e46801d051d02d6982, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -24.91
+      value: -35.27
       objectReference: {fileID: 0}
     - target: {fileID: 2444984859286849632, guid: 3b692ce9cae838e46801d051d02d6982, type: 3}
       propertyPath: m_LocalRotation.w
@@ -36486,7 +36512,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -37740,7 +37766,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -37973,7 +37999,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -38039,7 +38065,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -40303,7 +40329,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -40615,7 +40641,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -41546,7 +41572,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -41835,7 +41861,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -42271,7 +42297,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -42579,6 +42605,10 @@ PrefabInstance:
     - target: {fileID: 6125692631451271370, guid: de5c6f4fadf093a4ca5c0fbc1de2d510, type: 3}
       propertyPath: m_Name
       value: Pickupable
+      objectReference: {fileID: 0}
+    - target: {fileID: 6125692631451271370, guid: de5c6f4fadf093a4ca5c0fbc1de2d510, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -43427,7 +43457,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -44459,7 +44489,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -45922,7 +45952,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -47871,7 +47901,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -51698,7 +51728,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -51759,7 +51789,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -52227,7 +52257,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -52288,7 +52318,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -55014,7 +55044,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -55789,7 +55819,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -56486,7 +56516,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -56888,7 +56918,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -58737,7 +58767,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -60353,7 +60383,7 @@ MonoBehaviour:
   code: 
   randCode: 0
   item:
-  - {fileID: 1568454386}
+  - {fileID: 546639276}
   puzzle: []
   hasOpened: 0
   unlockTimer: 2.5
@@ -60401,7 +60431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: c790c6157c9944a88a7c6eb6e02e05a7
+  uniqueId: 4b4a018ee9f54b95a4a0197b28180fa9
 --- !u!1 &2106083111 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2067244019749802320, guid: 2f4f572fd6157774f996a5c23eaa9d5e, type: 3}
@@ -60689,6 +60719,66 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2114966999}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &2122689860
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 3dd0c664987195f4da434fb3076f99f4, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -28.846
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3dd0c664987195f4da434fb3076f99f4, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 65.356
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3dd0c664987195f4da434fb3076f99f4, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -59.617
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3dd0c664987195f4da434fb3076f99f4, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.69164675
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3dd0c664987195f4da434fb3076f99f4, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.38738933
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3dd0c664987195f4da434fb3076f99f4, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.42230448
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3dd0c664987195f4da434fb3076f99f4, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.43956038
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3dd0c664987195f4da434fb3076f99f4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -9.475
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3dd0c664987195f4da434fb3076f99f4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 69.64
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 3dd0c664987195f4da434fb3076f99f4, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -71.472
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3dd0c664987195f4da434fb3076f99f4, type: 3}
+      propertyPath: m_Name
+      value: office_key
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 3dd0c664987195f4da434fb3076f99f4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 546639277}
+  m_SourcePrefab: {fileID: 100100000, guid: 3dd0c664987195f4da434fb3076f99f4, type: 3}
 --- !u!1 &2129183985 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: e459d70c822946d418776fdeea5334c4, type: 3}
@@ -61296,3 +61386,4 @@ SceneRoots:
   - {fileID: 1115714009}
   - {fileID: 1791033525}
   - {fileID: 160566201}
+  - {fileID: 2122689860}
