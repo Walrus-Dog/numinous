@@ -210,7 +210,7 @@
     "m_SubDatas": [],
     "m_ActiveTargets": [
         {
-            "m_Id": "edde510cd95647e9b134ff3ec9c6a426"
+            "m_Id": "4533a45e5e7940d5a0ebff777d83d576"
         }
     ]
 }
@@ -650,6 +650,31 @@
 
 {
     "m_SGVersion": 1,
+    "m_Type": "UnityEditor.Rendering.Universal.ShaderGraph.UniversalTarget",
+    "m_ObjectId": "4533a45e5e7940d5a0ebff777d83d576",
+    "m_Datas": [],
+    "m_ActiveSubTarget": {
+        "m_Id": "ae5985a95f6647c1a68f6b6df3c92c2f"
+    },
+    "m_AllowMaterialOverride": false,
+    "m_SurfaceType": 0,
+    "m_ZTestMode": 4,
+    "m_ZWriteControl": 0,
+    "m_AlphaMode": 0,
+    "m_RenderFace": 2,
+    "m_AlphaClip": false,
+    "m_CastShadows": false,
+    "m_ReceiveShadows": true,
+    "m_DisableTint": false,
+    "m_AdditionalMotionVectorMode": 0,
+    "m_AlembicMotionVectors": false,
+    "m_SupportsLODCrossFade": false,
+    "m_CustomEditorGUI": "",
+    "m_SupportVFX": false
+}
+
+{
+    "m_SGVersion": 1,
     "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
     "m_ObjectId": "5aa797de92ca418b877ec36b2397cd0f",
     "m_Guid": {
@@ -882,6 +907,12 @@
     "m_Property": {
         "m_Id": "fece61f5141e40c0940b2e4624272306"
     }
+}
+
+{
+    "m_SGVersion": 2,
+    "m_Type": "UnityEditor.Rendering.Universal.ShaderGraph.UniversalUnlitSubTarget",
+    "m_ObjectId": "ae5985a95f6647c1a68f6b6df3c92c2f"
 }
 
 {
@@ -1166,24 +1197,6 @@
 }
 
 {
-    "m_SGVersion": 2,
-    "m_Type": "UnityEditor.Rendering.BuiltIn.ShaderGraph.BuiltInTarget",
-    "m_ObjectId": "edde510cd95647e9b134ff3ec9c6a426",
-    "m_Datas": [],
-    "m_ActiveSubTarget": {
-        "m_Id": "fe42fb8f7c734f8496d7fab1a24bc066"
-    },
-    "m_AllowMaterialOverride": false,
-    "m_SurfaceType": 0,
-    "m_ZWriteControl": 0,
-    "m_ZTestMode": 4,
-    "m_AlphaMode": 0,
-    "m_RenderFace": 2,
-    "m_AlphaClip": false,
-    "m_CustomEditorGUI": ""
-}
-
-{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.BlockNode",
     "m_ObjectId": "f72ca591f822441e8d16d003d43fa65a",
@@ -1215,12 +1228,6 @@
         "m_SerializableColors": []
     },
     "m_SerializedDescriptor": "VertexDescription.Tangent"
-}
-
-{
-    "m_SGVersion": 0,
-    "m_Type": "UnityEditor.Rendering.BuiltIn.ShaderGraph.BuiltInUnlitSubTarget",
-    "m_ObjectId": "fe42fb8f7c734f8496d7fab1a24bc066"
 }
 
 {
