@@ -7,12 +7,14 @@ using UnityEngine.Windows;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] float mouseSensitiviy = 3f;
+    [SerializeField] float mouseSensitiviy = 1f; // now loaded 
     [SerializeField] float walkingSpeed = 5f;
     [SerializeField] float mass = 1f;
     [SerializeField] float acceleration = 20f;
     [SerializeField] float worldBottomBoundary = -100f;
     [SerializeField] float cameraTransitionSpeed = 10f;
+    [SerializeField] float gravityMultiplier = 1f;
+    [SerializeField] CharacterController characterController;
 
     public Transform cameraTransform;
 
@@ -36,7 +38,7 @@ public class Player : MonoBehaviour
     public CharacterController controller;
     public Vector3 velocity;
     public Vector3 initialCameraPosition;
-    Vector2 look;
+    public Vector2 look;
 
     (Vector3, Quaternion) initialPositionAndRotation;
 
@@ -47,6 +49,10 @@ public class Player : MonoBehaviour
     InputAction lookAction;
     InputAction flyUpDownAction;
     InputAction interactAction;
+
+    public AudioSource footstepSound;
+
+    private const string SensitivityKey = "MouseSensitivity"; // Added constant for PlayerPrefs key
 
     void Awake()
     {
@@ -68,27 +74,38 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        initialPositionAndRotation = (transform.position, transform.rotation);
+        characterController.stepOffset = 1;
 
+        // === Load saved sensitivity from PlayerPrefs (default 1.0) ===
+        mouseSensitiviy = PlayerPrefs.GetFloat(SensitivityKey, 1f);
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+
+        initialPositionAndRotation = (transform.position, transform.rotation);
         initialCameraPosition = cameraTransform.localPosition;
         standingHeight = Height;
     }
 
-    public void Teleport(Vector3 position, Quaternion rotation) 
-    { 
-        transform.position = position;
-        Physics.SyncTransforms();
-        look.x = rotation.eulerAngles.y;
-        look.y = rotation.eulerAngles.z;
-        velocity = Vector3.zero;
-    }
-
     void Update()
     {
+        // pause game
+        if (global::PauseMenu.Paused)
+            return;
+
         movementSpeedMutliplier = 1f;
 
         UpdateMovement();
+        UpdateLook();
+    }
+
+    public void Teleport(Vector3 position)
+    {
+        transform.position = position;
+        Physics.SyncTransforms();
+        //look.x = rotation.eulerAngles.y;
+        //look.y = rotation.eulerAngles.z;
+        velocity = Vector3.zero;
     }
 
     public void UpDateCameraPosition(float targetHeight)
@@ -110,7 +127,7 @@ public class Player : MonoBehaviour
         if (transform.position.y < worldBottomBoundary)
         {
             var (position, rotation) = initialPositionAndRotation;
-            Teleport(position, rotation);
+            Teleport(position);
         }
     }
 
@@ -125,7 +142,7 @@ public class Player : MonoBehaviour
 
     public void UpdateGravity()
     {
-        var gravity = Physics.gravity * mass * Time.deltaTime;
+        var gravity = Physics.gravity * mass * Time.deltaTime * gravityMultiplier;
         velocity.y = controller.isGrounded ? -1f : velocity.y + gravity.y;
     }
 
@@ -133,6 +150,22 @@ public class Player : MonoBehaviour
     {
         var moveInput = moveAction.ReadValue<Vector2>();
         var flyUpDownInput = flyUpDownAction.ReadValue<float>();
+
+        if (moveInput != Vector2.zero)
+        {
+            if (!footstepSound.isPlaying)
+            {
+                footstepSound.Play();
+            }
+            if (!IsGrounded)
+            {
+                footstepSound.Stop();
+            }
+        }
+        else
+        {
+            footstepSound.Stop();
+        }
 
         var input = new Vector3();
         var referenceTransform = horizontal ? transform : cameraTransform;
@@ -157,7 +190,7 @@ public class Player : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
     }
 
-    public void MoveHorizontal ()
+    public void MoveHorizontal()
     {
         var input = GetMovementInput(walkingSpeed);
 
@@ -178,12 +211,19 @@ public class Player : MonoBehaviour
         transform.localRotation = Quaternion.Euler(0, look.x, 0);
     }
 
+    // === Added public method for SettingsMenuManager ===
+    public void SetSensitivity(float value)
+    {
+        // Clamp value to safe range and apply immediately
+        mouseSensitiviy = Mathf.Clamp(value, 0.05f, 10f);
+    }
+
     void OnToggleFlying()
     {
         if (currentPlayerState == playerWalking)
         {
             currentPlayerState = playerFlying;
-        } 
+        }
         else
         {
             currentPlayerState = playerWalking;
@@ -203,5 +243,5 @@ public class Player : MonoBehaviour
     {
         currentPlayerState = playerWalking;
     }
-
 }
+

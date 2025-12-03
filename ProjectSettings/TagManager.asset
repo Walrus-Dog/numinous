@@ -9,6 +9,8 @@ TagManager:
   - ShadowButton
   - Shadow
   - Pickup
+  - Drawer
+  - Door
   layers:
   - Default
   - TransparentFX
