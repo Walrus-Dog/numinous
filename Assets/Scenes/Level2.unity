@@ -18430,9 +18430,6 @@ PrefabInstance:
       addedObject: {fileID: 627301074}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2f4f572fd6157774f996a5c23eaa9d5e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 627301078}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2f4f572fd6157774f996a5c23eaa9d5e, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 627301079}
     - targetCorrespondingSourceObject: {fileID: -5568371526223589888, guid: 2f4f572fd6157774f996a5c23eaa9d5e, type: 3}
       insertIndex: -1
@@ -18611,33 +18608,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!54 &627301078
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 627301073}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!64 &627301079
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -26494,9 +26464,6 @@ PrefabInstance:
       addedObject: {fileID: 925908947}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2f4f572fd6157774f996a5c23eaa9d5e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 925908946}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2f4f572fd6157774f996a5c23eaa9d5e, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 925908949}
     - targetCorrespondingSourceObject: {fileID: -5568371526223589888, guid: 2f4f572fd6157774f996a5c23eaa9d5e, type: 3}
       insertIndex: -1
@@ -26641,33 +26608,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!54 &925908946
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 925908943}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!65 &925908947
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33426,9 +33366,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2f4f572fd6157774f996a5c23eaa9d5e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1159733508}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2f4f572fd6157774f996a5c23eaa9d5e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1159733507}
   m_SourcePrefab: {fileID: 100100000, guid: 2f4f572fd6157774f996a5c23eaa9d5e, type: 3}
 --- !u!4 &1159733502 stripped
 Transform:
@@ -33554,33 +33491,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!54 &1159733507
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1159733503}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!65 &1159733508
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -35160,9 +35070,6 @@ PrefabInstance:
       addedObject: {fileID: 1196886020}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2f4f572fd6157774f996a5c23eaa9d5e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1196886019}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2f4f572fd6157774f996a5c23eaa9d5e, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1196886018}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2f4f572fd6157774f996a5c23eaa9d5e, type: 3}
       insertIndex: -1
@@ -35477,33 +35384,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!54 &1196886019
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1196886010}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!65 &1196886020
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -52306,9 +52186,6 @@ PrefabInstance:
       addedObject: {fileID: 1733522155}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2f4f572fd6157774f996a5c23eaa9d5e, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1733522159}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2f4f572fd6157774f996a5c23eaa9d5e, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1733522158}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 2f4f572fd6157774f996a5c23eaa9d5e, type: 3}
       insertIndex: -1
@@ -52483,33 +52360,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!54 &1733522159
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1733522154}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!65 &1733522160
 BoxCollider:
   m_ObjectHideFlags: 0
