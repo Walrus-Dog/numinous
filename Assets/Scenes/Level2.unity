@@ -1161,7 +1161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 931aaeb69c7847a88ba9a7ee5d914c3e
+  uniqueId: 48edf252e26341369a31014d05131381
 --- !u!1 &44679400 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2067244019749802320, guid: 2f4f572fd6157774f996a5c23eaa9d5e, type: 3}
@@ -9039,7 +9039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: 9d008d46e96147f1beb3a21490d4ea29
+  uniqueId: 3d678489920048ca9154e7cefca5af5e
 --- !u!1001 &302074144
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38873,7 +38873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: c85646131d8a469d8b7b63182621f9f6
+  uniqueId: e606e9ff1efb401296f5bb278943a98a
 --- !u!64 &1243073212
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -55049,7 +55049,7 @@ RectTransform:
   m_GameObject: {fileID: 1741918956}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.00003399}
-  m_LocalScale: {x: 14.781239, y: 6.9402, z: 6.9402}
+  m_LocalScale: {x: 261.03668, y: 122.56393, z: 122.56393}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 654888826}
@@ -68580,7 +68580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56717f95f64d30b4098d544c4d8fe39d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uniqueId: b13a3f133718459aa48148d16bcb2a15
+  uniqueId: 6e17b034156f41178daba13e7ad5812b
 --- !u!1 &2106083111 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2067244019749802320, guid: 2f4f572fd6157774f996a5c23eaa9d5e, type: 3}
